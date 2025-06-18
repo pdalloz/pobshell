@@ -1,0 +1,56 @@
+--------------------------------------------------------------------------------
+
+# which command
+
+Defining class for a method or descriptor
+
+Attempts to identify where a method or descriptor was defined
+
+
+## USAGE
+
+  / ▶ which [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ which -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+
+* Commonly used with type command:
+
+  -1        One line per member, truncate at screen width, prefix with name
+  -v        Show full path instead of name
+  -q        No path or name, just the object's defining location
+  -L N      Limit results to the first N members 
+  -a        Include hidden objects
+  -u        Unstyled output (no colored output, no ANSI codes)
+  -r        Use Regex matching for FILTER patterns
+  -i        Ignore case for FILTER patterns
+  -e        Enumerate output objects for later reference
+
+
+## EXAMPLES
+
+* Report the defining class of my_method
+  / ▶ which my_method
+* Report the defining class of methods in my_instance, each a one line result
+  / ▶ which -1 my_instance/
+* As previous example, for members of current object & including private members
+  / ▶ which -1 -a
+* Report defining class of each member that has code with a property decorator
+  / ▶ which -1 --cat "*@property*"
+
+
+## --which as FILTER for other commands
+* List methods in current object defined in PobNode 
+  / ▶ ls -la --which *PobNode*
+* Report first line of code for each obj defined in a cmd2 class
+  / ▶ cat -1 --which *cmd2*
+* Report oneline docstring for each obj NOT defined in a cmd2 class
+  / ▶ doc -1 --nwhich *cmd2*
+* Recursive search for methods defined in pobshell
+  / ▶ find . --which *pobshell* -l -a
+
+---

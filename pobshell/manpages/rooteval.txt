@@ -1,0 +1,70 @@
+--------------------------------------------------------------------------------
+
+# rooteval command
+
+Evaluate Python expression in root namespace, which persists changes
+
+* Use to add new objects to root by import or assignment 
+ (So you can 'cd' to them and explore)
+
+Runs a Python expression such as an import in the root namespace, at path "/".
+
+Assignments, imports, deletions and other changes to objects in this namespace stick around after evaluation is done.
+
+This behaviour is different from eval at other paths, whose namespaces are recreated every time a command is run, by mapping from the Python object
+
+Its purpose is to make it easy to add objects you want to investigate to the rootnamespace, e.g. modules you want to import, or objects resulting from evaluating Python expressions.
+
+N.B. Pobshell's "eval" command evaluates a given Python expression in the namespace of the object at your current path. If your current path is root, this is the same as rooteval 
+
+
+## USAGE
+
+  / ▶ rooteval PYEXPR
+
+* Shortcut for rooteval command is "::"
+
+  / ▶ ::PYEXPR
+
+
+PYEXPR must be valid for Python exec() or eval()
+
+PYEXPR is evaluated at root
+
+Evaluation namespace is populated with:
+* 'self', a reference to the current object
+* 'pn', a reference to the internal Pobshell object for the path; a PobNode
+  giving access to PobNode properties that implement Pobshell commands:
+  'pn.cat', 'pn.abspath' etc
+* Attribute names of current object (if current 'map' setting is 'attributes' or 'everything')
+* Names of objects in Pobshell's root "directory" (as globals)
+
+
+
+## NOTES
+
+* Changes to mutable objects affect original objects, in the frame that called Pobshell
+* Members added or deleted in Pobshell's root path are persisted in Pobshell
+  but don't affect calling frame
+* Adding or deleting members at other paths isn't persisted 
+
+* The eval command, with shortcut ':', acts just like the rooteval command but evaluates at the current path 
+
+
+## EXAMPLES
+
+* E.g. Add object with name "a" and value 42 to root namespace
+    / ▶ ::a = 42
+  New object "a" can now be explored
+	/ ▶ ls -l /a
+	a  int                       42
+  Objects can be deleted from root, in the same way
+	/ ▶ ::del a
+
+
+* E.g. Import module datetime to root namespace 
+    / ▶ ::import datetime
+  Now make it the current path
+    / ▶ cd datetime
+
+---

@@ -1,0 +1,89 @@
+--------------------------------------------------------------------------------
+
+# hide command
+
+Hide objects from listings: change what OPTION -a does 
+
+Persistently exclude objects from find, ls, doc, cat, other Inspection commands
+(whenever OPTION -a is not used)
+
+
+## USAGE
+
+    / ▶ hide [FILTERS] 
+
+Same syntax as Inspection command FILTERS 
+
+
+## NOTES
+
+* Any Inspection command run with OPTION -a shows hidden objects
+
+* Use 'show' command to reverse a 'hide' command
+    E.g. To include dunders and privates 
+      / ▶  show --name
+    N.B. See "man show" 
+
+* By default Pobshell hides anything whose name starts with underscore
+  i.e. Python dunders and private attributes.
+
+* Each hide command with FILTER acts in *addition* to previous filters
+
+* find command will not check hidden objects for a match or search their members
+
+* For help on syntax use OPTION -h
+  / ▶ hide -h
+
+
+## EXAMPLES
+
+* To hide function and method objects unless -a is used
+  / ▶ hide --isroutine
+  to show them again
+    / ▶ show --isroutine
+
+* To restore default behaviour and hide prefixed names if this was changed
+  / ▶ hide name "_*"
+
+* Extended example
+  # Initially names with underscore prefixes are hidden, the default
+  /json ▶ ls -l
+  JSONDecodeError  type                      <class 'json.decoder.JSOND…
+  JSONDecoder      type                      <class 'json.decoder.JSOND…
+  JSONEncoder      type                      <class 'json.encoder.JSONE…
+  codecs           module                    <module 'codecs' (frozen)>
+  decoder          module                    <module 'json.decoder' fro…
+  detect_encoding  function                  <function detect_encoding …
+  dump             function                  <function dump at 0x101fd5…
+  dumps            function                  <function dumps at 0x101fd…
+  encoder          module                    <module 'json.encoder' fro…
+  load             function                  <function load at 0x1020a0…
+  loads            function                  <function loads at 0x1020a…
+  scanner          module                    <module 'json.scanner' fro…
+
+  # Hide objects whose repr matches the pattern
+  /json ▶ hide --repr *json.*
+  Adding filterset entry: 'repr': '*json.*'
+  Current filters:  {'name': '_*', 'repr': '*json.*'}
+  # Now they're not reported
+  /json ▶ ls
+  codecs  detect_encoding  dump  dumps  load  loads     
+  # OPTION -a includes hidden objects
+  /json ▶ ls -a
+  JSONDecodeError  __doc__      __version__       dumps  
+  JSONDecoder      __file__     _default_decoder  encoder
+  JSONEncoder      __loader__   _default_encoder  load   
+  __all__          __name__     codecs            loads  
+  __author__       __package__  decoder           scanner
+  __builtins__     __path__     detect_encoding 
+  __cached__       __spec__     dump         
+
+  # Unhide the persistent repr filter
+  /json ▶ show --repr
+  Removing filterset entry for: 'repr'
+  Current filters:  {'name': '_*'}
+  # Only names with underscore prefixes are hidden
+  /json ▶ ls
+  JSONDecodeError  JSONEncoder  decoder          dump   encoder  loads  
+  JSONDecoder      codecs       detect_encoding  dumps  load     scanner
+---

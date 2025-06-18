@@ -1,0 +1,159 @@
+--------------------------------------------------------------------------------
+
+# doc command
+
+Show documentation string for object
+
+From __doc__ or inspect.getdoc  
+
+
+## USAGE
+
+  / ▶ doc [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET
+  / ▶ doc -h 
+  / ▶ man TARGET
+
+
+## NOTES
+
+* Affected by the setting 'simple_cat_and_doc'.
+  See "set simple_cat_and_doc" 
+* Affected by "map local" and "map mro"
+  If "map local" then only checks obj.__doc__
+  If "map mro" then will use inheritance too
+
+
+## OPTION
+
+  -1             Single line output with first line of docstring only
+  -n N           Multi line output truncated to N lines per member
+  -l             Prefix each output line with object name
+  -lv            Prefix each output line with object's Pobshell path
+  -P             Prefix each output line with object's Python path
+  -v             Banner at top of each members docstring listing shows path
+  -q             Don't output object names or paths
+  -L N           Limit reporting to the first N members 
+  -a             Include hidden objects
+  -u             Unstyled output (no ANSI codes)
+  -r             Use Regex matching for FILTER patterns
+  -i             Ignore case for FILTER patterns
+  -e             Enumerate output for later reference
+  
+
+## FILTERS
+
+Restrict the members a 'doc' command operates on
+
+* Show docs for objects which match a predicate
+    / ▶ doc -1a --ismethod    # -a includes private methods & dunders
+    / ▶ doc --isroutine
+    / ▶ doc -n 5 --isclass
+* Show docs for objects which don't match a predicate
+    / ▶ doc -1 --nismodule
+* Show docs of objects whose docstrings match a glob pattern
+    / ▶ doc -n 4 --doc *Encoding*
+* Show docs of objects whose names match a regex pattern 
+    / ▶ doc --name do_  -r
+* Show docs of objects whose names match case insensitive glob pattern
+    / ▶ doc --name do_*  -i
+* Show docs of objects that define Oyster related classes	
+    / ▶ doc --cat "class\s+oyster" -ir
+
+
+## --doc as FILTER for other commands
+
+* Apply COMMAND only to members whose docstring matches PATTERN
+  COMMAND --doc PATTERN
+E.g. List code for objects whose docstring includes "encoding" 
+  / ▶ cat --doc *encoding*
+* Use 'find' command to discover objects whose docstring matches PATTERN
+    / ▶ find --doc PATTERN
+* --doc PATTERN treats PATTERN as a case-sensitive glob pattern
+  Unless:
+    For regex PATTERNS  use OPTION -r 
+    For case insensitive PATTERNS use OPTION -i 
+    N.B. Options -r and -i change the logic for ALL the filters
+* Match any object that has a docstring
+    --doc * 
+* Match any object that does NOT have matching docstring
+    --ndoc PATTERN
+* Long list all members that have docstrings
+    / ▶ ls -l --doc * 
+* Count how many members have docstrings
+    / ▶ ls -l --doc * | wc -l
+
+
+## EXAMPLES
+
+* Show oneline docstrings for members of current object
+  / ▶ doc -1
+* Show docstring for specific object
+  / ▶ doc /__builtins__/staticmethod
+* Show docstring for objects whose names match glob pattern
+  / ▶ doc -1 sys/get*
+* Show oneline docstrings for members of inspect module
+  / ▶ doc -1 /inspect/
+* Show first 3 docstring lines for members of foo that are non-data objects
+  / ▶ doc -n 3 /foo/ --nisdata
+* Show oneline docstrings for all members of current object, including private
+  / ▶ doc -1a   
+* Recursively search for classes and report docstrings within object foo.bar
+  N.B. Reports oneline docstrings, each with object's path  (doc -1v)
+  / ▶ find /foo/bar  --isclass --cmd 'doc -1v .'
+* Open oneline docstrings for members of current obj in Sublime Text
+  / ▶ doc -1u | subl
+* Count how many lines in object foo's docstring
+  / ▶ doc -q foo | wc -l
+* Show 3 docstring lines for each of first 10 members of current object
+  N.B. Show exception messages for missing docstrings (--missing message)
+  / ▶ doc -n 3 -L 10 --missing message
+* Show docstrings for contents but not attributes of object foo
+  / ▶ doc foo/  --map contents
+* Show docstrings for attributes but not contents of object foo
+  / ▶ doc foo/  --map attributes
+* Report oneline docstrings for pandas module's Exception objects
+  / ▶ find /pandas   --mro "*<class 'Exception'>*" --cmd "doc -v1 ."
+* Browse the return data types of all sklearn dataset functions
+  /sklearn/datasets ▶ doc -l | grep Returns -A 4 | less -R
+* Grep all member docstrings for 'settable'
+  N.B. Adds object path as prefix to each output line (-lv)
+  /PVi ▶ doc -lv | grep -i settable
+  /PVi/add_settable Add a settable parameter to ``self.settables`` 
+  /PVi/add_settable  
+  /PVi/add_settable :param settable: Settable object being added 
+  /PVi/build_settables Create the dictionary of user-settable parameters 
+  /PVi/do_set Set a settable parameter or show current settings of parameters 
+* Search for docstrings that contain the text "environ" and output them
+  / ▶ find .. --doc *environ* -i --cmd 'doc -v .'
+  HOW IT WORKS
+  Search inside the object that's at parent path (find ..)
+  Match objects whose docstrings match *environ*  (--doc *environ*)
+  Make pattern matching case-insensitive (-i)
+  Report complete docstrings of matched objects, and show full paths 
+    (--cmd 'doc -v')
+* Search for objects whose code references "self.editor" and report docstrings
+  / ▶ find --cat *self.editor* -d 3 --cmd 'doc -lv .' 
+* Read docstrings for members of current object in paging utility
+  / ▶ doc  | less -R
+* Report docstrings for data descriptors using temporary 'static' map
+  /net/fc1/weight/`0`/`0` ▶ doc -1 --isdata --map static
+  H              Returns a view of a matrix (2-D tensor) conjugated and…
+  T              Returns a view of this tensor with its dimensions reve…
+  device         Is the :class:`torch.device` where this Tensor is.
+  ...
+* diff the docstrings for json.dump and json.dumps.  N.B. See shell command
+  /json ▶ !diff """doc dump""" """doc dumps"""
+  1,3c1,2
+  < # ==> dump <==
+  < Serialize ``obj`` as a JSON formatted stream to ``fp`` (a
+  < ``.write()``-supporting file-like object).
+  ---
+  > # ==> dumps <==
+  > Serialize ``obj`` to a JSON formatted ``str``.
+  9,11c8,10
+  < If ``ensure_ascii`` is false, then the strings written to ``fp`` can
+  ...
+
+---

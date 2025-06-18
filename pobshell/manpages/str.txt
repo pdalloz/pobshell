@@ -1,0 +1,52 @@
+--------------------------------------------------------------------------------
+
+# str command
+
+Show string representation of an object, str(obj)
+
+
+## USAGE
+
+  / ▶ str [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ str -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+
+    -v        Show full path
+    -a        Include hidden names
+
+
+
+## EXAMPLES
+
+* Show str of members truncated to oneline, prefixed with member names
+  / ▶ str -1
+
+* Grep str of members by piping to OS grep
+  / ▶ str -l | grep 6.3
+  iris        [6.3, 3.3, 4.7, 1.6], 
+  iris        [6.3, 2.5, 4.9, 1.5], 
+  ...
+  N.B. Uses -l OPTION to prefix each output line with member name
+
+* Filter command to members that match a pattern for their str representation
+  / ▶ ls -l --str *sin*
+  iris   Bunch                     {'DESCR': '.. _iris_dataset:\n\nIris…
+  p      str                       'sin(q)'
+  paths  list                      ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2…
+
+* Filter command to members whose str doesn't match pattern
+  / ▶ doc -1 --nstr sin  -r
+  ast          ast
+  connection   This object wraps a `sqlite3 pointer
+  ...
+  N.B. Note use of regex OPTION (-r)
+
+* Find integers with the value 42
+  / ▶ find /Magrathea --str 42 --typename int 
+
+---

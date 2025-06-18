@@ -1,0 +1,61 @@
+--------------------------------------------------------------------------------
+# shell Command
+
+Run an OS shell command with optional Pobshell command substitution
+
+
+* Supports triple quoted Pobshell commands or @N history references 
+  Captures Pobshell output to file and runs the OS command with these filenames
+
+* Particularly useful with !diff !aichat !join  !sort
+
+
+## USAGE
+
+  / ▶ !OS-COMMAND  ["""POB-COMMAND"""] [@N]
+
+* Pass Pobshell output to shell commands
+  - Use triple double quotes """POB-COMMAND"""
+    Substitute name of a temporary file containing output of Pob command
+
+  - Use history number of prior command @N
+    Substitute name of a temporary file containing output of Pob command
+    N.B. Output may not may not match original
+       (Commands are rerun with current path, map and settings)
+	Negative numbers work too @-1 is the immediately previous command, and @-2 the command before that
+
+
+## NOTES
+
+* Debug using !cat to check file content is as expected
+/ ▶ !cat """ls -l wally_the_walrus/""" """ls -l walter_the_walrus/"""  """cat ."""
+
+
+## EXAMPLES
+
+* Run OS commands without leaving Pobshell
+  / ▶ !ls
+  / ▶ !rm oops.txt
+  / ▶ !ls -l ~/Dropbox/Grail/Scripts/Ni/Ni/autoresponse.py
+  / ▶ !ps aux | grep debugPob
+
+* Diff code for live functions
+  / ▶ !diff """cat old_func""" """cat new_func"""
+  
+  /new_func ▶ !diff """cat ../old_func -u""" """cat . -u"""
+  N.B. Uses OPTION -u to remove ANSI style codes from cat output
+
+* Diff instance of a class against the class itself
+  / ▶ !diff """ls -la wally_the_walrus/""" """ls -la Walrus/""" -yw 
+
+* Diff state of live objects with Beyond Compare
+  / ▶ !bcomp """ls -lua wally_the_walrus/""" """ls -lua walter_the_walrus/""" 
+  
+
+* Send code to LLMs for code review
+  / ▶ !aichat -f """cat ns_path_complete""" Explain how this code works
+
+* Send live state to LLMs for debugging
+  / ▶ !aichat -f """ls -l wally_the_walrus/"""  -f """ls -l walter_the_walrus/""" -f """cat ."""  "Why do the instances have different types for oysters_eaten?"
+  
+---

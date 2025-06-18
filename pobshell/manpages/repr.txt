@@ -1,0 +1,58 @@
+--------------------------------------------------------------------------------
+
+# repr command
+
+Show string representation of an object, repr(obj)
+
+
+## USAGE
+
+  / ▶ repr [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ repr -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+
+    -v        Show full path
+    -a        Include hidden names
+
+
+## repr as FILTER for other commands
+
+* To match an empty string, use single quotes inside double quotes
+  E.g. / ▶ find . --repr "''" 
+  E.g. / ▶ ls -l --repr "''"
+
+
+## EXAMPLES
+
+* Show repr of members truncated to oneline, prefixed with member names
+  / ▶ repr -1
+
+* Grep repr of members by piping to OS grep
+  / ▶ repr -vl | grep 6.3
+  iris        [6.3, 3.3, 4.7, 1.6], 
+  iris        [6.3, 2.5, 4.9, 1.5], 
+  ...
+  N.B. Uses -l OPTION to prefix each output line with member name
+
+* Filter command to members that match a pattern for their repr string
+  / ▶ ls -l --repr *sin*
+  iris   Bunch                     {'DESCR': '.. _iris_dataset:\n\nIris…
+  p      str                       'sin(q)'
+  paths  list                      ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2…
+
+* Filter command to members whose repr doesn't match pattern
+  / ▶ doc -1 --nrepr sin  -r
+  ast          ast
+  connection   This object wraps a `sqlite3 pointer
+  ...
+  N.B. Note use of regex OPTION (-r)
+
+* Find integers with the value 42
+  / ▶ find /Magrathea --repr 42 --typename int 
+
+---

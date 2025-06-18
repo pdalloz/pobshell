@@ -1,0 +1,26 @@
+--------------------------------------------------------------------------------
+
+# comment command
+
+Write a line of text to command history
+
+
+## USAGE
+
+  / ▶ ## Some comment text
+  / ▶ comment Some comment text
+
+* Shortcut for comment command is '##' 
+
+* N.B. Use 'history' command to list comments and other commands
+  To get help on history command
+  / ▶ history -h
+
+
+## EXAMPLE
+
+* Add a TODO note to Pobshell command history and retrieve it later
+  / ▶ .. [some commands that prompt further investigation] ..
+  / ▶ ## TODO Look closer at cave's attribute xyzzy
+  / ▶ history /TODO/
+

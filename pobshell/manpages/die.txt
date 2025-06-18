@@ -1,0 +1,46 @@
+--------------------------------------------------------------------------------
+
+# die command
+
+Quit pobshell and ignore future calls to shell() or pob()
+
+Use die to halt pobshell completely. 
+For breaking out of loops or scripts that repeatedly call pobshell.shell()
+
+Once halted, pobshell cannot be restarted until a call to pobshell.reset()
+
+
+## USAGE
+
+  / ▶ die
+
+
+## EXAMPLE
+
+* Instruct Pobshell to ignore repeated calls to start cmdloop
+
+  IPython 8.30.0 -- An enhanced Interactive Python. Type '?' for help.
+  
+  In [1]: import pobshell
+  
+  In [2]: for j in range(10):
+     ...:     pobshell.shell()
+     ...: 
+  
+  ɘmoɔlɘW to pobshell. Type 'help' for instructions; 'quit' to exit 
+  2025-04-01 17:22:32.929752
+  / ▶ ls
+  In  Out  exit  get_ipython  j  open  quit
+  / ▶ quit
+  
+  ɘmoɔlɘW to pobshell. Type 'help' for instructions; 'quit' to exit 
+  2025-04-01 17:22:35.761543
+  / ▶ die
+  Exiting pobshell (halted). To use it again, call pobshell.reset()
+  
+  In [3]: j
+  Out[3]: 9
+
+
+---
+

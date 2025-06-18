@@ -1,0 +1,75 @@
+--------------------------------------------------------------------------------
+
+# mount command
+
+'cd' to class of an object 
+
+* Make class of a given object the current path.
+  Add the class object to root, if not already present, and 'cd' to the class
+
+
+## USAGE
+
+/ ▶ mount [-h] [--alias ALIAS] [PATH]
+
+	PATH specifies the object whose class is to be mounted.  It's Pobshell  linux-style path, absolute or relative.
+
+	ALIAS is the name to associate with the class object in root.
+
+
+* The mount command adds a class object to root, and makes it the current object.
+
+* Mount command with no PATH lists currently mounted class objects
+
+N.B. The 'unmount' command undoes the most recent mount command; removing the class object from root, and restoring previous current path
+
+
+
+## EXAMPLES
+
+* Mount class of specified object 
+  / ▶ mount foo/bar
+  /Bar ▶
+ 
+* Mount class using alias
+  / ▶ mount foo/bar --alias xyzzy
+  /xyzzy ▶
+
+
+## EXAMPLE USE CASE 
+   
+* Mount and then unmount the class of object viking_cafe
+  /viking_cafe ▶ ls -l .
+  viking_cafe  Cafe                      <__main__.Cafe object at 0x138…
+  /viking_cafe ▶ mount .
+  /Cafe ▶ ls -l .
+  Cafe  type                      <class '__main__.Cafe'>
+  /Cafe ▶ unmount
+  Mounted class was removed: /Cafe 
+  /viking_cafe ▶ 
+
+* Repeated mounting 
+  /pandas/DataFrame ▶ mount .
+  /NDFrame ▶ doc -1 .
+  NDFrame  N-dimensional analogue of DataFrame. Store multi-dimensional…
+  /NDFrame ▶ mount .
+  /PandasObject ▶ doc -1 .
+  PandasObject  Baseclass for various pandas objects.
+  /PandasObject ▶ mount .
+  /DirNamesMixin ▶ doc -1 .
+  /DirNamesMixin ▶ mount .
+  /object ▶ doc -1 .
+  object  The base class of the class hierarchy.
+  /object ▶ unmount 
+  Mounted class was removed: /object 
+  /DirNamesMixin ▶ unmount 
+  Mounted class was removed: /DirNamesMixin 
+  /PandasObject ▶ unmount 
+  Mounted class was removed: /PandasObject 
+  /NDFrame ▶ unmount 
+  Mounted class was removed: /NDFrame 
+  /pandas/DataFrame ▶ mro .
+  # ==> DataFrame <==
+  (<class 'pandas.core.frame.DataFrame'>, <class 'pandas.core.generic.NDFrame'>, <class 'pandas.core.base.PandasObject'>, <class 'pandas.core.accessor.DirNamesMixin'>, <class 'pandas.core.indexing.IndexingMixin'>, <class 'pandas.core.arraylike.OpsMixin'>, <class 'object'>)
+
+---

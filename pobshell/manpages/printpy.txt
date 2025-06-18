@@ -1,0 +1,148 @@
+--------------------------------------------------------------------------------
+
+# printpy command
+
+Evaluate and print a Python expression in context of TARGET object
+
+
+## USAGE
+
+  / ▶ printpy PYEXPR [OPTIONS] [FILTERS] [TARGET]
+
+
+PYEXPR must be valid Python expression for Python eval()
+
+PYEXPR is evaluated at the TARGET object's path.  
+Evaluation namespace is populated with:
+* 'self', a reference to the TARGET object
+* 'pn', a reference to the internal Pobshell object for the path; a PobNode
+  giving access to PobNode properties that implement Pobshell commands:
+  'pn.cat', 'pn.abspath' etc
+* Attribute names of TARGET object (if current 'map' setting is 'attributes' or 'everything')
+* Names of objects in Pobshell's root "directory" (as globals)
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ printpy -h 
+  / ▶ man TARGET
+
+
+## NOTES
+
+* Changes to mutable objects affect original objects in the frame that called Pobshell
+* Changes to members of Pobshell's root path are persisted in Pobshell, but don't affect calling frame
+* Changes to members of other paths aren't persisted
+
+* printpy is affected by the setting 'global_ns'.
+  Command "set global_ns" gives more info
+  * By default members of root are available in PYEXPR  ("set global_ns /")
+      E.g. To use an inspect function in PYEXPR
+      # Make inspect module a member of root (requires current path is root)
+      / ▶ :import inspect
+      # Use inspect function to find line number where foo.bar is defined
+      / ▶ printpy "inspect.findsource(self)[-1]" -1  foo/bar
+      # Find line number where each foo.bar member is defined
+      / ▶ printpy "inspect.findsource(self)[-1]" -1 --noraise foo/bar/
+
+  * To instead use user_defs.py namespace in PYEXPR  ("set global_ns user")
+
+
+## 'pn' object
+'pn' exposes useful PobNode properties for a Pobshell path and its Python object
+
+* Most properties have the same name as the Pobshell command they implement
+* They return strings
+
+abcs        Names of abstract base class interfaces implemented by class 
+              or instance object              
+cat         Source code for object 
+doc         Documentation string for object 
+filepath    OS path of file where object was defined (inspect.getfile)
+id          str() of the object's id 
+memsize     Total memory size of object and its members 
+              returned AS A STRING (via pympler.asizeof)
+module      Attempt to guess which module an object was defined in
+mro         Tuple of base classes (including cls) in 
+              method resolution order of class
+pathinfo    Multiline string with (name, repr, type and id) for each
+              object that's a component in self.abspath 
+pprint      Pretty print representation of object 
+predicates  String with names of all inspect functions whose names start 
+              with 'is' and return True for object
+pydoc       String containing the pydoc documentation for object
+pypath      Qualified Python name of object from converting 
+              object's Pobshell abspath [has a BUG with some dict keys]
+reprval     repr() representation of object
+signature   str() of signature of callable object
+strval      str() representation of object 
+type        str() of the type of object 
+typename    Name attribute of the type of object 
+which       Attempt to resolve the class that defined this method object
+
+
+
+
+## OPTIONS commonly used with printpy command
+
+  --noraise      Don't raise Exceptions from evaluating PYEXPR
+  -1             Truncate output at screenwidth, prefix each line with name
+  -l             Single output line per member, not truncated at width,
+                   each line prefixed with name
+  -v             Multi line output per member, with banner showing Pobshell path
+  -1v            Truncate output at screenwidth, prefix each line with path
+  -P             Multi line output per member, with banner showing Python path
+
+  -L N           Limit results to the first N members 
+  -a             Include hidden objects
+  -r             Use Regex matching for FILTER patterns
+  -i             Ignore case for FILTER patterns
+
+
+## FILTERS
+
+Restrict the members a 'printpy' command operates on
+
+* Report predicates for members which have a specific predicate
+    predicates -1a --isdata    # -a includes private methods & dunders
+* Report predicates for members which don't have a specific predicate
+    predicates -1 --nisdata
+* Report predicates for members whose docstrings match a glob pattern
+    predicates -l --doc *Encoding*
+* Report predicates for members whose names match a regex pattern 
+    predicates --name do_  -r
+* Report predicates for members whose names match case insensitive glob pattern
+    predicates --name do_*  -i
+
+
+## --printpy with other commands
+
+* To FILTER with Python expression, use --matchpy PYEXPR 
+  'printpy' is not a filter
+
+* find command supports the "match action" --printpy PYEXPR 
+  PYEXPR is evaluated at the path of each matched object, and printed
+    
+
+## EXAMPLES
+
+* Show the boolean value of all members of current object;  
+  / ▶ printpy "bool(self)" -1
+* Show the minimum value contained in each member that is a container
+  / ▶ printpy min(self) -1 --noraise
+* find list objects with more than three members and report length
+  / ▶ find . --typename list --matchpy "len(self) > 3" --printpy "len(self)"
+  HOW IT WORKS
+  Search from current object (find .)
+  Match lists   (--typename list)
+  With more than 3 items  (--matchpy "len(self) > 3")
+  Print list len; object path also printed by default (--printpy "len(self)")
+* Sort members by the number of lines in their docstrings
+  / ▶ printpy -q "f'{len(pn.doc.splitlines())} {pn.name}'" -1 | sort -k1,1n
+  HOW IT WORKS
+  Evaluate PYEXPR for each member and don't print member names (printpy -q)
+  Output results on oneline (-1)
+  For each member print the number of docstring lines, a space, then name
+    "f'{len(pn.doc.splitlines())} {pn.name}'"
+  Pipe to OS sort and sort on first column numerically  (| sort -k1,1n)
+
+---
+

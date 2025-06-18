@@ -1,0 +1,82 @@
+--------------------------------------------------------------------------------
+
+# filepath command
+
+Show path of file where object is defined 
+
+Display the source file path of an object, if available. Useful for locating code definitions. Requires module, class, method, function, traceback, frame, or code object
+
+Also useful as a FILTER for other commands --filepath PATTERN
+
+
+
+## USAGE
+
+  / ▶ filepath [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ filepath -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+
+-1        Truncate to a one line result
+-a        Report on hidden members too
+
+
+## FILTERS
+
+Restrict the members a 'filepath' command operates on
+
+* Show filepaths for objects which match a predicate
+    / ▶ filepath -1a --ismethod    # -a includes private methods & dunders
+    / ▶ filepath --isroutine
+    / ▶ filepath  --isclass
+* Show filepaths for objects which don't match a predicate
+    / ▶ filepath -1 --nismodule
+
+
+## --filepath as FILTER for other commands
+
+* Apply COMMAND only to members whose docstring matches PATTERN
+  COMMAND --filepath PATTERN
+
+* Find members of current object defined in file spam.py
+	find --filepath */spam.py
+* find objects defined in directory 
+	find --filepath *//filename.py
+* List the paths of files defining classes used by sklearn
+      /sklearn ▶ find . --isclass --cmd "filepath -q ." -L 1000 | sort | uniq -c
+
+    HOW IT WORKS
+    * find the (non hidden) attributes of sklearn that represent classes
+      find . --isclass
+    * for each one report its filepath; don't report member name 
+      --cmd "filepath -q ."
+    * pipe output to OS utilities to sort and count the filepaths
+      | sort | uniq -c
+
+    CAVEATS
+    * Search is to a depth of 4, some classes may be nested more deeply
+    * Won't find objects imported or created dynamically
+
+
+## EXAMPLES
+
+* List path of the file defining current object
+/obj ▶ filepath .
+
+* List defining file for each member of current object
+/obj ▶ filepath  -1
+
+* List all the files defining members of current object
+/obj ▶ filepath -1q | sort | uniq -c
+
+
+
+
+
+
+
+---

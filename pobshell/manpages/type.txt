@@ -1,0 +1,65 @@
+--------------------------------------------------------------------------------
+
+# type command
+
+Show object type, from type(obj)
+
+
+## USAGE
+
+  / ▶ type [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ type -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+
+* Commonly used with type command:
+
+  -1        One line per member, truncate at screen width, prefix with name
+  -l        One line per member, not truncated, prefix with name
+  -v        Show full path instead of name
+  -q        No path or name, just the object's type
+  -L N      Limit results to the first N members 
+  -a        Include hidden objects
+  -u        Unstyled output (no syntax highlighing, no ANSI codes)
+  -r        Use Regex matching for FILTER patterns
+  -i        Ignore case for FILTER patterns
+  -e        Enumerate output objects for later reference
+
+
+## NOTES
+
+See also 'typename' command which reports type(obj).__name__ and 'ls -l' which reports name, typename and repr 
+
+
+## EXAMPLES
+
+* Report the type of my_obj
+  / ▶ type my_obj
+* Report the type of members of my_obj, each a one line result
+  / ▶ type -1 my_obj/
+* Report type of each member of current; include private members; oneline results
+  / ▶ type -1 -a
+* Report the type for each member of current obj whose code mentions "property"
+  / ▶ type -1 --cat "*property*"
+* report types and predicates of all objects to a depth of 2, limit to 100 results
+  / ▶ find . --revisit none --cmd "type -l .; predicates -1v ." -d 2 -L 100
+
+## --type as FILTER for other commands
+* Give a long listing of all members whose type matches the pattern *sklearn*
+  / ▶ ls -l --type *sklearn*
+* As previous example, but case insensitive pattern
+  / ▶ ls -l --type *sklearn* -i
+* Recursive search for objects matching pattern for type
+  / ▶ find /sympy --type *sympy.core.symbol.Dummy*
+* Tree diagram of objects to depth 1, whose typename is str (ie type is <class 'str'>) OR type matches pattern
+  / ▶ tree / -d 1 --typename str --type *list*  -o
+* Recursive search for objects whose type matches pattern and whose repr is '42', and enumerate results
+  / ▶ find . --repr 42 --type *int* -e 
+* Report types for all objects in enumerated results
+  / ▶ type $$
+
+---

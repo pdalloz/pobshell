@@ -1,0 +1,98 @@
+--------------------------------------------------------------------------------
+
+# eval command
+
+Evaluate Python expression (rest of line) at current path and print result
+
+* Use to evaluate attributes of current object
+* If current path is root, can add new objects to root by import or assignment 
+ (So you can 'cd' to them and explore, or use them )
+
+
+## USAGE
+
+	/ ▶ :PYEXPR
+
+PYEXPR must be a valid line of Python code for Python exec() or eval()
+
+PYEXPR is evaluated at the current object
+
+Evaluation namespace is populated with:
+* 'self', a reference to the current object
+* 'pn', a reference to the internal Pobshell object for the path; a PobNode
+  giving access to PobNode properties that implement Pobshell commands:
+  'pn.cat', 'pn.abspath' etc
+* Attribute names of current object (if current 'map' setting is 'attributes' or 'everything')
+* Names of objects in Pobshell's root "directory" (as globals)
+
+
+## NOTES
+
+* Changes to mutable objects affect original objects in the frame that called Pobshell
+* Changes to members of Pobshell's root path are persisted in Pobshell, but don't affect calling frame
+* Changes to members of other paths aren't persisted
+
+* N.B. The rooteval command, with shortcut '::', acts just like the eval command but always evaluates in root whatever the current path 
+
+* Affected by the setting 'global_ns'.
+  Command "set global_ns" gives more info
+  - By default members of root are available in PYEXPR  ("set global_ns /")
+      E.g. To use an inspect function in PYEXPR
+      # Make inspect module a member of root (requires current path is root)
+      / ▶ :import inspect
+      # Make the foo.bar the current object
+      / ▶ cd foo/bar
+      # Use inspect function to find line number where foo.bar is defined
+      /foo/bar ▶ :inspect.findsource(self)[-1]
+  - To instead use user_defs.py namespace in PYEXPR  ("set global_ns user")
+
+
+## 'pn' object
+'pn' exposes useful PobNode properties for a Pobshell path and its Python object
+
+* Most properties have the same name as the Pobshell command they implement
+* They return strings
+
+abcs        Names of abstract base class interfaces implemented by class 
+              or instance object              
+cat         Source code for object 
+doc         Documentation string for object 
+filepath    OS path of file where object was defined (inspect.getfile)
+id          str() of the object's id 
+memsize     Total memory size of object and its members 
+              returned AS A STRING (via pympler.asizeof)
+module      Attempt to guess which module an object was defined in
+mro         Tuple of base classes (including cls) in 
+              method resolution order of class
+pathinfo    Multiline string with (name, repr, type and id) for each
+              object that's a component in self.abspath 
+pprint      Pretty print representation of object 
+predicates  String with names of all inspect functions whose names start 
+              with 'is' and return True for object
+pydoc       String containing the pydoc documentation for object
+pypath      Qualified Python name of object from converting 
+              object's Pobshell abspath [has a BUG with some dict keys]
+reprval     repr() representation of object
+signature   str() of signature of callable object
+strval      str() representation of object 
+type        str() of the type of object 
+typename    Name attribute of the type of object 
+which       Attempt to resolve the class that defined this method object
+
+
+## EXAMPLES
+
+/ ▶ :len(self)
+/ ▶ :x = 42       # create a new entry in root with value 42
+/ ▶ :import inspect   # Add inspect module as new entry in root
+/ ▶ :from os import path  # adds name 'path' to root if curr path is root
+/ ▶ :len(pn.cat.splitlines())  # count source code lines in calling frame 
+
+/foo/bar/mylist ▶ :self[-5:]   # show last 5 items if current object is a list
+
+/foo/bar ▶ :mylist[-1]   # show last entry in foo.bar.mylist
+/foo/bar ▶ :x = 42       # name x is lost when command completes
+                           because we're not in root
+/foo/bar ▶ :mylist.append('new entry')      # permanently mutate foo.bar.mylist
+
+---

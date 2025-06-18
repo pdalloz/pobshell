@@ -1,0 +1,71 @@
+--------------------------------------------------------------------------------
+
+# show command
+
+Unhide previously hidden objects
+
+Restores visibility for objects hidden using 'hide' command or by default 
+
+
+## USAGE
+
+  / ▶ show --FILTERNAME
+
+All filters of the specified kind are removed
+
+Valid FILTERNAMES:
+	--name --cat --doc --pydoc --filepath --memsize --id --mro --abcs --predicates --module --pypath --signature --type --typename --repr --str --abspath --which --nname --ncat --ndoc --npydoc --nfile --nid --nmro --nabcs --npredicates --npypath --nsignature --ntype --ntypename --nstr --nrepr --nabspath --nwhich --matchpy 
+
+	--isdata --nisdata --isabstract --nisabstract --isasyncgen --nisasyncgen --isasyncgenfunction --nisasyncgenfunction --isawaitable --nisawaitable --isbuiltin --nisbuiltin --isclass --nisclass --iscode --niscode --iscoroutine --niscoroutine --iscoroutinefunction --niscoroutinefunction --isdatadescriptor --nisdatadescriptor --isframe --nisframe --isfunction --nisfunction --isgenerator --nisgenerator --isgeneratorfunction --nisgeneratorfunction --isgetsetdescriptor --nisgetsetdescriptor --ismemberdescriptor --nismemberdescriptor --ismethod --nismethod --ismethoddescriptor --nismethoddescriptor --ismethodwrapper --nismethodwrapper --ismodule --nismodule --isroutine --nisroutine --istraceback --nistraceback
+ 
+
+## EXAMPLES
+
+* Unhide all name filters
+  / ▶ show --name 
+
+* Unhide isroutine filter and any filters of the form "hide --predicate PATTERN"
+  / ▶ show --isroutine --predicates
+	 
+* Extended example
+  # Initially names with underscore prefixes are hidden, the default
+  /json ▶ ls -l
+  JSONDecodeError  type                      <class 'json.decoder.JSOND…
+  JSONDecoder      type                      <class 'json.decoder.JSOND…
+  JSONEncoder      type                      <class 'json.encoder.JSONE…
+  codecs           module                    <module 'codecs' (frozen)>
+  decoder          module                    <module 'json.decoder' fro…
+  detect_encoding  function                  <function detect_encoding …
+  dump             function                  <function dump at 0x101fd5…
+  dumps            function                  <function dumps at 0x101fd…
+  encoder          module                    <module 'json.encoder' fro…
+  load             function                  <function load at 0x1020a0…
+  loads            function                  <function loads at 0x1020a…
+  scanner          module                    <module 'json.scanner' fro…
+
+  # Hide objects whose repr matches the pattern
+  /json ▶ hide --repr *json.*
+  Adding filterset entry: 'repr': '*json.*'
+  Current filters:  {'name': '_*', 'repr': '*json.*'}
+  # Now they're not reported
+  /json ▶ ls
+  codecs  detect_encoding  dump  dumps  load  loads     
+  # OPTION -a includes hidden objects
+  /json ▶ ls -a
+  JSONDecodeError  __doc__      __version__       dumps  
+  JSONDecoder      __file__     _default_decoder  encoder
+  JSONEncoder      __loader__   _default_encoder  load   
+  __all__          __name__     codecs            loads  
+  __author__       __package__  decoder           scanner
+  __builtins__     __path__     detect_encoding 
+  __cached__       __spec__     dump         
+
+  # Unhide the persistent repr filter
+  /json ▶ show --repr
+  Removing filterset entry for: 'repr'
+  Current filters:  {'name': '_*'}
+  # Only names with underscore prefixes are hidden
+  /json ▶ ls
+  JSONDecodeError  JSONEncoder  decoder          dump   encoder  loads  
+  JSONDecoder      codecs       detect_encoding  dumps  load     scanner
+---

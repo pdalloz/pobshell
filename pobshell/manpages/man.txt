@@ -1,0 +1,43 @@
+--------------------------------------------------------------------------------
+
+# man command
+
+Show the man page for a topic.  Man pages are focused on examples & use cases
+
+Available topics include Pobshell commands, options and setting.
+
+
+## USAGE
+
+  / ▶ man TOPIC
+
+N.B. See also 'help' command, e.g. "/ ▶ help find"
+
+
+## TIPS
+
+* TOPIC names support tab-completion
+
+* Pipe 'man' output to 'less -R' for paged output and search
+  E.g. / ▶ map cat | less -R
+
+* Use help command to check syntax of command and its arguments 
+  E.g. / ▶ help cat
+    or / ▶ cat -h
+  Use man command for extra information and examples
+  E.g. / ▶ man cat
+
+
+
+## EXAMPLES
+
+/ ▶ man autoimport
+/ ▶ man enumerate | less -R
+
+
+## TOPICS
+
+
+!ls pobshell/manpages/*.txt 
+
+---

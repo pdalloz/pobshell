@@ -1,0 +1,178 @@
+--------------------------------------------------------------------------------
+
+# cat command
+
+List source code for object
+
+Source code of functions, methods, classes, or modules.  From inspect.getsource 
+
+
+## USAGE
+
+  / ▶ cat [OPTIONS] [FILTERS] [TARGET]
+
+* Examine code of live Python objects with no worries about file location or env 
+* Send code to LLM command line tools 
+* Diff code of live objects 
+* Search for code dependencies
+
+* For details on OPTIONS, FILTERS and TARGET
+  / ▶ cat -h 
+  / ▶ man TARGET
+
+
+## NOTES
+
+* Turn off syntax coloring with OPTION -u, or 'allow_style' setting
+* List code of frame that invoked Pobshell
+    / ▶ cat /.
+
+
+## OPTIONS
+
+* Without options the cat command gives a multi-line listing, with syntax coloring and a banner showing object name
+
+* Commonly used with cat command:
+  -1             Single line output with first line of code only
+  -n N           Multi line output truncated to N lines per member
+  -l             Prefix each output line with object name
+  -lv            Prefix each output line with object's Pobshell path
+  -P             Prefix each output line with object's Python path
+  -v             Banner at top of each members code listing shows path
+  -L N           Limit report to the first N members 
+  -a             Include hidden objects
+  -u             Unstyled output (no syntax highlighing, no ANSI codes)
+  -r             Use Regex matching for FILTER patterns
+  -i             Ignore case for FILTER patterns
+  -e             Enumerate output
+
+
+## FILTERS
+
+Restrict the members a 'cat' command operates on
+
+* List code only for objects which match a predicate
+    cat -1a --ismethod    # -a includes private methods & dunders
+    cat --isroutine
+    cat -n 5 --isclass
+* List code of objects which don't match a predicate
+    cat -1 --nismodule
+* List code of objects whose docstrings match a glob pattern
+    cat -n 4 --doc *Encoding*
+* List code of objects whose names match a regex pattern 
+    cat --name do_  -r
+* List code of objects whose names match case insensitive glob pattern
+    cat --name do_*  -i
+* List code of objects that define Oyster related classes	
+    cat --cat "class\s+oyster" -ir
+
+
+## --cat as FILTER for other commands
+
+* Apply COMMAND only to members whose source code matches PATTERN
+  COMMAND --cat PATTERN
+E.g. Show docstrings for objects whose code includes "encoding" 
+  / ▶ doc --cat *encoding*
+* Use 'find' command to discover objects whose code matches PATTERN
+      / ▶ find --cat PATTERN
+* --cat PATTERN treats PATTERN as a case-sensitive glob pattern
+  Unless:
+    For regex PATTERNS  use OPTION -r 
+    For case insensitive PATTERNS use OPTION -i 
+    N.B. Options -r and -i change the logic for ALL the filters
+* Match any object that has source code
+    --cat * 
+* Match any object that does NOT have matching code
+    --ncat PATTERN
+* Long list all members that have code
+    ls -l --cat * 
+* Count how many members have code
+    ls -l --cat * | wc -l
+* Find objects whose code includes "TODO"
+   find . --cat *TODO* -i 
+
+
+## RELEVANT SETTINGS
+
+
+* simple_cat_and_doc
+	'cat' command concatenates code from fget/fset/fdel for property attributes  
+    And can retrieve code of root frame with 'map variables
+* linenumbers
+	Source code listings include linenumbers 
+* allow_style
+	Source code syntax coloring respects this setting: Allow ANSI text style sequences in output (valid values: Always, Never, Terminal)
+
+
+## EXAMPLES
+
+* List code of current object 
+    /x ▶ cat .    		 
+* List first 20 lines of code for object 'mymodule.myclass'
+    / ▶ cat -n 20 mymodule/myclass    
+  OR 'cd mymodule' then
+    /mymodule ▶ cat -n 20 myclass    
+* List first line of code for EVERY MEMBER of mymodule.myclass 
+    /x ▶ cat -1 myclass/
+* List first line of code for each member of current object 
+	/x ▶  cat -1
+
+  E.g. 1:  Object is a module   # N.B. requires "map attributes"
+    /sympy/integrals ▶ cat -1
+    CosineTransform            class CosineTransform(SineCosineTypeTransform):
+    FourierTransform           class FourierTransform(FourierTypeTransform):
+    HankelTransform            class HankelTransform(HankelTypeTransform):
+
+  E.g. 2:  Object is a list of classes or functions   # N.B. requires "map contents"
+    /sys/meta_path ▶ cat -1
+    `1`      class BuiltinImporter:
+    `2`      class FrozenImporter:
+    `3`      class PathFinder:
+
+* List first 3 lines of code of members whose names start with 'do_'
+    /x ▶ cat -n 3 do_* 
+* Show lines of code in object output_infos that contain string "verbosity"
+    /PVi ▶ cat output_infos | grep verbosity
+* List first line of code for each member, and show any exception messages
+    /x ▶ cat -1 --missing message
+* Browse syntax highlighted code for myobj.myfunc in pager utility
+    /mymodule ▶ cat myobj/my_func | less -R
+* List code of current object and grep for symbol 'do_tree' 
+  N.B. OPTION -u removes syntax coloring which may break regex matching
+    /PVi/__class__ ▶ cat -u . | grep -E "\bdo_tree\b"
+* Open code of current object in Sublime Text editor (read only)
+	/x ▶ cat -u . | subl
+* Search for objects whose code includes string "spam"
+  / ▶ find . --cat *spam*
+* Diff code between json.dump and json.dumps
+	N.B. '!' at start of a line sends the line to the OS shell, and supports command substitution of triple quoted strings. See 'man shell' for details.
+  
+  /json ▶ !diff """cat -u dump""" """cat -u dumps"""
+  1,2c1,2
+  < # ==> dump <==
+  < def dump(obj, fp, *, skipkeys=False, ensure_ascii=True, check_circular=True,
+  ---
+  > # ==> dumps <==
+  > def dumps(obj, *, skipkeys=False, ensure_ascii=True, check_circular=True,
+  5,6c5
+  ...
+
+* Diff code side by side
+  /json ▶ !diff -ybd --left-column """cat -u dump""" """cat -u dumps""" 
+* Diff code with GUI tool Beyond Compare
+  / ▶ !bcomp """ls -la Cafe/""" """ls -la viking_cafe/"""
+* Send code to an LLM via aichat
+  / PVi ▶ !aichat -f """cat ns_path_complete""" Explain how this code works
+* Count lines of code for current object and each of its members
+  /pdb ▶ find . -d 1 --cmd "ls -l .; cat . | wc -l"
+  HOW IT WORKS
+  Search to depth of 1.  No match-criteria or filters are applied
+  --cmd runs Pobshell commands on each match (all members in this case)
+     ';' is the separator for multiple Pobshell commands
+     1: Run 'ls -l .' on the matched object, to report name, type and repr
+     2: Run 'cat .' command to list its code and pipe to 'wc -l' to count lines
+   
+* List the functions in the Inspect module that reference unwrap
+  N.B. "cat -vl" to get fullpath prefix for each line of code
+  /inspect ▶ cat -vl ./ | grep unwrap
+---

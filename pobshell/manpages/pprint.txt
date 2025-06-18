@@ -1,0 +1,96 @@
+--------------------------------------------------------------------------------
+
+# pprint Command
+
+Pretty-print object using pprint(obj)
+
+Show a nicely laid out string representation of an object
+
+
+## USAGE
+
+  / ▶ pprint [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ pprint -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+
+* Without options pprint gives multi-line output
+
+* Commonly used with pprint command:
+  -1             Single line output truncated at column width 
+  -n N           Multi line output truncated to N lines per member
+  -l             Prefix each output line with object name
+  -lv            Prefix each output line with object's Pobshell path
+  -P             Prefix each output line with object's Python path
+  -v             Show path in banner at top of each members pprint output
+  -L N           Limit report to the first N members 
+  -a             Include hidden objects
+  -u             Unstyled output (no syntax highlighing, no ANSI codes)
+  -r             Use Regex matching for FILTER patterns
+  -i             Ignore case for FILTER patterns
+  -e             Enumerate output
+
+
+## FILTERS
+
+Restrict the members a 'pprint' command operates on
+
+* Pretty-print only the members which match a predicate
+    pprint -1a --ismethod    # -a includes private methods & dunders
+    pprint --isroutine
+    pprint -n 5 --isclass
+* Pretty-print members which don't match a predicate
+    pprint -1 --nismodule
+* Pretty-print members whose docstrings match a glob pattern
+    pprint -n 4 --doc *Encoding*
+* Pretty-print members whose names match a regex pattern 
+    pprint --name do_  -r
+* Pretty-print members whose names match case insensitive glob pattern
+    pprint --name do_*  -i
+* Pretty-print members whose code defines an Oyster related class
+    pprint --cat "class\s+oyster" -ir
+
+
+## pprint is not available as a FILTER for other commands
+
+* Instead use --str PATTERN   or   --repr PATTERN 
+
+
+## EXAMPLES
+* pprint object foo.bar
+  E.g.   / ▶ pprint foo/bar
+  E.g.   /foo ▶ pprint bar
+  E.g.   /foo/bar ▶ pprint .
+
+* Show first 5 lines of pprint output for each member of current object
+  E.g.   / ▶ pprint -n 5
+
+* pprint item number 42 when current object is a list
+   /mylist ▶ pprint `42`
+
+* find all the dicts and show first 4 lines of pretty print 
+  N.B. Show fullpaths of matched objects (pprint -v .)
+
+  E.g.
+  / ▶ find . --typename dict --cmd "pprint -n 5 -v ." -L 3
+  # ==> /apsw/mapping_access <==
+  {0: 'SQLITE_ACCESS_EXISTS',
+   1: 'SQLITE_ACCESS_READWRITE',
+   2: 'SQLITE_ACCESS_READ',
+   'SQLITE_ACCESS_EXISTS': 0,
+   'SQLITE_ACCESS_READ': 2,
+  
+  # ==> /apsw/mapping_authorizer_function <==
+  {0: 'SQLITE_COPY',
+   1: 'SQLITE_CREATE_INDEX',
+   2: 'SQLITE_CREATE_TABLE',
+   3: 'SQLITE_CREATE_TEMP_INDEX',
+   4: 'SQLITE_CREATE_TEMP_TABLE',
+  
+  ...
+  
+---

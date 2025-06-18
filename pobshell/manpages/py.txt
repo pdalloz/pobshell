@@ -1,0 +1,136 @@
+--------------------------------------------------------------------------------
+
+# py command
+
+Drop into a Python shell at current path 
+
+* Use to evaluate expressions for current object and its attributes
+* Changes to mutable objects are persistent, other changes are not
+
+
+## USAGE
+
+	/ ▶ py
+
+Python shell's namespace is populated with:
+* 'self', a reference to the current object
+* 'pn', a reference to the internal Pobshell object for the path; 
+	a PobNode giving access to PobNode properties that implement Pobshell commands: 'pn.cat', 'pn.abspath' etc
+* Attributes of current object 
+    (if current map is 'attributes' or 'everything')
+* Objects in Pobshell's root "directory" 
+    (if SETTING global_ns is '/')
+
+
+## NOTES
+
+* Changes to mutable objects will affect originals
+    (i.e. objects in the frame that called Pobshell)
+* Assignments and deletions aren't persisted 
+
+* Affected by the setting 'global_ns'.
+  - By default, members of root are available  ("set global_ns /")
+  - To instead namespace from user_defs.py   ("set global_ns user")
+  - To have no global namespace ("set global_ns none")
+
+
+## 'pn' object
+'pn' exposes useful PobNode properties for a Pobshell path and its Python object
+
+* Most properties have the same name as the Pobshell command they implement
+* They return strings
+
+abcs        Names of abstract base class interfaces implemented by class 
+              or instance object              
+cat         Source code for object 
+doc         Documentation string for object 
+filepath    OS path of file where object was defined (inspect.getfile)
+id          str() of the object's id 
+memsize     Total memory size of object and its members 
+              returned AS A STRING (via pympler.asizeof)
+module      Attempt to guess which module an object was defined in
+mro         Tuple of base classes (including cls) in 
+              method resolution order of class
+pathinfo    Multiline string with (name, repr, type and id) for each
+              object that's a component in self.abspath 
+pprint      Pretty print representation of object 
+predicates  String with names of all inspect functions whose names start 
+              with 'is' and return True for object
+pydoc       String containing the pydoc documentation for object
+pypath      Qualified Python name of object from converting 
+              object's Pobshell abspath [has a BUG with some dict keys]
+reprval     repr() representation of object
+signature   str() of signature of callable object
+strval      str() representation of object 
+type        str() of the type of object 
+typename    Name attribute of the type of object 
+which       Attempt to resolve the class that defined this method object
+
+
+## EXAMPLES
+
+* Simple example: Invoke Python shell
+
+  / ▶ py
+  Python 3.12.8 | packaged by conda-forge | (main, Dec  5 2024, 14:25:12) [Clang 18.1.8 ] on darwin
+  Type "help", "copyright", "credits" or "license" for more information.
+  
+  Use `Ctrl-D` (Unix) / `Ctrl-Z` (Windows), `quit()`, `exit()` to exit.
+  Run CLI commands with: app("command ...")
+  
+  >>> 
+
+
+* Demonstrate mutation when current object is a list
+
+  / ▶ ::mylist = ['a', 'b', 'c']
+  / ▶ cd mylist
+  /mylist ▶ py
+  Python 3.12.8 | packaged by conda-forge | (main, Dec  5 2024, 14:25:12) [Clang 18.1.8 ] on darwin
+  Type "help", "copyright", "credits" or "license" for more information.
+  
+  Use `Ctrl-D` (Unix) / `Ctrl-Z` (Windows), `quit()`, `exit()` to exit.
+  Run CLI commands with: app("command ...")
+  
+  >>> self
+  ['a', 'b', 'c']
+  >>> self[0]
+  'a'
+  >>> self.append(42)
+  >>> self
+  ['a', 'b', 'c', 42]
+  >>> quit()
+  Now exiting Python shell...
+  /mylist ▶ ls -l .
+  mylist  list              ['a', 'b', 'c', 42]
+
+
+* Demonstrate lack of persistence for object members
+  /foo ▶ py
+  Python 3.12.8 | packaged by conda-forge | (main, Dec  5 2024, 14:25:12) [Clang 18.1.8 ] on darwin
+  Type "help", "copyright", "credits" or "license" for more information.
+  
+  Use `Ctrl-D` (Unix) / `Ctrl-Z` (Windows), `quit()`, `exit()` to exit.
+  Run CLI commands with: app("command ...")
+  
+  >>> wont_work = -1
+  >>> wont_work
+  -1
+  >>> quit()
+  Now exiting Python shell...
+  /mylist ▶ ls wont_work
+  ls: wont_work: No such path
+
+* Contrast the persistence of 'eval' command in root namespace
+	N.B. ':' is a shortcut for 'eval' command, which evaluates a Python expression at current path
+	N.B. 'eval' command is only persistent in root. See "man eval"
+    / ▶ ls -l will_work
+    ls: will_work: No such path
+    / ▶ :will_work = 42
+    ls -l will_work
+    / ▶ :will_work = 42
+    / ▶ ls -l will_work
+    will_work  int               42
+
+
+---

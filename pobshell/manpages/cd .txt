@@ -1,0 +1,50 @@
+--------------------------------------------------------------------------------
+
+# cd command
+
+Make object at PATH the current object
+
+Navigate a Python object hierarchy like changing directories in a filesystem
+
+
+## USAGE
+
+/ ▶ cd PATH
+
+Where PATH is a Linux style path, absolute or relative.
+
+* When working with collection contents, such as list and dict items, use backticks for any "name" that's not a Python identifier  See 'man TARGET' for further info on this
+
+
+## EXAMPLES
+
+* Make root the current path
+  /obj/attr ▶ cd /
+  Prompt shows root is now current path:
+  / ▶ 
+
+* Make object at absolute path the current object 
+  E.g. Make the time attribute of datetime module the current path (assuming datetime is in root)
+    /some/path ▶  cd /datetime/time 	 
+    /datetime/time ▶  
+
+* Make a member the current object
+	Depending on your map settings "Member of current path" may mean an attribute of the object at current path, and/or an item in its collection if object is a container such as a list or dict.  See map command.
+  E.g. cd to 'my_list' attribute of 'obj'
+    /some/obj ▶ map attributes
+    /some/obj ▶ cd my_list
+  E.g cd to first item in list
+    /some/list ▶  map everything  # or 'map contents'
+    /some/list ▶  cd `0`             
+
+* Go up one level
+  /obj/attr ▶ cd ..                   
+  Prompt shows /obj is now current path:
+  /obj ▶ 
+
+* cd to member of dict having key 'os.path'
+  / ▶ map everything 
+  / ▶ cd /sys/modules/`'os.path'`
+
+
+---

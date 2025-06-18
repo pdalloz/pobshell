@@ -1,0 +1,320 @@
+§ ;
+ls
+§ wildcard wrapped name pattern ;
+ls *nn*
+§ ls case sensitivity ;
+ls C*
+§ ls case sensitivity ;
+ls c*
+§ ls one name ;
+ls ast
+§ ls name with trailing / ;
+ls ast/
+§ ls tail component with trailing pattern ;
+ls ast/c*
+§ ls of name with trailing /  where name's ns is empty ;
+ls /ast/comprehension/
+§ ls -a of name with trailing /  where name's ns has only hidden members ;
+ls -a /ast/comprehension/
+§ ls -a of pattern containing ? ;
+ls -a /ast/comprehens?on
+cd /sympy/integrals/..
+§ trailing /.. ;
+pwd
+cd /sympy/integrals
+§ cd abs path ;
+pwd
+cd /
+§ back to root ;
+pwd
+cd /sympy/integrals/
+§ cd abs path with trailing / ;
+pwd
+cd /
+cd nosuchpath
+§ still in root, last cd cmd should have failed ;
+pwd
+§ relative parentdir is part of abspath, and ls invoked with -v ;
+ls -v iris/data/../target
+cd iris
+§ ls in ns with few members ;
+ls 
+§ No such path error for ls _* in ns with no hidden members ;
+ls _*
+§ ls _* returns no matches despite ns having hidden members, because lacks -a argument ;
+ls data/_*
+cd ..
+§ ls _* with no hidden members ;
+ls /sklearn/_*
+§ ls -a _* with hidden members ;
+ls -a /sklearn/_*
+§ a pwd in root just to write transcript ;
+pwd
+§ find with filter typename ;
+find . --typename str -L 3 --cmd "ls -lv ."
+§ find with filter isdata ;
+find . --predicates *isdata* -d 3 -L 10
+§ find using --matchpy and --noraise ;
+find / --matchpy "len(self)<10" -L 5 --cmd "ls -l ." --noraise 
+§ find using --matchpy and --noraise with --cmd "ls -lv ." ;
+find / --matchpy "len(self)<10" -L 5 --cmd "ls -lv ." --noraise 
+§ glob patterns must match whole name, this didn't match ast_trees ;
+find . --name ast -d 1 
+§ I treat regex patterns as true if they match part of string, ie re.search ;
+find . --name ast -d 1 --regex
+§ no result for wildcard match of hidden names ;
+ls *doc*
+§ result returned for hidden name if specified by non-wildcard pattern ;
+ls __doc__
+§ find with raised exception due to user --matchpy ;
+find / --matchpy "len(self)<10" -L 5 --cmd "ls -lv ." 
+§ default behaviour for --missing setting is skip ;
+doc -1
+§ --missing with blank ;
+doc -1 --missing blank
+§ --missing with "message" shows Exception strings ;
+doc -1 --missing message 
+§ confirm --missing skip gives same behaviour as default setting we had before;
+doc -1 --missing skip
+set missing blank
+§ show that persistent missing setting of 'blank' changes doc output for missing infos ;
+doc -1 
+set missing message 
+§ show that persistent missing setting of 'message' changes doc output for missing infos ;
+doc -1 
+set missing skip 
+§ Return to default persistent missing setting of 'skip' ;
+doc -1 
+§ test that sympy deprecation warnings are trapped by PP.getmember_func ;
+ls /x/expr_free_symbols
+cd x
+§ test that sympy deprecation warnings are trapped by PP.getitems_func ;
+ls
+§ test doc infocmd on __doc__  returning a non string, e.g.  /pandas/core/arrays/categorical/cache_readonly/__doc__  ;
+find /pandas --doc Exception* -L 10 --cmd "doc -1v ."
+cd ..
+§ cat of object without code (a str) ;
+cat /p
+set missing message
+§ cat of object without code (a str) when missing is message ;
+cat /p
+§ cat lots of objects that don't have code with missing message ;
+cat -1
+set missing skip
+§ test bugfix for empty signatures ;
+signature -1 --nsignature *
+§ test bugfix for mro with instances  ;
+mro -1
+cd ast
+§ pypath in action ;
+pypath -1 A*
+cd ..
+cd /
+cd /
+map contents
+cd /kson/`1`/bar/
+§ ls with wildcarded contentkey after cd to contentkeyed path ;
+ls `*`
+cd /
+§ ls of genuinely empty namespace should not report an error, test for bugfix ;
+ls /sklearn/multiclass/sp/sputils/
+map 
+map attributes static
+§ ls of /cursor/ finds elements if map is static ;
+ls /cursor/
+§ find without --noraise can raise Exceptions for some evaluations, some paths ;
+find /pandas/CategoricalIndex/ --matchpy "len(list(pn.all_child_paths()))==0"
+§ find with --noraise does not raise the exception ;
+find /pandas/CategoricalIndex/ --matchpy "len(list(pn.all_child_paths()))==0" --noraise
+§ printpy without --noraise can raise Exceptions ;
+printpy "len(list(pn.all_child_paths()))" /pandas/CategoricalIndex/str -1
+§ printpy with --noraise does not raise Exceptions ;
+printpy "len(list(pn.all_child_paths()))" /pandas/CategoricalIndex/str -1 --noraise
+§eval does assignment in root;
+:spam = 42
+§ confirm spam has value 42 in root ;
+ls -l spam
+cd viking_cafe/
+§ update persitent root assignment with rooteval ;
+::spam += 1
+§ confirm rooteval assignment updated spam value ;
+ls -l /spam
+map
+map dynamic
+cd :__class__.we_have_got
+§ confirm cd works with colon prefixed relative pypath ;
+pwd
+cd /
+cd p
+cd ::viking_cafe.__class__.we_have_got
+§ confirm cd with double colon absolute pypath works ok ;
+pwd
+cd nosuchpath
+§ confirm "No such path" message for cd to non existent path ;
+pwd
+cd __doc__
+§ test cd to hidden path works ok ;
+pwd
+cd /
+cd nosuchpath
+§ confirm cd from root to non existent path gives "No such Path" message too;
+pwd
+§ find with a --cmd arg having multiple cmds and a semicoloon ;
+find . -d 1 --typename list --cmd "pprint .;predicates ." 
+§ test unrecognized command ;
+find . -d 1 --typename list --cmd "nonesuch .;predicates ." 
+map contents
+§ show that map contents works ;
+ls -l p/`2`
+§ test contentkey-delimited args in error messages ;
+ls -l p/`8`map
+map everything 
+§ test truncation of ls -l middle output fields ;
+ls -l /apsw/allow_missing_dict_bindings
+cd /__builtins__
+§ fixed bug in -L limit counting with missing infos ;
+signature -1 -L 3
+§ ls of empty dir should not give error message (bugfix)
+ls -a None/ --map local
+§ confirm that listing an "empty directory" doesn't give  error message ;
+ls -a  None/ --map local
+cd /
+set column_width 110
+§ ls -l with column_width so large it suppresses col 1 (counting from 0) altogether ;
+ls -l
+set column_width 24
+set column_width 0
+§ ls -l with column_width zero so it suppresses col 1 (counting from 0) altogether ;
+ls -l
+§test shell command substitution;
+!cat """cat Cafe -1"""  """cat json -1 """
+§ test shell with command substitution using relative command number ;
+!cat @-1
+§ test non existing command with backtick arg executes del of hex data stored for backtick content ;
+§ test shell with command substitution using relative command number ;
+§ enumerate root contents to test dollar paths ;
+ls -e
+§ confirm dollar access after prior enumeration ;
+ls -l $0
+mount $7
+§ cannot test mount directly, this tests ls shows Bunch after mount of sklearn.iris type ;
+ls .
+unmount
+§ confirm unmount worked by ls of new current path ie root ;
+ls .
+cdh
+cdh 21
+§ after chd confirm that curr path is now  __builtins__ ;
+ls .
+cdh -1
+§ confirm that curr path is root after cdh -1 ;
+ls .
+set column_width 24
+hide --ismodule
+§ confirm contents of root after hiding ismodule objects ;
+ls -l
+show --ismodule
+§ confirm back to normal after showing the thing we just hid ;
+ls -l
+map frameattrs 
+§ confirm the contents of root are attrs of the frame, plus the added spam object after map frameattrs ;
+ls -1
+map variables 
+§ confirm after map variables we see the original root contents and the added spam object has persisted map change ;
+ls -1
+§ show eval works ok in root namespace ;
+:self
+cd Cafe
+§ confirm eval works ok in non-root namespace ;
+:pn
+§ Confirm root eval evals in root namespace ;
+::self
+mount
+§ show mount history when no history ;
+## placeholder comment as I can't test mount command ;
+mount .
+§ pwd to confirm parent class of Cafe is curr path, i.e. object ;
+pwd
+mount
+§ pwd to confirm parent class of Cafe is curr path, i.e. object ;
+§ test 'mount' command applied to a class ;
+unmount
+§ pwd to confirm successful unmount ;
+pwd
+unmount NEVERMOUNTEDTHING
+§ test unmountcommand with never mounted thing ;
+pwd 
+cdh -t
+§ test of previous cmdCOMMAND ;
+pwd
+cd /
+§ test shellCOMMAND when typed in full rather than bang shortcut ;
+shell cat """cat Cafe -1"""  """cat json -1 """
+§ test newline command ;
+find .  -d 1  --isroutine -L 40 --cmd "signature -1 . ;newline;doc -1 ."
+§ enumerate to set up next test ;
+ls -e
+§ confirm dollar-dollar as place holder for everything in list enumerated of paths ;
+ls $$
+§ test use of solo slash as path ;
+ls /
+§ test error message for wildcard in parent path ;
+ls p*/find
+cd iris
+§ test the pypath option ;
+ls -P
+cd /
+§ test line prefixes with multiline output ;
+cat Cafe -l
+§ test multiline output with quiet option, confirm no name or path listed ;
+cat Cafe -q
+§ test tree command with filter ;
+tree Cafe -d 2 --isroutine
+cd Cafe
+cd /
+§ test treeCOMMAND with or option ;
+tree Cafe -d 2 --isdatadescriptor  -o --isroutine 
+§ test treeCOMMAND with or option and pruning ;
+tree Cafe -d 2 --isdatadescriptor  -o --isroutine --prune */we_have_got
+§ initial find before pruning ;
+find --name D* -l -d 2 
+§ same findCOMMAND as above with two prunes ;
+find --name D* -l -d 2 --prune */sympy  ismodule
+§ check help option for infocmd ;
+doc -h
+§ test memsize is working ;
+memsize viking_cafe 
+§ test memsize as filter ;
+find . -d 1 --memsize "==488"
+§ test negative filter ;
+ls --nismodule
+§ test str filter ;
+ls --str 43
+§ test repr filter ;
+ls --repr 43
+cd $0
+cd ..
+cd /
+§ test unstyled option ;
+typename -1 -u
+§ confirm cat works for root frame ;
+cat /. -n 4
+§ test backtick with key \x00 ;
+ls -l /json/encoder/ESCAPE_DCT/`'\x00'`
+cd $4
+cd /
+§ test backticks with non stringy dict key ;
+ls -l /sympy/Id/canonical_variables/`_x`
+map
+cd p
+cd /
+cd /x/free_symbols/ 
+map contents 
+map everything 
+cd /
+§ test listing contents of set object ;
+ls -l /x/free_symbols/ --nisroutine
+ls sympy/this
+set auto_import true
+§ test auto_import, sympy.this is only visible when auto_import is true ;
+ls sympy/this

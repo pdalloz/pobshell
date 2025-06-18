@@ -1,0 +1,49 @@
+--------------------------------------------------------------------------------
+
+# signature command
+
+Function signature from inspect.signature
+
+
+## USAGE
+
+  / ▶ signature [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ signature -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+Commonly used with mro command:
+  -1             Truncate output at screenwidth, prefix each line with name
+  -l             Single output line per member, not truncated at width,
+                   each line prefixed with name
+  -v             Multi line output per member, with banner showing Pobshell path
+  -1v            Truncate output at screenwidth, prefix each line with path
+  -P             Multi line output per member, with banner showing Python path
+
+  -L N           Limit results to the first N members 
+  -a             Include hidden objects
+  -u             Unstyled output (no syntax highlighing, no ANSI codes)
+  -r             Use Regex matching for FILTER patterns
+  -i             Ignore case for FILTER patterns
+  -e             Enumerate output objects for later reference
+
+
+## EXAMPLES
+* List signatures of callable members at current path
+  / ▶ signature -1
+
+* List the signature of a specific member
+  / ▶ signature /foo/bar_func
+
+* Search for (annotated) functions that return a bool
+  / ▶ find . --signature "*->*bool*"
+
+* Use signature as a FILTER for another command
+  # Report docstring oneliners for objects that take an argument related to path
+  /pandas ▶ ls -l  --signature "*path*)*" -i 
+  N.B. Will match argument names as well as type annotations 
+
+---

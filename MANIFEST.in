@@ -1,0 +1,11 @@
+# Include top-level metadata files
+include README.md
+include LICENSE
+include requirements.txt
+include setup.py
+include pyproject.toml
+
+# Include the man pages
+recursive-include pobshell/manpages *.txt
+
+# Note: all .py under mypackage/ are picked up automatically by setuptools/find_packages()

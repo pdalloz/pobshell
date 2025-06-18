@@ -1,0 +1,69 @@
+# pypath command
+
+Report the Python path of an object.  EXPERIMENTAL.
+
+Convert Pobshell path with "/" separator to Python path with "." and "[ ]"
+
+E.g.
+   / ▶ pypath /Foo/bar   
+   Foo.bar
+   / ▶ pypath /Foo/mylist/`42`   
+   Foo.mylist[42]
+
+
+## USAGE
+
+  / ▶ pypath [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ pypath -h 
+  / ▶ man TARGET
+
+
+## NOTES 
+
+* pypath gives the python path to object from root, not from current path
+
+* Inspection commands have OPTION -P to report members with Python paths
+  /Foo ▶ ls -P
+  Foo.bar
+  Foo.mylist
+
+
+## Use a Python path with ':' prefix to specify a command TARGET 
+
+* path prefix ':' is relative to current path
+  E.g.  / ▶ cd :inspect.BoundArguments.args
+  E.g.  / ▶ doc :os.path.join
+  E.g.  / ▶ cat :datetime.datetime.now
+  E.g.  / ▶ ls -l :PVi.poutput
+  E.g.  / ▶ printpy "self" :inspect.BoundArguments.args
+  E.g.  /Foo ▶ cd :bar
+
+* path prefix '::' is from root
+  E.g.  /x ▶ cd ::Foo.bar
+  E.g.  / ▶ doc ::inspect.signature
+  E.g.  / ▶ ls -l :PVi.tree_parser.error
+  E.g.  / ▶ cd :inspect.BoundArguments.args
+
+* N.B. ':' and '::' prefixes do not support tab completion or wildcards
+
+
+## Examples
+
+/ ▶ pypath  /inspect/BoundArguments/args
+# ==> args <==
+inspect.BoundArguments.args
+
+/ ▶ pypath  /inspect/BoundArguments/args  -1
+args  inspect.BoundArguments.args
+
+/mylist ▶ ls -lP
+mylist[0]  str                       'foo'
+mylist[1]  dict                      {'bar': ['baz', None, 1.0, 2]}
+
+/mylist ▶ abcs  -P -1  
+mylist[0]  Collection Container Hashable Iterable Reversible Sequence S…
+mylist[1]  Collection Container Iterable Mapping MutableMapping Reversi…
+
+---

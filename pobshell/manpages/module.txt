@@ -1,0 +1,33 @@
+--------------------------------------------------------------------------------
+
+# module Command
+
+Show defining module for object
+
+Report the module where object is defined via inspect.getmodule(obj)
+
+
+## USAGE
+
+  / ▶ module [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ module -h 
+  / ▶ man TARGET
+
+## OPTIONS
+
+-1        One line result per object
+-v        Show full path of each object reported
+-a        Include hidden members
+
+
+## EXAMPLES
+
+  / ▶ module /foo/bar/my_obj
+  / ▶ module -1 /foo/bar/my_obj/
+  / ▶ module -1 *handler*
+  / ▶ module .
+
+
+---

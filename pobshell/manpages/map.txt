@@ -1,0 +1,89 @@
+--------------------------------------------------------------------------------
+
+# map command
+
+Control how Python objects map to Pobshell paths
+
+
+## USAGE
+
+  / ▶ map [[MAP_SETTING], MAP_SETTING]
+
+
+* With the default map, listing object attributes may change object state
+	Pobshell's "map dynamic", evaluates descriptor objects (e.g. properties) in the same way as Python, i.e. they execute code.  
+  To prevent this use 'map static'  
+    / ▶ map static
+  To start Pobshell with this map
+    >> pobshell.shell(cmd='map static')
+
+* Mapped container contents are limited to 2000 members per object by default
+  Change this with 'set contents_limit'
+
+* 'map' with no arguments shows current map settings
+
+* For info on map command syntax
+  / ▶ map -h 
+
+
+## MAP_SETTINGS 
+
+* A hierarchy of attributes, such as methods of a class  (default)
+  / ▶ map attributes 
+* A hierarchy of contents of container objects, such as list and dicts
+  / ▶ map contents
+* A hierarchy of both
+  / ▶ map everything
+
+* Listings show values of descriptors, such as property objects  (default)
+  / ▶ map dynamic
+* Listings show descriptor objects themselves
+  / ▶ map static
+
+* Object members include objects defined locally or inherited  (default)
+  / ▶ map mro
+* Object members only include objects defined locally 
+  / ▶ map local
+
+* Root "directory" is populated with globals and locals of calling frame
+  / ▶ map variables
+* Root is populated with attributes of calling frame
+  / ▶ map frameattrs
+
+
+## NOTES
+
+* The default map
+	Each Python object maps to a namespace of its attributes, and values are resolved via normal Python evaluation. Container contents are excluded. 
+
+* Individual commands can override current map  (--map MAP_SETTING)
+
+
+## Explore contents of data structures
+
+Contents of lists, dicts, sets and other container objects will be included as object members.
+
+You'll work with paths having backtick delimited names like 
+  /mylist/`0`
+  /mydict/`'email.errors'`
+Use backticks around member "names" that aren't valid Python identifiers.
+
+
+## map as an OPTION for other commands
+
+A map setting can be temporarily overridden with --map MAP_SETTING
+Only lasts for the duration of the command executed.
+
+* E.g. to see only attributes or only contents in a listing
+  / ▶ doc -l --map attributes
+  / ▶ ls -l --map contents
+
+* Report docstrings for data descriptors using temporary 'static' map
+  /net/fc1/weight/`0`/`0` ▶ doc -1 --isdata --map static
+  H              Returns a view of a matrix (2-D tensor) conjugated and…
+  T              Returns a view of this tensor with its dimensions reve…
+  device         Is the :class:`torch.device` where this Tensor is.
+  ...
+
+
+---

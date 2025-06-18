@@ -1,0 +1,4 @@
+/ ▶ ls p*
+pobshell  pobmain
+/ ▶ ls qwer
+ls: qwer: No such path

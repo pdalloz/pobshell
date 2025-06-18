@@ -1,0 +1,23 @@
+--------------------------------------------------------------------------------
+
+# pwd command
+
+Print current path
+
+Shows the current path (like Unix `pwd`)
+
+
+## USAGE
+
+   / ▶ pwd
+
+
+Shows the current path (without truncation)
+
+N.B. Paths shown in prompt and command output are truncated if they exceed 'path_width' setting. But pwd output is never truncated.
+
+
+## EXAMPLES
+
+  /sys/modules/`'scipy.opt[TRUNCATED]mize_trustregion_constr'` ▶ pwd
+/sys/modules/`'scipy.optimize._trustregion_constr.minimize_trustregion_constr'`

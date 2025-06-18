@@ -1,0 +1,80 @@
+--------------------------------------------------------------------------------
+
+# typename command
+
+Show name of object's type, from type(obj).__name__ 
+
+Displays just the class name of the object’s type (e.g., 'list', 'MyClass', 'int').
+
+
+## USAGE
+
+  / ▶ typename [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ typename -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+
+
+* Commonly used with type command:
+
+  -1        One line per member, truncate at screen width, prefix with name
+  -v        Show full path instead of name
+  -q        No path or name, just the object's typename
+  -L N      Limit results to the first N members 
+  -a        Include hidden objects
+  -u        Unstyled output (no syntax highlighing, no ANSI codes)
+  -r        Use Regex matching for FILTER patterns
+  -i        Ignore case for FILTER patterns
+  -e        Enumerate output objects for later reference
+
+
+## NOTES
+
+See also 'type' command which reports type(obj) and 'ls -l' which reports name, typename and repr 
+
+
+## EXAMPLES
+
+* Report the typename of my_obj
+  / ▶ typename my_obj
+* Report the typename of members of my_obj, each a one line result
+  / ▶ typename -1 my_obj/
+* As previous example, for members of current object & including private members
+  / ▶ typename -1 -a
+* Report the typename for each member of current obj whose code mentions "property"
+  / ▶ typename -1 --cat "*property*"
+
+typename --cat "*@property*"
+
+
+## --typename as FILTER for other commands
+* Long list members, excluding str objects  
+  / ▶ ls -al --ntypename str
+* Long list members, excluding objects whose typename matches pattern   
+  E.g. objects of type "builtin_function_or_method" 
+  / ▶ ls -al --ntypename *builtin*
+* Find str or list objects to depth 2
+  / ▶ find / -d 2 --typename str --type *list*  -o
+* Find 10 dict objects with at least one non identifier key, long list them and enumerate for later reference
+  / ▶ find . --typename dict --matchpy "len(self) > 0 and all(not isinstance(k, str) or not k.isidentifier() for k in self.keys())" -L 10 -l --noraise 
+* Find all the dicts and enumerate them
+  / ▶ find . --typename dict -e
+* find all the ints of value 42 and long list them
+  / ▶ find  --str 42 --typename int  -l
+* Find all the objects with typename float64 and a repr of 0.5 but exclude those with path containing "/real" or "/flat" or "/T".  
+  N.B. OPTION -r interprets FILTER patterns as regex
+  / ▶ find . --typename float64 --repr 0.5  --nabspath "/real|/flat|/T" -r  -l --revisit all
+* Tree diagram of all lists inside current object
+  / ▶ tree --typename list .
+* Long list all the strings in sys
+  / ▶ ls /sys/ -l --typename str
+* Show the type of object used as name / key / index for all members of type Symbol
+  / ▶ printpy "type(pn.name)" --typename Symbol
+* Tree diagram to depth 1, of objects with typename str (ie type is <class 'str'>) OR type matches pattern
+  / ▶ tree / -d 1 --typename str --type *list*  -o
+
+---

@@ -1,0 +1,88 @@
+--------------------------------------------------------------------------------
+
+# memsize command
+
+Approximate memory size of object in bytes. From pympler.asizeof
+
+
+## USAGE
+
+  / ▶ memsize [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ memsize -h 
+  / ▶ man TARGET
+
+## NOTES
+
+Sum of the flat size of an object plus recursive sizes of referenced objects
+
+If components share references (e.g. multiple attributes pointing to the same list), asizeof counts each object only once
+
+N.B. Not always reliable
+
+
+## OPTIONS
+
+-1        Truncate to a one line result
+-a        Report on hidden members too
+
+-v        Verbose: show full Pobshell path in place of name
+-P        Show Python path in place of name
+-L N      Limit listing to the first N members
+-e        Enumerate output for later reference
+
+
+
+## --memsize MEM_TEST as FILTER for other commands
+
+* Apply COMMAND to members whose memsize satisfies MEM_TEST
+Concatenates memsize result to MEM_TEST str, and evaluates as Python expression
+
+  COMMAND --memsize MEM_TEST
+
+  E.g. Show extended listing for members whose memsize is > 10000 bytes
+    / ▶ ls -x --memsize ">10000"
+    N.B.  MEM_TEST must be quoted because ">" symbol redirects output to file
+  E.g. List members whose memsize is 0 bytes
+    / ▶ ls -l --memsize "==0"
+
+
+* Recursive search for objects by their memory usage
+  E.g. Find objects within foo.bar using > 100000 bytes
+    / ▶ find /foo/bar --memsize ">100000" -l
+
+  E.g. Find objects using > 1000000 bytes and sort them by memsize
+    / ▶ find . --memsize ">1000000"  --prune */sklearn --cmd 'memsize -1vu .' | sort -k2,2n
+
+    HOW IT WORKS
+    Find objects using > 1000000 bytes  (find . --memsize ">1000000")
+    Don't walk members of sklearn object    (--prune */sklearn)
+    Report memsize of each match    (--cmd 'memsize -1vu .')      
+      report without ANSI styling, for piping to sort  (memsize -u OPTION)
+      report full paths, not just names     (memsize -v OPTION)
+    Pipe output to OS sort utility and sort on 2nd column numerically 
+      (| sort -k2,2n)
+
+
+## EXAMPLES
+
+* List memsizes of members of current object
+  / ▶ memsize -1
+
+* Sort members of current object by memsize 
+  / ▶ memsize -1u | sort -k2,2n 
+  Cafe         0
+  load_iris    0
+  p            48
+  cursor       168
+  connection   240
+  ...
+
+  HOW IT WORKS
+  Prevent ANSI codes confusing sort utility's ability to identify columns (-u)
+  Pipe output to OS sort utility and sort by 2nd column numerically 
+    (| sort -k2,2n)
+  
+
+---

@@ -1,0 +1,114 @@
+--------------------------------------------------------------------------------
+
+# predicates Command
+
+Characterize an object with Inspect predicates
+
+	Display names of the predicate functions (inspect.is* and pydoc.isdata) that return True for an object
+
+	Output is a space-separated string of function names
+
+
+## USAGE
+
+  / ▶ predicates  [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ predicates -h 
+  / ▶ man TARGET
+
+
+## OPTIONS commonly used with predicates command
+
+  -1             Truncate output at screenwidth, prefix each line with name
+  -l             Single output line per member, not truncated at width,
+                   each line prefixed with name
+  -v             Multi line output per member, with banner showing Pobshell path
+  -1v            Truncate output at screenwidth, prefix each line with path
+  -P             Multi line output per member, with banner showing Python path
+
+  -L N           Limit results to the first N members 
+  -a             Include hidden objects
+  -u             Unstyled output (no syntax highlighing, no ANSI codes)
+  -r             Use Regex matching for FILTER patterns
+  -i             Ignore case for FILTER patterns
+  -e             Enumerate output objects for later reference
+
+
+## FILTERS
+
+Restrict the members a 'predicates' command operates on
+
+* Report predicates for members which have a specific predicate
+    predicates -1a --isdata    # -a includes private methods & dunders
+* Report predicates for members which don't have a specific predicate
+    predicates -1 --nisdata
+* Report predicates for members whose docstrings match a glob pattern
+    predicates -l --doc *Encoding*
+* Report predicates for members whose names match a regex pattern 
+    predicates --name do_  -r
+* Report predicates for members whose names match case insensitive glob pattern
+    predicates --name do_*  -i
+
+
+##  Predicates as FILTERS for other commands
+
+* Apply command to members whose predicates output match wildcard pattern
+    COMMAND --predicates PATTERN 
+  E.g.   / ▶ ls -l --predicates *descriptor* 
+* Or with negated match for wildcard pattern
+    COMMAND --npredicates PATTERN 
+  E.g.   / ▶ ls -l --npredicates *descriptor* 
+
+* Individual predicates can be used as FILTERS without a pattern
+  --isdata,   --isroutine,   --isclass,   --ismodule,   ...
+  E.g.   / ▶ ls -l --isdata
+         / ▶ doc --isclass
+
+* Negated predicates can be used as FILTERS without a pattern
+  --nisdata,   --nisroutine,   --nisclass,   --nismodule,   ...
+
+
+##  Predicates with 'find' command: 
+
+* Individual predicates can be used as match criteria
+  / ▶ find --isdata
+  / ▶ find --nisdata
+
+* Individual predicates can be used as prune criteria
+  / ▶ find --prune ismodule
+  / ▶ find --prune */sys isclass
+
+* --predicates can be used with a wildcard pattern
+  / ▶ find --predicates *descriptor* 
+  / ▶ find --predicates descriptor -r
+
+
+## NOTES
+
+* Predicates are functions such as inspect.isfunction, inspect.ismodule,
+inspect.isclass, and pydoc.isdata. 
+
+* List of predicates:
+From Inspect module (see Inspect docs)
+  isabstract          isbuiltin    iscoroutinefunction  isgenerator             
+  ismethod            isroutine    isasyncgen          isclass     
+  isdatadescriptor    isgeneratorfunction              ismethoddescriptor  
+  istraceback         isasyncgenfunction               iscode       
+  isframe             isgetsetdescriptor               ismethodwrapper   
+  isawaitable         iscoroutine                      isfunction         
+  ismemberdescriptor  ismodule   
+From pydoc 
+  isdata
+
+
+## EXAMPLES
+
+  / ▶ predicates .
+  / ▶ predicates -l 
+  / ▶ predicates -1 foo/
+  / ▶ predicates foo/bar
+  / ▶ predicates /foo/bar
+
+
+---

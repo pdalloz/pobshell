@@ -1,0 +1,64 @@
+--------------------------------------------------------------------------------
+
+# id command
+
+Show object id
+
+Display the unique identifier of an object via 'id(obj)' 
+N.B. For CPython this is the object's memory address for the current session.
+
+Useful to disambiguate similar looking objects, and to find instances of some object of interest
+
+
+## USAGE
+
+  / ▶ id [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ id -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+
+-1        One line result per object
+-v        Show full path of each object reported
+-a        Include hidden members
+
+
+## EXAMPLES
+
+  / ▶ id /foo/bar/my_obj
+  / ▶ id -1 /foo/bar/my_obj/
+  / ▶ id -1 *data*
+  / ▶ id -v .
+
+
+# USECASE EXAMPLE
+
+## Question: Are all instances of the number 42 the same object?
+* Add an instance of 42 to root via 'eval' command, shortcut ':'
+  / ▶ :m = 42
+* ls confirms its there; changes to members of root are persistent
+  / ▶ ls -l m
+  m  int                       42
+* Check the id of this instance
+  / ▶ id m
+  # ==> m <==
+  4505126904
+* Find integers with value 42 and report their id
+  / ▶ find . --str 42 --typename int --cmd "id -1v ."
+  /m  4505126904
+  /apsw/SQLITE_FCNTL_RESET_CACHE  4505126904
+  /m/numerator  4505126904
+  /m/real  4505126904
+  /apsw/SQLITE_FCNTL_RESET_CACHE/numerator  4505126904
+  /apsw/SQLITE_FCNTL_RESET_CACHE/real  4505126904
+  /apsw/mapping_file_control/SQLITE_FCNTL_RESET_CACHE  4505126904
+  /PVi/rootns/m  4505126904
+  ...
+* Alternatively find integers with value 42 that don't match this id
+  / ▶ find . --str 42 --typename int --nid 4505126904
+  # No results
+
+---

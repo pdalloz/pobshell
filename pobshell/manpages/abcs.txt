@@ -1,0 +1,60 @@
+--------------------------------------------------------------------------------
+
+# abcs command
+
+Report abstract base classes implemented by a class or an instance
+
+A space-separated string with names of abstract base class interfaces supported by an instance or implemented by a class. From collections.abc
+
+
+## USAGE
+
+/ ▶ abcs [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ abcs -h 
+  / ▶ man TARGET
+
+
+## NOTES
+
+Python 3.12 ABCs:
+	AsyncGenerator, AsyncIterable, AsyncIterator, Awaitable, Buffer, ByteString, Callable, Collection, Container, Coroutine, Generator, Hashable, ItemsView, Iterable, Iterator, KeysView, Mapping, MappingView, MutableMapping, MutableSequence, MutableSet, Reversible, Sequence, Set, Sized, ValuesView
+
+
+## EXAMPLES
+
+* List the abcs for data members of object at current path. 
+
+With OPTION -1: one line ouput, truncated at screen width
+
+  / ▶ abcs -1 --isdata
+  ast_trees    Collection Container Iterable MutableSequence Reversible…
+  connection   Hashable 
+  cursor       Hashable Iterable Iterator 
+  eq           Hashable 
+  iris         Collection Container Iterable Mapping MutableMapping Rev…
+
+Without OPTION -1; multi line output, not truncated at screen width
+
+  / ▶ abcs --isdata
+  # ==> ast_trees <==
+  Collection Container Iterable MutableSequence Reversible Sequence Sized 
+  
+  # ==> connection <==
+  Hashable 
+  
+  # ==> cursor <==
+  Hashable Iterable Iterator 
+  
+  # ==> eq <==
+  Hashable 
+  
+  # ==> iris <==
+  Collection Container Iterable Mapping MutableMapping Reversible Sized 
+
+
+* Restrict --matchpy evaluation to "Sized" objects during search to avoid infinite iterators when evaluating 'sum'
+  /sympy ▶ find . --matchpy "sum(self) < 100" --abcs *Sized* --noraise
+
+---

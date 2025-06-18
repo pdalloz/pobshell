@@ -1,0 +1,65 @@
+# # test find
+
+$$import pobshell
+cd /
+ls
+
+set echo true
+set timing true	
+
+# timing - was: False	
+# now: True	
+
+# ## revisit all
+find pobshell -typename module -maxdepth 1  -revisit 'all' -all  | wc -l	
+# Elapsed: 0:00:00.000178	
+# Elapsed: 0:00:00.007575	
+#       7	
+find pobshell -typename module -maxdepth 2  -revisit 'all' -all  | wc -l	
+# # Elapsed: 0:00:00.000185	
+# # Elapsed: 0:00:00.029770	
+# #       50	
+find pobshell -typename module -maxdepth 3  -revisit 'all' -all  | wc -l	
+# # Elapsed: 0:00:00.000194	
+# # Elapsed: 0:00:01.226542	
+# #      399	
+find pobshell -typename module -maxdepth 4  -revisit 'all' -all  | wc -l	
+# # Elapsed: 0:00:00.000191	
+# # Elapsed: 0:00:53.339960	
+# #     2488	
+# ###  revisit successes
+find pobshell -typename module -maxdepth 1  -revisit 'successes' -all  | wc -l	
+# # Elapsed: 0:00:00.000131	
+# # Elapsed: 0:00:00.007528	
+# #        7	
+find pobshell -typename module -maxdepth 2  -revisit 'successes' -all  | wc -l	
+# # Elapsed: 0:00:00.000373	
+# # Elapsed: 0:00:00.030129	
+# #       29	
+find pobshell -typename module -maxdepth 3  -revisit 'successes' -all  | wc -l	
+# # Elapsed: 0:00:00.000186	
+# # Elapsed: 0:00:00.562219	
+# #       91	
+find pobshell -typename module -maxdepth 4  -revisit 'successes' -all  | wc -l	
+# # Elapsed: 0:00:00.000201	
+# # Elapsed: 0:00:06.060750	
+# #      178	
+# ###  revisit none
+find pobshell -typename module -maxdepth 1  -revisit 'none' -all  | wc -l	
+# # Elapsed: 0:00:00.000279	
+# # Elapsed: 0:00:00.010221	
+# #        7	
+find pobshell -typename module -maxdepth 2  -revisit 'none' -all  | wc -l	
+# # Elapsed: 0:00:00.000182	
+# # Elapsed: 0:00:00.032713	
+# #       29	
+find pobshell -typename module -maxdepth 3  -revisit 'none' -all  | wc -l	
+# # Elapsed: 0:00:00.000186	
+# # Elapsed: 0:00:00.524287	
+# #       91	
+find pobshell -typename module -maxdepth 4  -revisit 'none' -all  | wc -l	
+# # Elapsed: 0:00:00.000226	
+# # Elapsed: 0:00:05.063792	
+# #      178
+
+find pobshell --name do_* --nname do_p* -maxdepth 3

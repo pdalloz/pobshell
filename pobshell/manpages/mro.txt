@@ -1,0 +1,73 @@
+--------------------------------------------------------------------------------
+
+# mro command
+
+Report base classes in method resolution order 
+
+A str representation of the tuple of base classes from cls.__mro__ 
+Uses inspect.getmro
+
+
+## USAGE
+
+/ ▶ mro [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ mro -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+
+* Commonly used with mro command:
+  -1             Truncate output at screenwidth, prefix each line with name
+  -l             Single output line per member, not truncated at width,
+                   each line prefixed with name
+  -v             Multi line output per member, with banner showing Pobshell path
+  -1v            Truncate output at screenwidth, prefix each line with path
+  -P             Multi line output per member, with banner showing Python path
+
+  -L N           Limit results to the first N members 
+  -a             Include hidden objects
+  -u             Unstyled output (no syntax highlighing, no ANSI codes)
+  -r             Use Regex matching for FILTER patterns
+  -i             Ignore case for FILTER patterns
+  -e             Enumerate output objects for later reference
+
+
+## EXAMPLES
+
+* List the mro for any classes at current path
+
+With OPTION -1: one line ouput, truncated at screen width
+
+/pandas ▶ mro -1
+ArrowDtype            (<class 'pandas.core.dtypes.dtypes.ArrowDtype'>…
+BooleanDtype          (<class 'pandas.core.arrays.boolean.BooleanDtyp…
+Categorical           (<class 'pandas.core.arrays.categorical.Categor…
+CategoricalDtype      (<class 'pandas.core.dtypes.dtypes.CategoricalD…
+CategoricalIndex      (<class 'pandas.core.indexes.category.Categoric…
+
+
+Without OPTION -1; multi line output, not truncated at screen width
+With OPTION -L N; Stop after listing N members
+
+/pandas ▶ mro -L 3
+ # ==> ArrowDtype <==
+(<class 'pandas.core.dtypes.dtypes.ArrowDtype'>, <class 'pandas.core.dtypes.base.StorageExtensionDtype'>, <class 'pandas.core.dtypes.base.ExtensionDtype'>, <class 'object'>)
+
+ # ==> BooleanDtype <==
+(<class 'pandas.core.arrays.boolean.BooleanDtype'>, <class 'pandas.core.dtypes.dtypes.BaseMaskedDtype'>, <class 'pandas.core.dtypes.base.ExtensionDtype'>, <class 'object'>)
+
+ # ==> Categorical <==
+(<class 'pandas.core.arrays.categorical.Categorical'>, <class 'pandas.core.arrays._mixins.NDArrayBackedExtensionArray'>, <class 'pandas._libs.arrays.NDArrayBacked'>, <class 'pandas.core.arrays.base.ExtensionArray'>, <class 'pandas.core.base.PandasObject'>, <class 'pandas.core.accessor.DirNamesMixin'>, <class 'pandas.core.strings.object_array.ObjectStringArrayMixin'>, <class 'pandas.core.strings.base.BaseStringArrayMethods'>, <class 'abc.ABC'>, <class 'object'>)
+
+
+## --mro as FILTER for other commands
+
+* Find objects in sklearn that inherit from pandas
+  /sklearn ▶ find . --mro *pandas* -l -i -e --prune */pd -a
+  0: /sklearn/utils/_param_validation/_PandasNAConstraint  ABCMeta         <cl…
+  1: /sklearn/utils/_set_output/PandasAdapter  type            <class 'sklearn…
+
+---

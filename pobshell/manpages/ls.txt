@@ -1,0 +1,127 @@
+--------------------------------------------------------------------------------
+
+# ls command
+
+List members of an object 
+
+Analogous to Linux 'ls'
+
+List members of object at current path, at some specified path, or matching TARGET pattern
+
+
+## USAGE
+
+  / ▶ ls [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ ls -h 
+  / ▶ man TARGET
+
+
+## TARGET
+
+* A path without a trailing '/' reports on a single object
+  E.g. / ▶ ls foo
+       / ▶ ls foo/bar
+       / ▶ ls /foo/bar
+
+* Paths that end with a trailing '/' report on MEMBERS of an object
+  E.g.  / ▶ ls foo/
+        / ▶ ls foo/bar/
+        / ▶ ls /foo/bar/
+
+* Wildcards '*' and '?' are supported in last component of path
+  E.g.  / ▶ ls f*o
+        / ▶ ls foo/b*r
+        / ▶ ls /foo/b*r
+
+
+## OPTIONS
+
+-l              Long-listing oneline format (name, typename, repr)
+-a              Include hidden members
+-v              Verbose: show full Pobshell path in place of name
+-x              Extended info from multiple commands: ls -l, doc, cat, etc
+-1              List member names or paths, one per line
+-P              Show Python path in place of name
+-L N            Limit listing to the first N members
+-e              Enumerate output for later reference
+
+
+## FILTERS  (same as other Inspection commands)
+
+Filters restrict the members 'ls' operates on
+
+* List members which match a predicate
+  / ▶ ls -la --ismethod    # -a includes private methods & dunders
+  / ▶ ls --isroutine
+  / ▶ ls -l -n 5 --isclass
+* Long list members which don't match a predicate
+  / ▶ ls -l --nismodule
+* Long list first 4 members whose docstrings match a glob pattern
+  / ▶ ls -l -n 4 --doc *Encoding*
+* Long list members whose names match case insensitive glob pattern
+  / ▶ ls -l --name do_*  -i
+* Report extended listing for members whose names match regex pattern "do_"
+  / ▶ ls -x --name do_  -r
+* Long list members whose code defines Oyster related classes. 
+  N.B. Regex pattern (-r) and case insensitive (-i) 
+  / ▶ ls -l --cat "class\s+oyster" -ir
+* List contents of current object (override current map temporarily)
+  /paths/`1` ▶ ls -l --map contents 
+  `0`  str                       'T'
+  `1`  str                       '['
+  `2`  str                       '2'
+  `3`  str                       ']'
+  `4`  str                       '['
+  `5`  str                       '3'
+  `6`  str                       ']'
+* List attributes of current object (override current map temporarily)
+  /paths/`1` ▶ ls -l --map attributes 
+  capitalize    builtin_function_or_met…  <built-in method capitalize o…
+  casefold      builtin_function_or_met…  <built-in method casefold of …
+  center        builtin_function_or_met…  <built-in method center of st…
+  ...
+
+
+
+## EXAMPLES
+
+* List all members of current object
+  / ▶ ls -a
+* Long list members of current object 
+  / ▶ ls -l
+* Long list all members of current object 
+  / ▶ ls -la
+* Long list members whose name matches a glob pattern
+/ ▶ ls -l do_*
+* Extended listing for specific object
+  / ▶ ls -x foo
+* List names of members of the object at current path that are modules
+  / ▶ ls  --ismodule            
+* List names of members of the object at current path that aren't modules
+  / ▶ ls  --nismodule            
+* Long list current object
+  / ▶ ls -x .
+* Long list data-like members of current object
+  / ▶ ls -l --isdata
+* Grep members for a pattern
+  /iris/data ▶ ls -l | grep 5.2
+  `27`   ndarray                   array([5.2, 3.5, 1.5, 0.2])
+  `28`   ndarray                   array([5.2, 3.4, 1.4, 0.2])
+  ...
+* Show an extended listing for object at current path
+  N.B. Prompt shows current path object is index 1 in a list.  See map command.
+  /paths/`1` ▶ ls -x .
+  `1`  str                       'T[2][3]'
+      type          <class 'str'>
+      predicates    isdata 
+      abcs          Collection Container Hashable Iterable Reversible S…
+      memsize       48
+      pypath        paths[1]
+      id            4319624384
+* Show Python path of current object
+  /sympy/Id/canonical_variables ▶ ls -P .
+  sympy.Id.canonical_variables
+* Sort long listing of members by typename
+  / ▶ ls -l | sort -k 3

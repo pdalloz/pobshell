@@ -1,0 +1,33 @@
+--------------------------------------------------------------------------------
+
+# cdh command
+
+Path history navigation
+
+Revisit an object path from the history of objects visited this session.
+I.e. Return to a path previously visited with a 'cd' command
+
+
+## USAGE
+
+  / ▶ cdh N
+  / ▶ cdh 
+  / ▶ cdh --tail
+
+* Use cdh to get a numbered list of paths visited this session
+* Use cdh --tail to get a list numbered in reverse
+* cdh N to visit path number N; Negative N counts backwards
+
+
+## EXAMPLES
+
+* cd to 2nd path visited 
+  / ▶ cdh 2
+* return to the last path visited
+  / ▶ cdh -1
+* Show numbered history of paths visited this session
+  / ▶ cdh
+* Show tail of path history numbered with negative indexes
+  / ▶ cdh -t
+
+---

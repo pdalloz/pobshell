@@ -1,0 +1,230 @@
+--------------------------------------------------------------------------------
+
+# find Command
+
+Recursive search for Python objects
+
+Search object attributes and/or collection contents
+
+
+## USAGE
+
+  / ▶ find [MATCH CRITERIA] [MATCH ACTIONS] [SEARCH LOGIC] [PATH]
+
+* PATH -- Pobshell path of the object to be searched.
+Search recursively walks members (attributes/contents) of object at this path. Wildcards aren't supported. If PATH is omitted, search defaults to current path. 
+
+For more info on find command's arguments
+  / ▶ find -h
+
+
+## MATCH CRITERIA  -- What you're looking for
+  * Inspect predicates --ismodule, --isclass, --ismethod, ...
+  * Wildcard pattern for name, source code, docstring, ...
+    --name do_*   --cat "\bxyzzy\b"    --doc "* foo *"   --typename list
+  * Craft a Python expression that returns True for 'self' 
+    --matchpy "len(self)>100"  --matchpy "'bar' in self"  --matchpy "test(self)"
+
+If multiple match criteria are provided, a match must satisify all of them unless  "--any" or "-o" is used.
+
+* Predicates
+Find objects that satisfy a function from the Inspect module or Pydoc's isdata 
+Add n-prefix to find objects that DON'T satisfy Inspect predicates
+--isclass, --isroutine, --isdata, ...         Predicate filters
+--nisclass, --nisroutine, --nisdata, ...      Negated Predicate filters
+
+* Pattern match criteria
+--name PATTERN      Match by name
+--type PATTERN      Match type
+--doc PATTERN       Match docstring
+--cat PATTERN       Match docstring
+	PATTERN are glob patterns by default, and case sensitive. Use -r or -i to change this, they affect all PATTERNS used.
+
+--n*                Negated filters (e.g. --nname PATTERN, --ndoc PATTERN, ...)
+                    Satisfied by objects that fail the positive match
+
+--matchpy PYEXPR    Python expression, using names 'self' and 'pn' 
+                    See "PYEXPR" man page for details
+                 
+
+## MATCH ACTIONS   -- How to process each match
+  * Run Pobshell command on each matched object
+      find [..stuff..] --cmd "ls -lv ./foo"
+      N.B. --cmd can run multiple Pobshell commands, use ";" as separator
+        find [..stuff..] --cmd "ls -lv . ; predicates -1 ."
+  * Eval Python expression for each match 
+      find [..stuff..] --printpy "self.bar"
+  * Save set of matched objects for follow up
+      find [..stuff..] -e
+    then
+      ls -x $1/foo
+      doc -1 $$
+
+--cmd CMD             Run Pobshell command at the path of each match
+--printpy PYEXPR      Print Python expression evaluated for each match
+-l                    Run "ls -l ." on each match
+-e                    Enumerate matched objects as $0, $1, etc.
+
+
+
+## SEARCH LOGIC  -- Configure search logic
+  * Use 'map' to switch between searching object attributes and collection contents. Or between descriptor objects and their values
+  * Default search depth is 4, counting from initial object (level 0)
+  * Use "set auto_import true" to import subpackages and modules met during search
+  * Depth first search option in addition to breadth first (default)
+  * Prune paths by glob pattern, objects by type or predicate; recursive paths
+
+-d N                  Max depth
+-L N                  Max number of matches
+-a                    Include hidden objects
+--revisit STRATEGY    Should previously met objects be searched again?
+                      {none, successes (default), all}
+--DEPTHFIRST          Search members of each object before its siblings
+                        Breadthfirst reports interesting results sooner
+                        Depthfirst is quicker for exhaustive search
+--prune PRUNE         Prune paths/objects by abspath, typename, or predicate
+                        --prune accepts multiple arguments
+                        PRUNE containing / is a glob pattern for paths 
+                        PRUNE starting "is" or "nis" is a predicate
+                        otherwise PRUNE is a typename
+                          and matched using type(obj).__name__ ==  PRUNE
+                        E.g. "--prune */sys  */__dict__  nisdata  list"
+--map MODE            Temporary map setting {contents, attributes, static, ..}
+                        E.g. --map contents
+--noraise             Ignore Exceptions raised by --matchpy and --printpy
+                        E.g. --matchpy 'self == 42" --noraise
+--CODE, --DATA or --BASIC   Use named pruneset to speed up search 
+                            CODE prunes paths not interesting for CODE objects
+                            DATA prunes paths not likely to lead to DATA objects
+                            BASIC prunes __dir__, attributes of lists & ints etc
+                            NB Edit user_defs.py to amend or add named prunesets
+
+				
+## EXAMPLES
+
+* find objects with json in the name and report oneline docstrings
+/x ▶ find / --name *json* -i --cmd "doc -1v ."
+  HOW IT WORKS
+  Search root namespace and its contents          (find /)
+  Match objects with json in the name             (--name *json*)
+Ignore case when matching patterns              (-i)
+Run Pobshell command on each match              (--cmd CMD)
+to show first line of docstring and fullpath  ("doc -1v .")
+  N.B. As -d option wasn't used, search uses default depth of 4 
+  N.B. As -a option wasn't used hidden objects won't be searched or tested
+
+* find lists with contents that sum to more than 100 and long list them
+  / ▶ find . --matchpy "sum(self) < 100" --typename list --noraise -l
+    N.B. Without --noraise search will halt at any list with non numeric content
+* find lists and report any members with a value < 1
+  / ▶ find . --typename list --cmd "ls -l ./ --matchpy 'self < 0' --noraise"
+    N.B. finds list objects and uses "ls" with --matchpy to filter members
+* find classes; report their Python paths and long list the first 5 members
+  / ▶ find . --isclass -d 3 -L 10 --cmd "ls -P . ; ls ./ -l -L 5"
+* Find objects whose code contains the string "secret"
+  / ▶ find . --cat *secret* -ai  --revisit none --prune "*/re" --nid 4384134448
+    HOW IT WORKS
+    Prune path /re/ i.e. don't search inside objects with this name
+      N.B. Prune is different from '--nname re' which would fail re as a match but members of       re objects would be searched
+    Don't match object with id 4384134448   (--nid 4384134448)
+    Include hidden objects in the search (-a)
+    Ignore case when matching *secret* and */re (-i)
+    Don't search any object twice (--revisit none)
+
+* Find lists of numbers with sum is between 10 and 100 & long-list them
+/ ▶ find . --matchpy "10 < sum(self) < 100" --typename list  --noraise -l
+    HOW IT WORKS
+    Start search at current namespace    (find .)
+    Match list objects                   (--typename list)
+    Require they satisfy the Python expression --matchpy "10 < sum(self) < 100" 
+      N.B. matchpy inserts 'self' name to refer to object being tested
+    Don't stop searching if matchpy expression raises exception (--noraise)
+      N.B. without this search will halt at first list containing a non numeric
+    Long list each object matched   (-l)
+      N.B. equivalent to  (--cmd "ls -lv .")
+
+* Search within current object for items in a list with a value less than zero
+/ ▶ find . --typename list --cmd "ls -lP ./ --matchpy 'self < 0' --noraise"                                   
+    HOW IT WORKS
+    Match list objects   (--typename list)
+      N.B. Matches objects that satisify type(obj).__name__ == 'list'  
+  Run a Pobshell command on each match; listing items with value < 0
+    (--cmd "ls -l ./ --matchpy 'self < 0' --noraise")
+    Give a long listing of all members of matched object ("ls -l ./")
+    N.B. Notice the trailing / so command acts on object members 
+  Filter the 'ls' command so it only lists items with value < 0
+  ("ls -l ./ --matchpy 'self < 0')
+  Prevent the 'self < 0' comparison from raising exceptions for non-numerics
+  ("ls -l ./ --matchpy 'self < 0' --noraise")
+
+* Find classes and long-list their first 5 members 
+/ ▶ find x --isclass -d 3 -L 10 --cmd "ls -P . ;ls ./ -l -L 5" 
+    HOW IT WORKS
+    Search inside member x of current namespace  (find x)
+    Match classes using Inspect's 'isclass' function  (--isclass)
+    Search to depth of 3 counting with x being depth 0   (-d 3)
+    Limit search to 10 matches  (-L 10)
+      N.B. Use ^C to interrupt early
+    Run Pobshell commands on each match  (--cmd CMD)
+      N.B. For multiple Pobshell commands use ; as separator
+    Show python path of each match                  --cmd "ls -P ."
+    Show a long listing of first five members       --cmd "ls ./ -l -L 5"
+
+* Find names/dict keys more than 30 chars long & enumerate for later reference
+  / ▶ find . --matchpy "len(pn.name)>30" -e  -a -d 5
+    HOW IT WORKS
+    include hidden members in search  (-a) 
+    search 5 levels below current path  (-d 5)
+    enumerate the results to enable referencing results as $N  (-e)  
+      THEN: See an extended listing for the first match
+        ls -x $0
+      THEN: See first line docstrings of all the matches
+        doc -1 $$
+
+* Find objects that have code
+  / ▶ find . --cat * 
+
+* Find objects with more than 100 lines of code
+  / ▶ find . --matchpy "len(pn.cat.splitlines())>100" 
+  N.B. see "man PYEXPR" for more about 'pn' and --matchpy
+
+* Find lists containing 'xyzzy' and print their length
+  / ▶ find . -typename list --matchpy "'xyzzy' in self" --printpy "len(self)"
+
+* find objects to depth 2, whose typename is str (ie type is <class 'str'>) OR type matches pattern
+  / ▶ find / -d 2 --typename str --type *list*  -o
+
+* analyse predicates commonly associated with common object types
+  / ▶ find . -L 3000 --isdata --matchpy "len(pn.predicates.split())>1" --printpy "f'{pn.typename} {pn.predicates}'" -q | sort | uniq -c | sort -k2
+    HOW IT WORKS
+    find 3000 data like objects find . -L 3000 --isdata
+    with more than one predicate --matchpy "len(pn.predicates.split())>1"
+    output the typename and the predicates (but not the name/path)
+        printpy "f'{pn.typename} {pn.predicates}'" -q
+    sort them, count occurences and sort by number of occurrences
+        sort | uniq -c | sort -k2
+
+* Find 300 objects and report most common typename, predicates
+  / ▶ find . -L 300 --printpy "f'{pn.typename} {pn.predicates}'" -q | sort | uniq -c | sort
+
+* Report pobshell methods with no docstring, sorted by number of lines of code 
+  / ▶ find  --file *pobshell*  --ndoc *  --isroutine  --printpy  
+         "len(pn.cat.splitlines())" | sort -k 2,2n
+
+* find instances of Cafe class and add them to a list in root 
+  / ▶ find --matchpy "isinstance(self, Cafe)"  --printpy "found_cafes.append(self)" 
+    NOTES
+    First create an empty list in Pobshell's root namespace using rooteval command
+    / ▶ ::found_cafes = []
+    Cafe must be a name in root (which is the default global_ns for Python evals)
+    / ▶ ::from viking_cafe import Cafe
+    Then
+    / ▶ find --matchpy "isinstance(self, Cafe)"  --printpy "found_cafes.append(self)" 
+
+* find objects whose type matches pattern and whose repr is '42', and enumerate them
+  / ▶ find . --repr 42 --type *int* -e 
+     Report types of all enumerated objects
+  / ▶ type $$
+
+
+---

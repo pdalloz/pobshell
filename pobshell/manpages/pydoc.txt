@@ -1,0 +1,76 @@
+--------------------------------------------------------------------------------
+
+# pydoc Command
+
+Show pydoc documentation for object
+
+Display the full 'pydoc.render_doc(obj)' output for one or more objects. Use for detailed introspection beyond just the 'doc' or 'signature' commands.
+
+
+## USAGE
+
+
+  / ▶ pydoc [OPTIONS] [FILTERS] [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ pydoc -h 
+  / ▶ man TARGET
+
+
+## OPTIONS
+
+As pydoc often gives multi page output it's commonly used with OPTION -1,
+or OPTION -n N.
+
+-1        Just the first line
+-n N      Limit to N lines
+-v        Show full path
+-a        Include hidden names
+-u        Unstyled output 
+
+-p        Paginate output.  
+	N.B. OPTION -p only activates pager for the first member reported. To send combined output for multiple results to a single pager, pipe to an OS pager such as 'less'.  Use 'less' with '-R' for paged output that supports ANSI styles.
+
+
+## FILTERS
+
+Restrict the members a 'pydoc' command operates on
+
+* Report 1st line of pydoc for members which have a specific predicate 
+  / ▶ pydoc -1a --isdata    # -a includes private methods & dunders
+* Report 1st line of pydoc for members which don't have a specific predicate
+  / ▶ pydoc -1 --nisdata
+* Report pydoc of members whose docstrings match a glob pattern
+  / ▶ pydoc -l --doc *Encoding*
+* Report pydoc for members whose names match a regex pattern 
+  / ▶ pydoc --name do_  -r
+* Report pydoc for members whose names match case insensitive glob pattern
+  / ▶ pydoc --name do_*  -i
+
+
+## EXAMPLES
+
+* Read pydoc documentation for every member in pager
+  / ▶ pydoc | less -R
+
+* Report pydoc documentation for current object
+  / ▶ pydoc .
+
+* Report 10 lines of pydoc documentation for objects whose name contains 'json'
+  / ▶ pydoc -n 10 *json*
+
+* grep pydoc documentation of all members for references to "Encoding" 
+  / ▶ pydoc -lu | grep -Ei "\bEncoding\b"
+  HOW IT WORKS
+  Report unstyled pydoc documentation for each member (pydoc -u)
+    N.B. unstyled so won't confuse grep pattern matching
+  Prefix each line of output with name of member  (-l)
+    To identify the member each grepped line relates to
+  grep output for lines containing the symbol "Encoding", case insensitive
+    (| grep -Ei "\bEncoding\b")
+
+* Open pandas pydoc documentation in Sublime Text
+  / ▶ pydoc pandas -u | subl
+
+
+---

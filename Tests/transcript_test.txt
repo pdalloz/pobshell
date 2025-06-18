@@ -1,0 +1,61 @@
+/ ▶ ls
+Fg  MULTILINE_TERMINATOR  Pirate  args  cmd2  color_choices  pirate  pobshell  self  sys  pobmain  PV_instance
+/ ▶ ls c*
+cmd2  color_choices
+/ ▶ ls *o*
+color_choices  pobshell  pobmain
+/ ▶ ls p*
+pirate  pobshell  pobmain
+/ ▶ ls -i p*
+/ ▶ ls s?lf
+self
+/ ▶ ls -l
+Fg                         <enum 'Fg'>  <class 'enum.EnumMeta'>
+MULTILINE_TERMINATOR       ';'  <class 'str'>
+Pirate                     <class '__main__.Pirate'>  <class 'type'>
+args                       Namespace(ho=2, commas=False, beverage='rum', cmd2_statement=<cmd2.argparse_custom.Cmd2AttributeWrapper object at…  <class 'argparse.Namespa…
+cmd2                       <module 'cmd2' from '\/opt\/anaconda3\/envs\/PyShEnv\/lib\/python3.9\/site-packages\/cmd2\/__init__.py'>  <class 'module'>
+color_choices              ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'light_gray', 'dark_gray', 'light_red', 'light_gre…  <class 'list'>
+pirate                     <__main__.Pirate object at 0x7f79867e0880>  <class '__main__.Pirate'>
+pobshell                   <module 'pobshell' from '\/Users\/peterdalloz\/Dropbox\/PYTHONDROPBOX\/pobshell\/pobshell\/__init__.py'>  <class 'module'>
+self                       <__main__.Pirate object at 0x7f79867e0880>  <class '__main__.Pirate'>
+sys                        <module 'sys' (built-in)>  <class 'module'>
+pobmain                    <module 'pobshell.pobmain' from '\/Users\/peterdalloz\/Dropbox\/PYTHONDROPBOX\/pobshell\/pobshell\/pobmain.py'>  <class 'module'>
+PV_instance                <pobshell.pobmain.Pobiverse object at 0x7f79867935e0>  <class 'pobshell.pobmain.Pobiverse'>
+/ ▶ ls Pirate/
+ALPHABETICAL_SORT_KEY     cmd_func                   do_run_script                history_parser            parseline                        relative_run_script_parser
+CommandDataType           cmdloop                    do_set                       identchars                path_complete                    remove_settable           
+DEFAULT_EDITOR            columnize                  do_shell                     in_pyscript               perror                           ruler                     
+INTERNAL_COMMAND_EPILOG   complete                   do_shortcuts                 in_script                 pexcept                          run_editor                
+NATURAL_SORT_KEY          complete_help_command      do_sing                      index_based_complete      pfeedback                        run_pyscript_parser       
+add_settable              complete_help_subcommands  do_yo                        intro                     postcmd                          run_script_description    
+alias_create_description  complete_set_value         doc_header                   ipython_parser            postloop                         run_script_parser         
+alias_create_epilog       completedefault            doc_leader                   lastcmd                   poutput                          runcmds_plus_hooks        
+alias_create_parser       completenames              edit_description             macro_create_description  ppaged                           select                    
+alias_delete_description  default                    edit_parser                  macro_create_epilog       precmd                           set_description           
+alias_delete_help         delimiter_complete         emptyline                    macro_create_help         preloop                          set_parser                
+alias_delete_parser       disable_category           enable_category              macro_create_parser       print_topics                     set_parser_parent         
+alias_description         disable_command            enable_command               macro_delete_description  prompt                           set_window_title          
+alias_epilog              do__relative_run_script    eof_parser                   macro_delete_help         pwarning                         settables                 
+alias_list_description    do_alias                   find_commandset_for_command  macro_delete_parser       py_parser                        shell_cmd_complete        
+alias_list_help           do_drink                   find_commandsets             macro_description         quit_parser                      shell_parser              
+alias_list_parser         do_edit                    flag_based_complete          macro_epilog              read_input                       shortcuts_parser          
+alias_parser              do_eof                     get_all_commands             macro_list_description    register_cmdfinalization_hook    sigint_handler            
+alias_subparsers          do_help                    get_help_topics              macro_list_help           register_command_set             tokens_for_completion     
+aliases                   do_history                 get_names                    macro_list_parser         register_postcmd_hook            undoc_header              
+allow_style               do_ipy                     get_visible_commands         macro_parser              register_postloop_hook           unregister_command_set    
+always_prefix_settables   do_loot                    help_parser                  macro_subparsers          register_postparsing_hook        use_rawinput              
+async_alert               do_macro                   history_action_group         misc_header               register_precmd_hook             visible_prompt            
+async_update_prompt       do_py                      history_arg_help             nohelp                    register_preloop_hook            yo_parser                 
+basic_complete            do_quit                    history_description          onecmd                    relative_run_script_description
+build_settables           do_run_pyscript            history_format_group         onecmd_plus_hooks         relative_run_script_epilog     
+/ ▶ ls Pirate/do_eof
+do_eof
+/ ▶ ls Pirate/do_?of
+do_eof
+/ ▶ ls Pir?te/do_?of
+Wildcards are not supported in parent path component of pattern
+/ ▶ ls fksjk
+ls: fksjk: No such path
+/ ▶ ls *fksjk
+ls: *fksjk: No such path
