@@ -74,25 +74,25 @@ Other commands: `mro`, `pydoc`, `repr`, `type`, `signature`, `filepath`, ...
 Most commands work on the *members* of the current object. Use filters to control what is inspected. Filter members by type, docstring, source, str representation, Python expression, …
 
 - `--isfunction`, `--ismodule`, `--isclass`, etc.  
-  *E.g.* `/json ▶ doc -1 --ismodule`
+  *E.g.* `/path ▶ doc -1 --ismodule`
 - `--doc PATTERN` or `--cat PATTERN`  
-  *E.g.* `/json ▶ cat -n 4 --doc *Encoding*`  
-  *E.g.* `/ ▶ doc --cat "class\\s+oyster" -ir`  
-  *E.g.* `/json ▶ find . --cat *TODO* -i`
+  *E.g.* `/path ▶ cat -n 4 --doc *Encoding*`  
+  *E.g.* `/path ▶ doc --cat "class\\s+oyster" -ir`  
+  *E.g.* `/path ▶ find . --cat *TODO* -i`
 - `--str PATTERN`, `--mro PATTERN`, `--abcs PATTERN`  
   *E.g.* `/iris/data ▶ ls -l --str *6.3*`
 - `--matchpy PYTHON_EXPR`  
-  *E.g.* `/ ▶ find --matchpy "isinstance(self, Cafe)"`
+  *E.g.* `/path ▶ find --matchpy "isinstance(self, Cafe)"`
 
 ---
 
 ## OS Shell Integration
 
 - **Pipes and redirection**  
-  *E.g.* `/json ▶ ls -lu | sort -k 2`
+  *E.g.* `/path ▶ ls -lu | sort -k 2`
 - **Run OS commands with `!`** — prefix a shell command with `!`; wrap any Pobshell command in `"""..."""` to execute it first and substitute its output via a temporary file.
   *E.g.* `/json ▶ !diff  """cat dump"""  """cat dumps"""`  
-  *E.g.* `/json ▶ !aichat -f """cat ns_path_complete""" Explain how this code works`
+  *E.g.* `/path ▶ !aichat -f """cat ns_path_complete""" Explain how this code works`
 
 ---
 
@@ -108,20 +108,20 @@ Pobshell lets you *remap* what you see when you `cd` into an object. Use the `ma
 When working with contents, use backticks around any "name" not valid as a Python identifier:
 
 ```
-/ ▶ ls /mylist/`0`                    # list index
-/ ▶ cd /mydict/`'0'`                  # string key
-/ ▶ predicates /sympy/.../`exp`       # symbolic key
-/ ▶ ls -x "/mydict/`foo bar`"         # space in key
+/path ▶ ls /mylist/`0`                    # list index
+/path ▶ cd /mydict/`'0'`                  # string key
+/path ▶ predicates /sympy/.../`exp`       # symbolic key
+/path ▶ ls -x "/mydict/`foo bar`"         # space in key
 ```
 
 Python expressions inside filters and commands:
 
 ```
-/ ▶ ls -x --matchpy "isinstance(self, Cafe)"
-/ ▶ find --typename list --printpy "self[-1]"
-/ ▶ printpy "sum(self)" /iris/data
-/ ▶ ::import inspect    # add inspect module as a member of root
-/ ▶ ::x = 42            # assign x in root
+/path ▶ ls -x --matchpy "isinstance(self, Cafe)"
+/path ▶ find --typename list --printpy "self[-1]"
+/path ▶ printpy "sum(self)" /iris/data
+/path ▶ ::import inspect    # add inspect module as a member of root
+/path ▶ ::x = 42            # assign x in root
 ```
 
 ---
