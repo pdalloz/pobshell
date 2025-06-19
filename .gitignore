@@ -1,1 +1,4 @@
 .DS_Store
+/dist
+/pobshell/__pycache__
+/pobshell.egg-info
