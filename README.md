@@ -155,6 +155,18 @@ $ pip install pobshell
 
 ---
 
+## Platform Compatibility (tested)
+
+| Platform         | Python | Basic func. | Tab completion | Unit tests |
+|------------------|--------|--------------|----------------|-------------|
+| macOS            | 3.12   | Yes          | Yes            | Yes         |
+| Linux            | 3.12   | Yes          | Yes            | ?           |
+| Win 10 WSL       | 3.13   | Yes          | Yes            | Yes         |
+| Win 10 Native    | 3.12   | Yes          | Yes            | Yes         |
+| Win 10 Native    | 3.13   | Yes          | No             | No          |
+
+---
+
 ## Quickstart
 
 ```python
