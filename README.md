@@ -190,5 +190,6 @@ Bug reports, feature ideas, and pull requests welcome!
 Developed and maintained by **Peter Dalloz**, data lead and Python engineer.
 
 If you're looking for help with a data or AI project, or any Python codebase, feel free to reach out via LinkedIn. I'm open to permanent onsite roles in the UK (citizen) or Spain (resident), and remote or contract work globally.
+LinkedIn: https://www.linkedin.com/in/pdalloz
 
-Follow me on Substack: https://pythonstuff.substack.com
+
