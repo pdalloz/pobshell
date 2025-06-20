@@ -4,6 +4,11 @@ All notable changes to this project will be documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com).
 
+## [0.1.1] - 2025-06-20
+### Changed
+- `Pobshell` now defaults to `Pobprefs.DEBUG = False` instead of `DEBUG = True`
+- `DEBUG` is now an optional keyword argument to pobshell.shell() and .pob()
+
 ## [0.1.0] - 2025-06-19
 ### Added
 - Initial release of Pobshell
@@ -13,3 +18,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com).
 - OS shell integration with pipes and `!` commands
 - `map` modes: attributes, contents, everything, static,...
 - Alpha-level safety precautions
+
