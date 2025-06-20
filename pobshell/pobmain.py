@@ -532,6 +532,9 @@ class Pobiverse(cmd2.Cmd):
 
         prefs = {}
 
+        # Handle DEBUG setting
+        PobPrefs.init_options({'DEBUG': kwargs.pop('DEBUG', False)})
+
         # handle default shortcuts & any that are user specified
         # Default shortcuts
         shortcuts = {'?': 'find', '!': 'shell', ':': 'eval', '::': 'rooteval', '##': 'comment',

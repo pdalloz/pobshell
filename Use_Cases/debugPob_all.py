@@ -60,7 +60,8 @@ kson = json.loads('["foo", {"bar":["baz", null, 1.0, 2]}]')
 
 print('loaded all')
 import pobshell
-pobshell.shell()
+# pobshell.shell()
+pobshell.shell(DEBUG=True)
 # pobshell.shell(cmds='set allow_style never')
 # pobshell.shell(root=kson)
 

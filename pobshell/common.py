@@ -144,7 +144,7 @@ class PobPrefsClass:  # Singleton container object for pobshell preferences
 
     def __init__(self):
 
-        self.DEBUG = True  # True when debugging pobshell or creating tests (Check for POBDEBUG setting in?)
+        self.DEBUG = True  # True when debugging pobshell or creating tests
 
         # attributes that implement PV settings  ------------
         #   see Pobiverse __init__ for descriptions/help text
@@ -190,6 +190,19 @@ class PobPrefsClass:  # Singleton container object for pobshell preferences
         self.attributes = True
         self.simpleframes = True  # True -> map globals & vars ; False -> map raw Frame object attributes
 
+
+    def init_options(self, options_dict):
+        """
+        Set PobPrefs attributes passed in Pobmain **kwargs
+
+        Currently only handles DEBUG parameter
+        Args:
+            options_dict: {'DEBUG': required value for PobPrefs.DEBUG}
+        Returns:
+            None
+        """
+        for k, v in options_dict.items():
+            setattr(self, k, v)
 
 
     def map_description(self):   # TODO 24 Mar 2025 -- update this for onlycontents setting
