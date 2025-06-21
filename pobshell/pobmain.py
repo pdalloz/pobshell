@@ -630,9 +630,9 @@ class Pobiverse(cmd2.Cmd):
         find_flagfilter_group = self.find_parser.add_argument_group(
             title="Flag criteria",
             description=(
-                    "Match objects that satisfy is* functions. These match criteria don't take a pattern \n"
+                    "Find objects that satisfy is* functions. These criteria don't take a pattern \n"
                     + textwrap.fill(flag_desc, width=80))
-            )
+        )
 
         # flag_filter_group.add_argument(*args, **kwargs)
         for arg_names, arg_specs in INFOCMD_ARGS:
@@ -643,16 +643,17 @@ class Pobiverse(cmd2.Cmd):
         find_pattern_criteria_group = self.find_parser.add_argument_group(
             title='Pattern-matching criteria',
             description=(
-                  """Each PATTERN is a glob or regex for matching an object characteristic\n"""
-                  """--abc abstract base class interfaces, --abspath: pobshell path,\n"""
-                  """--cat: obj source code, --doc: obj doc string,\n"""
-                  """--repr: repr(obj), --str: str(obj), --filepath:  source file path,\n"""
-                  """--id: id(obj), --mro: mro tuple, --name: object's name,\n"""
-                  """--predicates: names of inspect.is* functions that return True,\n"""
-                  """--pydoc: pydoc content, --signature: signature of callable,\n"""
-                  """--type: type(obj), --typename: type(obj).__name__,\n"""                  
-                  """--which: defining class of method\n"""
-                  ))
+                """Find objects whose characteristics match a glob or regex PATTERN\n"""
+                """Each PATTERN selects objects whose Pobshell command result is a match\n"""
+                """--abc abstract base class interfaces, --abspath: pobshell path,\n"""
+                """--cat: obj source code, --doc: obj doc string,\n"""
+                """--repr: repr(obj), --str: str(obj), --filepath:  source file path,\n"""
+                """--id: id(obj), --mro: mro tuple, --name: object's name,\n"""
+                """--predicates: names of inspect.is* functions that return True,\n"""
+                """--pydoc: pydoc content, --signature: signature of callable,\n"""
+                """--type: type(obj), --typename: type(obj).__name__,\n"""
+                """--which: defining class of method\n"""
+            ))
 
         # find's pattern match filters ------
         # This loop adds additional filter args for do_find, now that PobPrefs.load_settings has picked up
