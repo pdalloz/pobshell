@@ -363,7 +363,7 @@ class Pobiverse(cmd2.Cmd):
         self.add_settable(cmd2.Settable('global_ns', str,
                                         "Global namespace used when evaluating Python expressions\n"
                                         "  Used by 'eval', 'rooteval' and 'printpy' commands.\n"
-                                        "  Also by '--matchpy' filter and find's '--printpy' option\n"                                                                                 
+                                        "  Also by '--matchpy' filter and find's '--printpy' option\n"
                                         "    ['none': Only builtins, '/': root namespace,\n"
                                         "     'user': user_defs.py namespace]",
                                         choices=["none", "/", "user"],
@@ -374,13 +374,13 @@ class Pobiverse(cmd2.Cmd):
                                         settable_object=PobPrefs))
 
         self.add_settable(cmd2.Settable('simple_cat_and_doc', bool,
-                                        """'cat' of property attributes combines fget/fset/fdel;\n""" 
-                                        """  'doc' suppresses empty docstrings and docs for instances\n"""                                        
+                                        """'cat' of property attributes combines fget/fset/fdel;\n"""
+                                        """  'doc' suppresses empty docstrings and docs for instances\n"""
                                         """  of builtin data classes such as lists and ints""",
                                         settable_object=PobPrefs))
 
         self.add_settable(cmd2.Settable('auto_import', bool,
-                                        "Automatically import subpackages and modules as members" 
+                                        "Automatically import subpackages and modules as members"
                                         "  (risk of code execution on import)\n",
                                         settable_object=PobPrefs))
 
@@ -661,7 +661,7 @@ class Pobiverse(cmd2.Cmd):
 
         # find's Python expression match ------
         find_pattern_criteria_group.add_argument('--matchpy', type=str, metavar='PYEXPR',
-                                                     help='match obj if python expression PYEXPR returns True')
+                                                 help='match obj if python expression PYEXPR returns True')
 
         # Add filter arguments for do_hide & do_tree ---------
         for args, kwargs in INFOCMD_ARGS:
@@ -686,13 +686,13 @@ class Pobiverse(cmd2.Cmd):
 
 
     def onecmd_plus_hooks(
-        self,
-        line: str,
-        *,
-        add_to_history: bool = True,
-        raise_keyboard_interrupt: bool = False,
-        py_bridge_call: bool = False,
-        orig_rl_history_length: Optional[int] = None,
+            self,
+            line: str,
+            *,
+            add_to_history: bool = True,
+            raise_keyboard_interrupt: bool = False,
+            py_bridge_call: bool = False,
+            orig_rl_history_length: Optional[int] = None,
     ) -> bool:
         """override cmd2 method to support 'echo' option outside scripts"""
         if self.echo:
@@ -707,11 +707,11 @@ class Pobiverse(cmd2.Cmd):
 
 
     def runcmds_plus_hooks(
-        self,
-        cmds: Union[List[HistoryItem], List[str]],
-        *,
-        add_to_history: bool = True,
-        stop_on_keyboard_interrupt: bool = False,
+            self,
+            cmds: Union[List[HistoryItem], List[str]],
+            *,
+            add_to_history: bool = True,
+            stop_on_keyboard_interrupt: bool = False,
     ) -> bool:
         """
         Override cmd2.runcmds_plus_hooks to abort the cmd loop as soon as the user presses Ctrl‑C.
@@ -726,9 +726,9 @@ class Pobiverse(cmd2.Cmd):
             try:
                 # Let cmd2 execute the command
                 if self.onecmd_plus_hooks(
-                    line,
-                    add_to_history=add_to_history,
-                    raise_keyboard_interrupt=stop_on_keyboard_interrupt,
+                        line,
+                        add_to_history=add_to_history,
+                        raise_keyboard_interrupt=stop_on_keyboard_interrupt,
                 ):
                     return True
 
@@ -783,7 +783,7 @@ class Pobiverse(cmd2.Cmd):
         # ------------
 
         line = data.statement.raw
-        if PobPrefs.contentkey_delimiter not in line:    
+        if PobPrefs.contentkey_delimiter not in line:
             return data
 
         btsplit = line.split(PobPrefs.contentkey_delimiter)
@@ -1042,7 +1042,7 @@ class Pobiverse(cmd2.Cmd):
 
         # extract path index (int) between $ char and '/' char or end of str
         subpath_pos = dollar_path.find('/')
-        if subpath_pos == -1:            
+        if subpath_pos == -1:
             index_str = dollar_path[1:]  # retrieve path from previously numbered results
         else:
             index_str = dollar_path[1:subpath_pos]
@@ -1337,8 +1337,8 @@ class Pobiverse(cmd2.Cmd):
 
         if type(self.curr_path.obj) is type(self) and self.curr_path.obj == self:  # avoid introspection recursion
             eval_ns = {k: v for k, v in
-                                    dirops.get_pk_members(self.curr_path.obj, obj_is_Pobiverse=True)
-                                    if type(k) is str and k.isidentifier() and k != 'py_locals'}
+                       dirops.get_pk_members(self.curr_path.obj, obj_is_Pobiverse=True)
+                       if type(k) is str and k.isidentifier() and k != 'py_locals'}
         else:
             # cmd2.do_ipy does something nasty to the namespace we provide
             # and cmd2.do_py inserts {app, quit, exit, Completer, readline} , so only give a copy of the dict
@@ -1738,13 +1738,13 @@ frames (how frame objects are mapped):
 
         # Complete token against topics
         topics = set([os.path.basename(f)[:-4] for f in os.listdir(common.MAN_FOLDER)
-                    if f.endswith(".txt") and os.path.isfile(os.path.join(common.MAN_FOLDER, f))])
+                      if f.endswith(".txt") and os.path.isfile(os.path.join(common.MAN_FOLDER, f))])
         strs_to_match = list(topics)
         return self.basic_complete(text, line, begidx, endidx, strs_to_match)
 
 
     man_parser = cmd2.Cmd2ArgumentParser(formatter_class=HideArgumentHelpFormatter,
-                                          description="")
+                                         description="")
     man_parser.add_argument(
         'TOPIC', nargs=argparse.OPTIONAL, help="Topic to retrieve help for", completer=man_completer
     )
@@ -1851,12 +1851,10 @@ frames (how frame objects are mapped):
         if os.path.exists(man_file_path):
             with open(man_file_path, 'r', encoding='utf-8') as f:
                 text = f.read()
-                # Process or display the text as needed.
         else:
             self.perror(f"No manual entry for '{' '.join(tokens)}'.")
             return
 
-        # from rich.markdown import Markdown
         formatted_output = render_custom_markdown(text)
         self.poutput(formatted_output)
 
@@ -2159,7 +2157,7 @@ frames (how frame objects are mapped):
                 else:
                     infocmd_func = lambda pn: [path_func(pn)]
                 max_col0_width = (max([ansi.style_aware_wcswidth(path_func_noE(pn)) for pn in targetpns[:arg_LIMIT]])
-                                    + (len(str(len(targetpns[:arg_LIMIT]))) + 2 if arg_enumerate else 0))
+                                  + (len(str(len(targetpns[:arg_LIMIT]))) + 2 if arg_enumerate else 0))
             else:
                 # "<infocmd> -1 -q" gives [line]   -- style = None
                 # "<infocmd> -1" as lsx_context gives ['    '+cmdstr, line]  --  style = None
@@ -2172,7 +2170,7 @@ frames (how frame objects are mapped):
                 else:   # infocmd -1 gives [path, line]  infocmd -l gives multiline [path, line]
                     styles = [{'fg': Fg[PobPrefs.current_theme['path']]}, {'fg': Fg[PobPrefs.current_theme['value']]}]
                     max_col0_width = (max([ansi.style_aware_wcswidth(path_func_noE(pn)) for pn in targetpns[:arg_LIMIT]])
-                                        + (len(str(len(targetpns[:arg_LIMIT]))) + 2 if arg_enumerate else 0))
+                                      + (len(str(len(targetpns[:arg_LIMIT]))) + 2 if arg_enumerate else 0))
 
 
         if max_col0_width is not None:
@@ -2290,7 +2288,7 @@ frames (how frame objects are mapped):
     tree_parser.add_argument('-p', '--paged', action='store_true', help="view output in pager")
     tree_parser.add_argument('--prune', nargs='+', help='Prune paths matching abspath pattern, typename or satisfying predicate')
     tree_parser.add_argument('path', metavar='PATH', completer=ns_path_complete, help="Specify the target (name or path)",
-                                suppress_tab_hint=True)
+                             suppress_tab_hint=True)
 
     @cmd2.with_argparser(tree_parser)
     def do_tree(self, args):
@@ -2300,10 +2298,10 @@ frames (how frame objects are mapped):
         filters_dict = extract_filter_criteria(args, infocmds.INFOFILTERS, for_show=False)
         if getattr(args, 'or'):
             match_func = None if len(filters_dict) == 0 else lambda pn: any(func(pn) for (_, func)
-                                                    in filters_dict.values() if func is not None)
+                                                                            in filters_dict.values() if func is not None)
         else:
             match_func = None if len(filters_dict) == 0 else lambda pn: all(func(pn) for (_, func)
-                                                    in filters_dict.values() if func is not None)
+                                                                            in filters_dict.values() if func is not None)
 
         exclude_func = None if args.all else self._nolist_func  # prune_prematch
 
@@ -2983,7 +2981,7 @@ frames (how frame objects are mapped):
             match_count = 0
             for pn in walk_chain:
                 self.clean_update_msgs_output()
-                
+
                 if not subcmd:
                     if args.enumerate:
                         self.poutput(boldit(str(match_count)) + ': ', end='')
