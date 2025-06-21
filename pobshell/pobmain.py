@@ -2455,14 +2455,14 @@ frames (how frame objects are mapped):
 
     test_parser = argparse.ArgumentParser()
     test_parser.add_argument('ACTION', nargs=1, choices=['init', 'show', 'cats', 'catt', 'load', 'edit', 'run', 'regenerate'],
-                            help="[init: Initialise new testsuite,  " +
-                                 "show: List collected cmds not yet written,  " +
-                                 "cats: Show contents of current script,   " +
-                                 "catt: Show contents of current transcript,   " +
-                                 "load: Load existing testsuite script,   " +
-                                 "edit: Edit current script,   " +
-                                 "run:  Run tests in current transcript,   " +
-                                 "regenerate:  Regenerate transcript from current script ")
+                             help="[init: Initialise new testsuite,  " +
+                                  "show: List collected cmds not yet written,  " +
+                                  "cats: Show contents of current script,   " +
+                                  "catt: Show contents of current transcript,   " +
+                                  "load: Load existing testsuite script,   " +
+                                  "edit: Edit current script,   " +
+                                  "run:  Run tests in current transcript,   " +
+                                  "regenerate:  Regenerate transcript from current script ")
     test_parser.add_argument('PATH', type=str, nargs='?', help="load testsuite script", const = '')
 
 
