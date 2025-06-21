@@ -456,7 +456,7 @@ class Pobiverse(cmd2.Cmd):
                                         settable_object=self))
 
         # find's trace messages break test suite output matching; set default trace_frequency to 0 in DEBUG mode
-        self.trace_frequency = 0 if PobPrefs.DEBUG else 1500
+        self.trace_frequency = 0 if PobPrefs.DEBUG else 500
         self.add_settable(cmd2.Settable('trace_frequency', int,
                                         "'find' command frequency of momentary update messages. \n"
                                         "  Object path is displayed for 1 in every N objects walked,\n"
