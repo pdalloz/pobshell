@@ -1753,6 +1753,7 @@ frames (how frame objects are mapped):
     man_parser.add_argument(
         'TOPIC', nargs=argparse.OPTIONAL, help="Topic to retrieve help for", completer=man_completer
     )
+    man_parser.add_argument('-p', '--paged', action='store_true', help="view output in pager")
 
     @cmd2.with_argparser(man_parser)
     def do_man(self, arg):
@@ -1785,7 +1786,7 @@ frames (how frame objects are mapped):
                               highlighter=NullHighlighter())
             lines = []
             for line in md_text.splitlines(keepends=False):
-                # Headings
+                # My own flavour of (kind-of) markdown
                 if line.startswith("# "):  # H1
                     h1 = Text(line[2:].strip(), style="bold underline")
                     lines.append(h1)
@@ -1824,15 +1825,13 @@ frames (how frame objects are mapped):
 
             return buffer.getvalue()
 
-
-
         topic = getattr(arg, 'TOPIC', None)
         if topic:
             tokens = topic.strip().split()
         else:
             tokens = None
 
-        # subtopic supporting code (but subtopics aren't implmented in manpages or parser)
+        # has some subtopic supporting code (but subtopics aren't implemented in manpages or parser)
         if not tokens:
             # No input provided; default to the introduction file.
             topic = 'introduction'
@@ -1861,7 +1860,13 @@ frames (how frame objects are mapped):
             return
 
         formatted_output = render_custom_markdown(text)
-        self.poutput(formatted_output)
+        # Show paged output if -p OPTION is used
+        #   or if 'man' command used without TOPIC (as suggested to users in "Welcome" banner)
+        if arg.paged or not tokens:
+            self.ppaged(formatted_output)
+        else:
+            self.poutput(formatted_output)
+
 
 
 
