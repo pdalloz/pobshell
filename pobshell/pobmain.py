@@ -2082,7 +2082,6 @@ frames (how frame objects are mapped):
         arg_pypath = getattr(args, argstr_pypath, False)
 
         arg_quiet = getattr(args, argstr_quiet, False)
-        # verbosity = 2 if arg_verbose else (0 if getattr(args, 'quiet', False) else 1)
         # N.B. arg_all, OPTION  -a is now handled by imethods
 
         arg_pattern = getattr(args, argstr_TARGET, None)
@@ -2123,7 +2122,7 @@ frames (how frame objects are mapped):
         else:
             path_attribute = 'name'
 
-        # A function to return possibly truncated string listing appropriate path for node
+        # A function to return possibly truncated string listing abspath|pypath|name for node
         #   _noE because it is used for displayed path string when no enumerate option was chosen
         path_func_noE = lambda pn: short(getattr(pn, path_attribute))
 
@@ -2236,7 +2235,7 @@ frames (how frame objects are mapped):
 
                     for linenum, line in enumerate(lines):
                         if arg_long:
-                            # infocmd -l  means line prefix paths instead of banners
+                            # infocmd -l  means lines are prefixed with paths instead of using a banner
                             self.poutput(f"{style_str(path_func(pn), 'path')} {line} ")
                         else:
                             # output a banner (blank if -q)
@@ -2245,7 +2244,12 @@ frames (how frame objects are mapped):
                                     self.output_path_banner(path_func(pn))
                             self.poutput(line)
 
-                    self.poutput()  # follow last line of each pn's multiline output with a blank line
+                    # Follow the last line of each pn's multiline output with a blank line,
+                    # unless the -q (quiet) option is used — in that case, the user is likely
+                    # counting lines and doesn't want blanks interfering.
+                    if not arg_quiet:
+                        self.poutput()
+
                     pn_num += 1
                     continue  # on to the next pn
 
