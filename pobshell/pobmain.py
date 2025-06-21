@@ -431,6 +431,10 @@ class Pobiverse(cmd2.Cmd):
         self.add_settable(cmd2.Settable('linenumbers', bool, "'cat' source code listings include (original) linenumbers",
                                         settable_object=PobPrefs))
 
+        self.add_settable(cmd2.Settable('flatten_multiline', bool, "Flatten multiline output to one (perhaps very wide) line",
+                                        settable_object=PobPrefs))
+
+
         #   cruft suppression -----
 
         self.add_settable(cmd2.Settable('missing', str,
@@ -2216,12 +2220,16 @@ frames (how frame objects are mapped):
 
                 if arg_paged and pn_num == 0:  # pragma: no cover
                     # -p option as applied here invokes cmd2 pager on first infocmd result only
+                    #    to avoid risk of user having to quit a pager for each member
                     self.output_path_banner(path_func(pn))
                     self.ppaged(output)
                     pn_num += 1
                     continue
 
-                lines = str(output).splitlines()[:arg_numlines]
+                if PobPrefs.flatten_multiline:
+                    lines = [output.replace('\n', '\\n')]
+                else:
+                    lines = str(output).splitlines()[:arg_numlines]
 
                 if not arg_oneline:  # multi line; we have infocmd without -1
 
@@ -2236,7 +2244,7 @@ frames (how frame objects are mapped):
                             # infocmd -l  means lines are prefixed with paths instead of using a banner
                             self.poutput(f"{style_str(path_func(pn), 'path')} {line} ")
                         else:
-                            # output a banner (blank if -q)
+                            # output a banner (unless -q)
                             if linenum == 0:
                                 if not arg_quiet:
                                     self.output_path_banner(path_func(pn))

@@ -158,6 +158,7 @@ class PobPrefsClass:  # Singleton container object for pobshell preferences
         self.column_width = 24
         self.null_separator = False
         self.linenumbers = False
+        self.flatten_multiline = False
 
         self.theme = 'dark'
         self._global_ns = '/'
