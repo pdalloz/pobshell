@@ -9,7 +9,7 @@ with open(os.path.join(here, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="pobshell",
-    version="0.1.1",
+    version="0.1.2",
     author="Peter Dalloz",
     author_email="pdalloz@proton.me",
     description="A Bash-like shell for Python objects",
