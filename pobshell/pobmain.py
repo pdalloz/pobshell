@@ -336,14 +336,16 @@ class Pobiverse(cmd2.Cmd):
 
         super().__init__(**prefs)
 
+        self.doc_leader = ("""Use 'help -v' to list command descriptions\n""" 
+                            """    'help <COMMAND>' for syntax""")
+        self.doc_header = """    'man' for list of man pages with example usage"""
+
         # SETTINGS-RELATED INITIALIZATION ===========================================================================
         if PobPrefs.DEBUG and ('-t' in sys.argv or '--test' in sys.argv):
             # we're in DEBUG mode, and running a test
             self.allow_style = ansi.AllowStyle.TERMINAL
-
             # prevent test scripts from clobbering history
             self.persistent_history_file = ''
-
         else:
             self.allow_style = ansi.AllowStyle.ALWAYS
 
