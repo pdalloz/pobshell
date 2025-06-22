@@ -1782,7 +1782,8 @@ frames (how frame objects are mapped):
             except:
                 return md_text
 
-            effective_width = min(PobPrefs.width, 80)
+            effective_width = PobPrefs.width
+            # effective_width = min(PobPrefs.width, 80)
             buffer = StringIO()
             console = Console(file=buffer, force_terminal=True, color_system="truecolor", width=effective_width,
                               highlighter=NullHighlighter())
