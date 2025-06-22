@@ -2955,7 +2955,7 @@ frames (how frame objects are mapped):
                 "match_func": match_func,
                 "prune_prematch": prune_prematch,
                 "prune_postmatch": lambda node: prune_postmatch and prune_postmatch(node) and node.abspath != start_path,
-                                  # Don't prune the pobnode we start at
+                # Don't prune the pobnode we start at
                 "find_flags": self.find_flags,
                 "feedback_freq": 0 if args.cmd2_statement.get().pipe_to else self.trace_frequency,
                 "explain_func": explain_func,
@@ -3053,7 +3053,7 @@ frames (how frame objects are mapped):
 
     def output_pobshell_banner(self):
         if not self.quiet:
-            self.poutput("\nɘmoɔlɘW to pobshell. Type '" + boldit("help") + "' for instructions; '"
+            self.poutput("\nɘmoɔlɘW to Pobshell - type '" + boldit("help") + "' for commands, '"
                          + boldit("quit") + "' to exit ")
             if PobPrefs.DEBUG:
                 self.poutput(datetime.now())
