@@ -864,7 +864,6 @@ class Cafe:
 	def we_have_got(self):
 		self._menu_item += "spam "
 		return self._menu_item + "eggs"
-
 / ▶ § test tree command with filter ;
 / ▶ tree Cafe -d 2 --isroutine
 Cafe  <class '__main__.Cafe'>  <class 'type'>
