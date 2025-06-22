@@ -1,0 +1,41 @@
+--------------------------------------------------------------------------------
+# quiet option
+
+## Suppress paths, names, banner headers and blank separator lines in output
+
+Typically used when counting object characteristics
+
+Use with 'find' to disable automatic output of paths for matched objects 
+Has same effect on introspection commands such as ls, predicates, typename
+Use with multi-line output to suppress banner headers 
+
+## Usage
+  / ▶ find [...] --quiet
+  / ▶ find [...] -q
+  / ▶ ls -1 -q [...] 
+  / ▶ str -q [...] 
+  / ▶ predicates -1 -q [...] 
+
+
+* Count member types 
+  / ▶ type -q -1 | sort | uniq -c
+
+* Find duplicate rows in array
+  /iris/data ▶ str -q | sort | uniq -c
+
+* analyse predicates commonly associated with data object types
+  / ▶ find . -L 3000 --isdata --printpy "f'{pn.typename} {pn.predicates}'" -q | sort | uniq -c | sort -k2, 2n
+    HOW IT WORKS
+    find 3000 data like objects:   find . -L 3000 --isdata
+    output the typename and the predicates (but not the name/path):
+        --printpy "f'{pn.typename} {pn.predicates}'" -q
+    sort them, count occurences and sort by number of occurrences:
+        sort | uniq -c | sort -k2, 2n
+
+* Count the lines in foo's docstring
+  N.B. without OPTION -q output would include a header banner and blank line
+  / ▶ doc -q foo | wc -l
+
+
+
+---

@@ -1,0 +1,46 @@
+--------------------------------------------------------------------------------
+# null_separator setting
+
+## Output null separator to support shell piping
+
+Adds null byte ('\0') separator in column oriented output.
+Commands with option '-l' or '-1' get a null byte between columns 
+for better integration with some command line tools
+
+## Syntax
+set null_separator true|false
+
+## Notes
+- Helps command line utilities identify columns with 'sort', 'uniq', 'awk' etc.
+- Can confuse text-based tools like 'grep'.
+
+## Examples
+set null_separator true
+
+/ ▶ memsize -1 | sort -k2,2n -t'\0'
+Cafe            0
+eval_key_maybe  0
+load_iris       0
+p               48
+cursor          168
+connection      240
+paths           448
+kson            576
+viking_cafe     680
+x               3048
+math            4856
+eq              5000
+iris            10360
+pobshell        22808
+json            27648
+ast             34904
+sklearn         43032
+pandas          51560
+pobmain         89456
+apsw            148392
+sympy           214696
+PVi             3794392
+ast_trees       4138056
+
+
+---

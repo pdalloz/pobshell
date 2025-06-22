@@ -11,7 +11,7 @@ Source code of functions, methods, classes, or modules.  From inspect.getsource
 
   / ▶ cat [OPTIONS] [FILTERS] [TARGET]
 
-* Examine code of live Python objects with no worries about file location or env 
+* Examine code of live Python objects 
 * Send code to LLM command line tools 
 * Diff code of live objects 
 * Search for code dependencies
@@ -71,8 +71,8 @@ Restrict the members a 'cat' command operates on
 
 * Apply COMMAND only to members whose source code matches PATTERN
   COMMAND --cat PATTERN
-E.g. Show docstrings for objects whose code includes "encoding" 
-  / ▶ doc --cat *encoding*
+    E.g. Show docstrings for objects whose code includes "encoding" 
+    / ▶ doc --cat *encoding*
 * Use 'find' command to discover objects whose code matches PATTERN
       / ▶ find --cat PATTERN
 * --cat PATTERN treats PATTERN as a case-sensitive glob pattern
@@ -93,7 +93,6 @@ E.g. Show docstrings for objects whose code includes "encoding"
 
 
 ## RELEVANT SETTINGS
-
 
 * simple_cat_and_doc
 	'cat' command concatenates code from fget/fset/fdel for property attributes  

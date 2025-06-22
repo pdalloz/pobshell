@@ -1,0 +1,106 @@
+--------------------------------------------------------------------------------
+
+# ABOUT MAN PAGES
+
+man pages give example usage for Pobshell commands & other topics
+
+* You're viewing this in the pager: 
+  - Scroll with 'j' & 'k', quit with 'q', pager help with 'h'
+
+## man command usage
+
+  /foo/bar ▶ man [-p] [TOPIC] 
+
+* -p OPTION: Use pager to view output
+* TOPIC supports <tab>-completion
+
+
+# LIST OF MAN PAGES
+
+### COMMAND NAMES ---------------
+
+* Each command listed here is a man page TOPIC
+  N.B. help -v shows additional (cmd2) commands that don't have man pages
+
+* Navigation commands
+cd                Navigate to object path                                                         
+cdh               Revisit an object path from the history of visited objects                      
+pwd               Show current object path                                                        
+pypath            Python path of object: Translate '/' to '.' and '[]' [experimental]             
+
+* List & search commands
+find              Search objects recursively                                                      
+ls                List members of object                                                          
+pathinfo          List each component of path using ls -x                                         
+tree              Tree diagram of object's members satisfying [MATCH CRITERIA]
+
+* Inspection commands
+abcs              Abstract base classes from collections.abc                                      
+cat               Source code of object using inspect.getsource                                   
+doc               Documentation string via __doc__ or inspect.getdoc                              
+filepath          File where the object was defined, from inspect.getfile                         
+id                Unique identifier of the object (id)                                            
+memsize           Total memory size of object and members, using pympler.asizeof                  
+module            Module that defines the object (inspect.getmodule)                              
+mro               Method resolution order (inspect.getmro)                                        
+pprint            Pretty-printed object value via pprint                                          
+predicates        Predicate functions that return True, from inspect.is* and pydoc.isdata
+pydoc             Auto-generated documentation using pydoc                                        
+repr              saferepr() representation of object value                                       
+signature         Function signature from inspect.signature                                       
+str               str() representation of object value                                            
+type              Type of the object                                                              
+typename          Name of the object’s type (type.__name__)                                       
+which             Defining class for a method or descriptor                                       
+
+* Mapping commands
+hide              Persistently hide members by filtering on characteristics                       
+map               Change the mapping from Python objects to Pobshell namespaces                   
+mount             Add object's class to root; and make it the current object path                 
+show              Remove persistent filters set with the 'hide' command                           
+
+* Python evaluation commands
+eval              Eval or exec Python expression at current object
+printpy           Evaluate and print Python expression in context of TARGET object                
+py                Enter an interactive Python shell with current object as namespace              
+rooteval          Eval or exec Python expression in root namespace 
+
+* Utility commands
+comment           Write multiline comment text to command history. End comment with ';'           
+die               Exit pobshell and prevent further use until pobshell.reset().                   
+man               Show man page for topic
+shell             Execute a command as if at the OS prompt, with Pobshell command substitution                                                        
+
+* For command shortcuts use 'man <COMMAND_NAME>'
+    SHORTCUT     COMMAND_NAME
+      !          shell
+      ##         comment
+      %          printpy
+      :          eval
+      ::         rooteval
+      ?          find
+
+  E.g.  / ▶ man shell
+
+
+### OPTIONS AND SETTINGS ---------------
+
+allow_style  -- Persistently strip ANSI styles and colors from output
+auto_import  -- Automatically import modules on access 
+enumerate    -- Number objects in command output for quick reference (-e)
+explain      -- Explain find command's prune and match decisions (--explain)
+global_ns    -- Set global namespace for Python expression evaluation
+LIMIT        -- Limit number of objects reported (-L)
+missing      -- Control how missing info is displayed
+noraise      -- Suppress Python exceptions from PYEXPR evaluation (--noraise)
+null_separator -- Add null byte ('\0') separator in column oriented output
+prune        -- Skip subpaths during search with 'find' or 'tree' (--prune)
+quiet        -- Suppress paths, names, banner headers and blank lines in output (-q)
+revisit      -- Revisit objects already met during 'find' recursive search?
+trace_frequency -- Frequency of update messages during 'find' command search
+
+
+### OTHER MAN PAGE TOPICS ---------------
+
+TARGET       --  Tell Pobshell commands what objects to operate on
+Evaluation   --  How Python expressions (PYEXPR) work in Pobshell

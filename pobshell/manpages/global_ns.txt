@@ -1,0 +1,41 @@
+--------------------------------------------------------------------------------
+# global_ns setting
+
+## Set global namespace for Python expression evaluation
+
+Defines what objects are available for 'matchpy', 'printpy', and 'eval'
+
+By default global_ns is '/'  so all objects in root namespace are available
+
+
+## Usage
+
+  / ▶ set global_ns [none|/|user]
+
+
+## Values
+  - /     Root object namespace  (default)
+  - none  No globals
+  - user  "user_defs.py" namespace
+
+
+## Examples
+
+* Import a function to root namespace for use with --matchpy
+  N.B. Assumes global_ns is "/", the default setting
+  / ▶ ::from myfoo import mybar
+  / ▶ find . --matchpy "mybar(x)"  
+ 
+* Allow searches with find command to match objects using a function "test"
+  declared in user_defs.py
+  / ▶ set global_ns user
+  / ▶ find . --matchpy "test(x)"   
+
+* Disable global namespace for PYEXPR evaluations
+  / ▶ set global_ns none
+  / ▶ find . --matchpy "test(x)"   
+  EXCEPTION of type 'NoSuchInfo' occurred with message: NoSuchInfo('matchpy exception at path: /: "name 'test' is not defined"')
+
+
+
+---

@@ -1,0 +1,65 @@
+--------------------------------------------------------------------------------
+
+# pathinfo command
+
+Show details of objects comprising a Pobshell path
+
+Run 'ls -x' for each object that's a component in TARGET path
+E.g.  '/ ▶ pathinfo /foo/bar'  runs 'ls -x /foo' and 'ls -x /foo/bar' 
+
+
+## USAGE
+
+  / ▶ pathinfo [TARGET]
+
+* For details on OPTIONS, FILTERS and TARGET 
+  / ▶ pathinfo -h 
+  / ▶ man TARGET
+
+
+## TIPS
+
+* You don't want a trailing / on TARGET for pathinfo command
+* pathinfo OPTIONS and FILTERS haven't been implemented
+
+
+## EXAMPLE
+
+  /Cafe/__gt__/__ge__ ▶ pathinfo .
+  Cafe  type                      <class '__main__.Cafe'>
+      type          <class 'type'>
+      predicates    isclass 
+      abcs          Hashable 
+      memsize       0
+      pydoc         class Cafe in module __main__
+      mro           (<class '__main__.Cafe'>, <class 'object'>)
+      cat           class Cafe:
+      signature     ()
+      module        <module '__main__' from '/Users/peterdalloz/Dropbox…
+      filepath      /Users/peterdalloz/Dropbox/PYTHONDROPBOX/pobshell_p…
+      pypath        Cafe
+      id            140571809844512
+  __gt__  wrapper_descriptor        <slot wrapper '__gt__' of 'object' …
+      type          <class 'wrapper_descriptor'>
+      predicates    ismethoddescriptor isroutine 
+      abcs          Callable Hashable 
+      memsize       72
+      doc           Return self>value.
+      pydoc         wrapper_descriptor
+      signature     (self, value, /)
+      pypath        Cafe.__gt__
+      id            4529324976
+      which         <class 'object'>
+  __ge__  method-wrapper            <method-wrapper '__ge__' of wrapper…
+      type          <class 'method-wrapper'>
+      predicates    ismethodwrapper isroutine 
+      abcs          Callable Hashable 
+      memsize       48
+      doc           Return self>=value.
+      pydoc         method-wrapper
+      signature     (value, /)
+      pypath        Cafe.__gt__.__ge__
+      id            5458781488
+      which         <class 'object'>
+
+---

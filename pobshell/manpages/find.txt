@@ -17,6 +17,10 @@ Search recursively walks members (attributes/contents) of object at this path. W
 For more info on find command's arguments
   / ▶ find -h
 
+* To automatically import modules met during search or introspection
+  N.B. May execute top-level code and change program state  
+  / ▶ set auto_import true
+
 
 ## MATCH CRITERIA  -- What you're looking for
   * Inspect predicates --ismodule, --isclass, --ismethod, ...
@@ -194,15 +198,15 @@ to show first line of docstring and fullpath  ("doc -1v .")
 * find objects to depth 2, whose typename is str (ie type is <class 'str'>) OR type matches pattern
   / ▶ find / -d 2 --typename str --type *list*  -o
 
-* analyse predicates commonly associated with common object types
-  / ▶ find . -L 3000 --isdata --matchpy "len(pn.predicates.split())>1" --printpy "f'{pn.typename} {pn.predicates}'" -q | sort | uniq -c | sort -k2
+* analyse predicate combinations commonly associated with data object types
+  / ▶ find . -L 3000 --isdata --matchpy "len(pn.predicates.split())>1" --printpy "f'{pn.typename} {pn.predicates}'" -q | sort | uniq -c | sort -k2, 2n
     HOW IT WORKS
-    find 3000 data like objects find . -L 3000 --isdata
-    with more than one predicate --matchpy "len(pn.predicates.split())>1"
-    output the typename and the predicates (but not the name/path)
+    find 3000 data like objects:   find . -L 3000 --isdata
+    with more than one predicate:  --matchpy "len(pn.predicates.split())>1"
+    output the typename and the predicates (but not the name/path):
         printpy "f'{pn.typename} {pn.predicates}'" -q
-    sort them, count occurences and sort by number of occurrences
-        sort | uniq -c | sort -k2
+    sort them, count occurences and sort by number of occurrences:
+        sort | uniq -c | sort -k2, 2n
 
 * Find 300 objects and report most common typename, predicates
   / ▶ find . -L 300 --printpy "f'{pn.typename} {pn.predicates}'" -q | sort | uniq -c | sort

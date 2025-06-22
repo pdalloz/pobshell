@@ -1,0 +1,26 @@
+--------------------------------------------------------------------------------
+# allow_style setting
+
+## setting for ANSI style control
+
+Use this setting to persistently turn off ANSI color/styling in output 
+
+## Syntax
+set allow_style VALUE
+
+## Values
+* Always    -- Use ANSI styles
+* Never     -- Don't use ANSI styles
+* Terminal  -- Suppress when piping externally
+
+
+## Notes
+Some external shell commands don't like text containing ANSI codes
+Most Pobshell commands can temporarily suppress ANSI styling with OPTION -u
+
+
+## Examples
+set allow_style Terminal
+set allow_style Never
+
+---

@@ -1,0 +1,62 @@
+--------------------------------------------------------------------------------
+
+# Enumerate option for Inspection commands
+### -e --enumerate
+
+Number objects in command output for quick reference. Adds a numeric index to each object listed.
+
+- '$0', '$1', etc. refer to individual matches.
+- '$$' refers to the entire enumerated set.
+
+## NOTE  
+
+* Further filters aren't applied to the enumerated set $$ 
+	E.g. 'ls $$ --isclass' lists all of $$ not just the --isclass matches
+
+
+## EXAMPLES
+
+* List data members of current path and enumerate them
+  / ▶ ls -e --isdata
+  0: ast_trees   2: cursor  4: iris  6: p      8: viking_cafe
+  1: connection  3: eq      5: kson  7: paths  9: x    
+
+  * Use numbered object as TARGET
+    Long listing of object number 3
+    / ▶ ls -l $3
+    eq  Add                       X + 1
+
+  * Use set of numbered objects as TARGET
+    Report oneline docstrings for all the data members
+    / ▶ doc -1 $$
+    connection   This object wraps a `sqlite3 pointer
+    eq           Expression representing addition operation for algebraic group.
+    iris         Container object exposing keys as attributes.
+    x            Symbol class is used to create symbolic variables.
+
+
+* Find objects with more than 100 attributes and enumerate them. Limit search to 5 results. Don't raise exceptions from the matchpy expression
+  / ▶ find . --matchpy "len(dir(self)) > 100" -e -L 5 --noraise
+  0: /apsw
+  1: /ast
+  2: /connection
+  3: /pandas
+  4: /sympy
+
+  * Make first match the current object
+    / ▶ cd $0
+    /apsw ▶ 
+
+  * List __dict__ attribute of second match
+    /apsw ▶ ls -l $1/__dict__
+    __dict__  dict                      {'AST': <class 'ast.AST'>, 'Add':…  
+
+  * Report oneline docstrings for all matches 
+    /apsw ▶ doc -1 $$
+    ast         ast
+    connection  This object wraps a `sqlite3 pointer
+    pandas      pandas - a powerful data analysis and manipulation librar…
+    sympy       SymPy is a Python library for symbolic mathematics. It ai…
+
+
+---

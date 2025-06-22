@@ -1,0 +1,60 @@
+--------------------------------------------------------------------------------
+# auto_import setting
+## Automatically import modules on access
+
+When enabled, objects like modules are auto-imported during listing or search.
+
+## Syntax
+set auto_import true|false
+
+## Notes
+Useful when exploring libraries or unfamiliar APIs.
+
+Using 'ls' or any introspection command on members of a module object will auto import it, and report its attributes.
+
+* WARNING: Modules may execute code on import
+
+## Example #1
+* Note use of :: to import an object to root namespace
+  / ▶ ::import sympy
+* auto_import defaults to False, so some module members aren't present
+  / ▶ ls -l sympy/ | grep this
+  / ▶ ls -l sympy/this
+  ls: sympy/this: No such path
+* Setting auto_import to True imports sympy members on introspection
+  / ▶ set auto_import true 
+  auto_import - was: False
+  now: True
+* Note the wall of text printed by sympy's "this" attribute on import.  
+  N.B. Only the last output line is the listing result
+  / ▶ ls -l sympy/this
+  The Zen of SymPy
+  
+  Unevaluated is better than evaluated.
+  The user interface matters.
+  Printing matters.
+  Pure Python can be fast enough.
+  If it's too slow, it's (probably) your fault.
+  Documentation matters.
+  Correctness is more important than speed.
+  Push it in now and improve upon it later.
+  Coverage by testing matters.
+  Smart tests are better than random tests.
+  But random tests sometimes find what your smartest test missed.
+  The Python way is probably the right way.
+  Community is more important than code.
+  this  module                  <module 'sympy.this' from '/opt/anaconda3/envs/…
+* this attribute is now persistently present even if auto_import is changed
+  / ▶ ls -l sympy/ | grep this
+  this                          module                    <module 'sympy.this' …
+
+## Example #2
+  / ▶ find /sklearn --name *randomforest* -i
+  / ▶ set auto_import true
+  auto_import - was: False
+  now: True
+  / ▶ find /sklearn --name *randomforest* -i
+  /sklearn/ensemble/RandomForestClassifier
+  /sklearn/ensemble/RandomForestRegressor
+  [...]
+---

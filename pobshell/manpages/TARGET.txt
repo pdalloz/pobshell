@@ -1,0 +1,124 @@
+--------------------------------------------------------------------------------
+# TARGET argument
+
+The TARGET argument specifies what objects a command operates on
+
+* Commands like 'cd' and 'find' require a specific path or name
+
+* Inspection commands like 'ls', 'cat', and 'doc' accept a glob pattern
+
+* TARGET ignores -i and -r options.  
+  If you need -i or -r, use  --name PATTERN  or  --abspath PATTERN
+
+
+## Path Syntax
+
+Paths use Linux syntax; relative and absolute paths are supported.  
+
+Path separator is /
+  / is root
+  . is current path
+  .. is parent path
+
+
+## TARGET for inspection commands like ls, cat and doc
+
+* No TARGET provided:  Apply command to all members of current object
+
+* Name or path with trailing slash: Apply command to members of object at path
+	/ ▶ ls /spam/spam/
+    / ▶ ls spam/
+
+* Name: Apply command to member of current object
+	/ ▶ ls spam
+
+* Absolute path: Apply command to member at given path
+	/ ▶ ls /spam/spam
+
+* Name or path with wildcards: Apply command to to matching members
+  N.B. Only supported in name component of path
+  N.B. Only glob patterns supported (* ? and []).  
+
+	/ ▶ ls /spam/spa*
+	/ ▶ ls sp*m
+
+* With backticks: Escape member key if not a valid identifier
+	/ ▶ ls /mylist/`42`
+    / ▶ cd mydict/`'email.errors'`
+     
+
+## TARGET paths for contents of containers
+  Requires 'map everything' or 'map contents'
+
+* Dict items whose key is a valid Python identifier 
+
+  Member name is the item's key   
+
+    E.g. my_dict          
+    / ▶ ls /my_dict
+    E.g. my_dict['int']      # object is dict item whose key is the string 'int'
+  	/ ▶ cd my_dict/int
+
+* Dict items whose key is not a valid Python identifier 
+  I.e. key is not a string, or string fails .isidentifier()
+
+  Member name is repr of the key, delimited by backticks
+
+    E.g. my_dict[0]           # key is the integer 0
+      / ▶ ls my_dict/`0`
+    E.g.  my_dict['0']        # key is the string '0'
+      / ▶ my_dict/`'0'`
+
+	N.B. It's possible but extremely rare for different Python objects to have the same repr.  In this case only one entry will appear.
+
+* Any path containing a space must be enclosed in double quotes
+
+  E.g. mydict['a b']     # key is string 'a b' 
+  / ▶ cd "/my_dict/`'a b'`"
+
+  E.g. my_dict[int]      # key is class __builtins__.int & repr str has a space
+	/ ▶ ls "/my_dict/`<class 'int'>`"
+
+    
+
+## Use Python path syntax with ':' or '::' prefix to specify a TARGET
+
+* ':' and '::' prefixes don't support tab completion, wildcards, or trailing /
+
+* path prefix ':' is relative to current path
+  E.g.
+    / ▶ cat -n 20 :mylist[42]
+  Equivalent to 
+    / ▶ cat -n 20 mylist/`42`
+
+  E.g.  / ▶ doc :os.path.join
+  E.g.  / ▶ cat :datetime.datetime.now
+  E.g.  / ▶ ls -l :PVi.poutput
+  E.g.  / ▶ printpy "self" :inspect.BoundArguments.args
+  E.g.  /Foo ▶ cd :bar
+
+* path prefix '::' is from root
+  E.g.
+    /myclass ▶ cat ::myobj.my_func   
+  Equivalent to 
+    /myclass ▶ cat /myobj/my_func   
+
+  E.g.  /x ▶ cd ::Foo.bar
+  E.g.  / ▶ doc ::inspect.signature
+  E.g.  / ▶ ls -l :PVi.tree_parser.error
+  E.g.  / ▶ cd :inspect.BoundArguments.args
+
+
+
+
+## Examples
+
+/ ▶ ls -l mylist/`0`
+/ ▶ cat /some/obj
+/ ▶ doc -1 /some/obj/
+/json ▶ cat ../*f*
+/ ▶ predicates -1 /some/obj/get*
+
+
+
+---

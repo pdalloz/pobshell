@@ -1,0 +1,25 @@
+--------------------------------------------------------------------------------
+# --revisit option
+
+## Control revisiting of objects during recursive search
+
+Choose how 'find' treats objects seen at multiple paths.
+
+* Default is 'successes': objects leading to successful matches are revisited.
+* TIP: If search's match criteria depend on path or parents use "--revisit all"
+
+
+## USAGE
+--revisit {none,successes,all}
+
+## MODES
+- none: Never revisit any object
+- successes (default): Revisit if path led to a match
+- all: Revisit even if not matched before
+
+## EXAMPLES
+  / ▶ find . --str 30 --revisit none
+  / ▶ find . --abspath */foo/* --revisit all
+
+
+---

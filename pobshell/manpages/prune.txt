@@ -1,0 +1,28 @@
+--------------------------------------------------------------------------------
+# prune option
+
+## Skip subpaths during search with 'find' or 'tree' 
+
+Exclude parts of the object graph from traversal. Supports multiple values.
+
+## Syntax
+--prune PATTERN [PATTERN ...]
+
+## Patterns
+- abspath (e.g. '/sys/*')
+Any prune pattern containing '/' is treated as an abspath glob pattern
+- predicate (e.g. 'ismodule', 'isclass')
+	Any prune pattern starting 'is' is treated as a predicate 
+- negated predicate ('nismodule', 'nisdata')
+	Any prune pattern starting 'nis' is treated as a negated predicate 
+- typename (e.g. 'str', 'list', '*descriptor*')
+	Any prune pattern that doesn't contain '/', or start 'is..' or 'nis..'
+
+## Examples
+  / ▶ find . --prune /sys/*  
+  / ▶ find . --prune Symbol
+  / ▶ tree . --prune ismodule
+  / ▶ find . --prune nisdata 
+  / ▶ find . --prune /sympy /sys/* Symbol ismodule
+
+---

@@ -1,0 +1,15 @@
+--------------------------------------------------------------------------------
+# noraise
+## Suppress Python exceptions from PYEXPR evaluation
+
+Ignore exceptions from '--matchpy', '--printpy', or '--cmd'.
+
+## Syntax
+
+--noraise
+
+## Examples
+  / ▶ find . --matchpy "1 / self" --noraise
+  / ▶ find . --cmd "doc ." --noraise
+
+---

@@ -1,0 +1,22 @@
+--------------------------------------------------------------------------------
+
+# trace_frequency setting
+
+Control frequency of update messages when searching with 'find' command
+
+Sets how often 'find' command reports the path being walked
+
+
+## Syntax
+
+  / ▶ set trace_frequency N
+
+Report 1 in every N 
+
+## Examples
+
+* find objects with code called __str__
+  / ▶ set trace_frequency 100
+  / ▶ find --cat * --name  __str__  -a /
+
+---

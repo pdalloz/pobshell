@@ -1,0 +1,40 @@
+--------------------------------------------------------------------------------
+
+# explain option
+
+## Explain find command's prune and match decisions 
+
+When added to a 'find' command, this option outputs reasoning behind whether an object matched or failed to match the current search filters
+
+Useful for debugging complex searches.
+
+## USAGE
+
+  / ▶ find [...] --explain PATH_PATTERN
+
+When an object being searched by "find" has an abspath that matches PATH_PATTERN glob, each step in find's decision making is shown.
+
+
+## EXAMPLE
+
+  / ▶ find . --name *foo* --explain */bar/
+
+
+## SEE ALSO
+
+* trace_frequency setting
+  E.g. / ▶ set trace_frequency 100
+
+* find_flags setting
+  E.g. / ▶ set find_flags 'WP'
+
+  N.B. Reset find_flags setting
+  / ▶ set find_flags ''
+  
+
+
+
+
+
+
+---

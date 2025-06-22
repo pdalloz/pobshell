@@ -1,0 +1,22 @@
+--------------------------------------------------------------------------------
+# LIMIT
+
+## Limit number of matches
+
+Restrict number of objects reported by 'find' and introspection commands.
+
+## Syntax
+-L N
+
+Report a maximum of N objects
+
+## Examples
+find . --typename list -L 10
+ls -l -N 30
+
+## Tips
+* Don't confuse with OPTION "-n" (truncates number of lines reported per member)
+* See 'contents_limit' setting for hard limit on container object contents
+  when using 'map contents' or 'map everything' 
+
+---

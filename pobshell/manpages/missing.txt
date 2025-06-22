@@ -1,0 +1,26 @@
+
+--------------------------------------------------------------------------------
+# missing setting
+
+## Control how missing info is displayed
+
+This setting affects how commands like 'doc', 'cat', and 'signature' behave when they cannot retrieve the requested information.
+
+Accepted values:
+
+* 'skip'      Omit result from output altogether (default)
+* 'blank'     Include object but leave info blank
+* 'message'   Show exception message from info retrieval attempt
+
+## Usage
+
+  / ▶ set missing skip
+  / ▶ set missing message
+
+
+## Tip
+
+Switch to 'message' when troubleshooting to see what's missing and why.
+
+---
+
