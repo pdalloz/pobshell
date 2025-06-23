@@ -3053,7 +3053,7 @@ frames (how frame objects are mapped):
 
     def output_pobshell_banner(self):
         if not self.quiet:
-            self.poutput("\nɘmoɔlɘW to Pobshell - type '" + boldit("help") + "' for commands, '"
+            self.poutput("\nWelcome to Pobshell - type '" + boldit("help") + "' for commands, '"
                          + boldit("quit") + "' to exit ")
             if PobPrefs.DEBUG:
                 self.poutput(datetime.now())
