@@ -4,6 +4,11 @@ All notable changes to this project will be documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com).
 
+## [0.1.3] - 2025-06-24
+### Changed
+- Fix terminal width detection bug
+- Change idiosyncratic Welcome banner. I liked it, but horrible in other fonts 
+
 ## [0.1.2] - 2025-06-22
 ### Added
 - New `flatten_multiline` setting (default: `False`)
