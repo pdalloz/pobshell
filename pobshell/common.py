@@ -144,7 +144,7 @@ class PobPrefsClass:  # Singleton container object for pobshell preferences
 
     def __init__(self):
 
-        self.DEBUG = True  # True when debugging pobshell or creating tests
+        self.DEBUG = False  # True when debugging pobshell or creating tests
 
         # attributes that implement PV settings  ------------
         #   see Pobiverse __init__ for descriptions/help text
@@ -152,6 +152,7 @@ class PobPrefsClass:  # Singleton container object for pobshell preferences
         # TODO: Consolidate these instance attributes with class attributes above
 
         # NB Need consistent width setting for tests, or output won't match
+        # DEBUG may be overridden in init_options; width and path_width will be updated if necessary
         self.width = 120 if self.DEBUG else shutil.get_terminal_size().columns
         self.path_width = self.width * 3 // 2  # this value is also updated in load_settings
 
@@ -204,6 +205,12 @@ class PobPrefsClass:  # Singleton container object for pobshell preferences
         """
         for k, v in options_dict.items():
             setattr(self, k, v)
+        #  update attributes that depend on other attributes
+        #  TODO make this a method
+        if 'width' not in options_dict:
+            self.width = 120 if self.DEBUG else shutil.get_terminal_size().columns
+        if 'path_width' not in options_dict:
+            self.path_width = self.width * 3 // 2  # this value is also updated in load_settings
 
 
     def map_description(self):   # TODO 24 Mar 2025 -- update this for onlycontents setting
