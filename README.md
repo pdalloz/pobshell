@@ -38,19 +38,6 @@ For example:
 
 ---
 
-## Command targets
-
-- **Omit target** — operates on *all* members of the current object. Use `-a` to include private attributes & dunders.  
-  *E.g.* `/json/JSONDecodeError ▶ ls -la`
-- **`*pattern*`** — operates on members with matching names.  
-  *E.g.* `/json ▶ ls -l *Decode*`
-- **`/path` (no trailing slash)** — treat that object itself as the target.  
-  *E.g.* `/ ▶ ls -l /json/JSONDecodeError`
-- **`/path/` (trailing slash)** — operate on *members* of that object.  
-  *E.g.* `/ ▶ ls -l /json/JSONDecodeError/`
-
----
-
 ## Core Commands
 
 Pobshell inspection commands are built on Python’s `inspect` module (mostly).
@@ -82,20 +69,48 @@ Pobshell inspection commands are built on Python’s `inspect` module (mostly).
 
 ---
 
+## Command targets
+
+`command [TARGET]`
+
+- **Omit target** — inspect *all* members of the current object. Use `-a` to include private attributes & dunders.  
+  *E.g.* `/json/JSONDecodeError ▶ ls -la`
+- **`*pattern*`** — inspect members with matching names.  
+  *E.g.* `/json ▶ ls -l *Decode*`
+- **`/path` (no trailing slash)** — inspect a specific target object.
+  *E.g.* `/ ▶ ls -l /json/JSONDecodeError`
+- **`/path/` (trailing slash)** — inspect *members* of target object.  
+  *E.g.* `/ ▶ ls -l /json/JSONDecodeError/`
+
+---
+
 ## Filters
 
-Most commands work on the *members* of the current object. Use filters to control what is inspected. Filter members by type, docstring, source, str representation, Python expression, …
+Use filters to control _which_ members inspection commands report — filter by type, docstring, source, string representation, Python expression, and more.  
 
-- `--isfunction`, `--ismodule`, `--isclass`, etc.  
-  *E.g.* `/path ▶ doc -1 --ismodule`
-- `--doc PATTERN` or `--cat PATTERN`  
-  *E.g.* `/path ▶ cat -n 4 --doc *Encoding*`  
-  *E.g.* `/path ▶ doc --cat "class\\s+oyster" -ir`  
-  *E.g.* `/path ▶ find . --cat *TODO* -i`
-- `--str PATTERN`, `--mro PATTERN`, `--abcs PATTERN`  
-  *E.g.* `/iris/data ▶ ls -l --str *6.3*`
-- `--matchpy PYTHON_EXPR`  
-  *E.g.* `/path ▶ find --matchpy "isinstance(self, Cafe)"`
+_N.B. Use same syntax for recursive search with `find` command._
+
+* Filter by inspect predicate
+  - `--isfunction`, `--ismodule`, `--isclass`, etc.  
+    _E.g._  
+    `/path ▶ doc -1 --ismodule`  
+    `/path ▶ find . --ismodule`
+
+* Filter by Pobshell inspection command 
+  - `--doc PATTERN` or `--cat PATTERN`  
+    _E.g._  
+    `/path ▶ cat -n 4 --doc *Encoding*`  
+    `/path ▶ doc --cat "class\\s+oyster" -ir`  
+    `/path ▶ find . --cat *TODO* -i`
+
+  - `--str PATTERN`, `--mro PATTERN`, `--abcs PATTERN`  
+    _E.g._  
+    `/iris/data ▶ ls -l --str *6.3*`
+
+* Filter by Python expression
+  - `--matchpy PYTHON_EXPR`  
+    _E.g._  
+    `/path ▶ find --matchpy "isinstance(self, Cafe)"`
 
 ---
 
@@ -122,18 +137,22 @@ When working with contents, use backticks around any "name" not valid as a Pytho
 
 ```
 /path ▶ ls /mylist/`0`                    # list index
-/path ▶ cd /mydict/`'0'`                  # string key
+/path ▶ cd /mydict/`'0'`                  # string key 
 /path ▶ predicates /sympy/.../`exp`       # symbolic key
 /path ▶ ls -x "/mydict/`foo bar`"         # space in key
 ```
 
-Python expressions inside filters and commands:
+---
+
+## Python expressions
+
+Use Python expressions in filters and commands:
 
 ```
 /path ▶ ls -x --matchpy "isinstance(self, Cafe)"
 /path ▶ find --typename list --printpy "self[-1]"
 /path ▶ printpy "sum(self)" /iris/data
-/path ▶ ::import inspect    # add inspect module as a member of root
+/path ▶ ::import inspect    # add inspect module to root
 /path ▶ ::x = 42            # assign x in root
 ```
 
