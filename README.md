@@ -164,6 +164,7 @@ Use Python expressions in filters and commands:
 - Syntax coloring and pagination
 - Shortcuts, macros, aliases, scripting
 - Supports light and dark themes
+- Built in `help` and `man` pages full of examples
 
 ---
 
