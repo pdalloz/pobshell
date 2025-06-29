@@ -4,6 +4,8 @@
 
 Think `cd`, `ls`, `cat`, and `find` — but for **Python objects** instead of files. Stroll around your code, runtime state, and data structures. Inspect everything: modules, classes, live objects. It's pick‑up‑and‑play: familiar commands plus optional new tricks. A fun and genuinely useful way to explore a Python app, package, or Python itself.
 
+2 minute video demo: https://www.youtube.com/watch?v=I5QoSrc_E_A 
+
 ---
 
 ## What Is Pobshell For?
