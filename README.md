@@ -51,12 +51,13 @@ For example:
 
 ## Core Commands
 
-Pobshell commands are built on Python’s `inspect` module (mostly).
+Pobshell inspection commands are built on Python’s `inspect` module (mostly).
 
 | Command  | Description                                   |
 |----------|-----------------------------------------------|
 | `ls`     | List object members                           |
 | `ls -l`  | Long listing: names, types, values            |
+| `ls -x`  | Extra long listing: `ls -l`, `cat -1`, `doc -1`,... |
 | `cat`    | Show syntax‑highlighted source code           |
 | `doc`    | Print docstrings                              |
 | `abcs`   | Show abstract base classes                    |
@@ -64,8 +65,18 @@ Pobshell commands are built on Python’s `inspect` module (mostly).
 | `memsize` | Total memory size of object and members      |
 | `tree`   | Diagram object structure                      |
 | `find`   | Recursive search                              |
-
-Other commands: `mro`, `pydoc`, `repr`, `type`, `signature`, `filepath`, ...
+| `filepath` | File where the object was defined           |
+| `id`     | Unique identifier of the object               |
+| `module` | Module that defines the object                |
+| `mro`    | Method resolution order                       |
+| `pprint` | Pretty-printed object value                   |
+| `pydoc`  | Auto-generated documentation                  |
+| `repr`   | saferepr() representation of object value     |
+| `signature` | Function signature                         |
+| `str`    | str() representation of object value          |
+| `type`   | Type of the object                            |
+| `typename` | Name of the object’s type (type.__name__)   |
+| `which`  | Defining class for a method or descriptor     |
 
 ---
 
@@ -130,7 +141,7 @@ Python expressions inside filters and commands:
 
 - Tab completion & history
 - Syntax coloring and pagination
-- Shortcuts, macros, aliases
+- Shortcuts, macros, aliases, scripting
 - Supports light and dark themes
 
 ---
