@@ -40,7 +40,7 @@ setup(
         "pyreadline3; sys_platform=='win32'",
     ],
 
-    python_requires=">=3.12,<4",
+    python_requires=">=3.11,<4",
 
     
     # ── Additional metadata (highly recommended for PyPI) ──

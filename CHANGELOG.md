@@ -4,10 +4,19 @@ All notable changes to this project will be documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com).
 
+## [0.1.4] - 2025-07-01
+### Changed
+- Minimum supported Python lowered from 3.12 to 3.11
+### Internal
+- Add .yml spec for Py 3.11 test environment
+- Rename prior .yml specs to be consistent
+- Add & rename test transcripts to match  
+
+
 ## [0.1.3] - 2025-06-24
 ### Changed
 - Fix terminal width detection bug
-- Change idiosyncratic Welcome banner. I liked it, but horrible in other fonts 
+- Change idiosyncratic Welcome banner
 
 ## [0.1.2] - 2025-06-22
 ### Added

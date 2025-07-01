@@ -192,6 +192,7 @@ $ pip install pobshell
 
 | Platform         | Python | Basic func. | Tab completion | Unit tests |
 |------------------|--------|--------------|----------------|-------------|
+| macOS            | 3.11   | Yes          | Yes            | Yes         |
 | macOS            | 3.12   | Yes          | Yes            | Yes         |
 | Linux            | 3.12   | Yes          | Yes            | ?           |
 | Win 10 WSL       | 3.13   | Yes          | Yes            | Yes         |
