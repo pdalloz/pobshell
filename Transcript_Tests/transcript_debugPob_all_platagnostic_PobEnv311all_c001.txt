@@ -1,0 +1,1000 @@
+/ ▶ § ;
+/ ▶ ls
+Cafe  ast        connection  eq    json  load_iris  p       paths    sympy  viking_cafe
+apsw  ast_trees  cursor      iris  kson  math       pandas  sklearn  sys    x          
+/ ▶ § wildcard wrapped name pattern ;
+/ ▶ ls *nn*
+connection
+/ ▶ § ls case sensitivity ;
+/ ▶ ls C*
+Cafe
+/ ▶ § ls case sensitivity ;
+/ ▶ ls c*
+connection  cursor
+/ ▶ § ls one name ;
+/ ▶ ls ast
+ast
+/ ▶ § ls name with trailing / ;
+/ ▶ ls ast/
+AST               Del             IntEnum         Name                        Sub             expr_context         
+Add               Delete          Interactive     NameConstant                Subscript       fix_missing_locations
+And               Dict            Invert          NamedExpr                   Suite           get_docstring        
+AnnAssign         DictComp        Is              NodeTransformer             Try             get_source_segment   
+Assert            Div             IsNot           NodeVisitor                 TryStar         increment_lineno     
+Assign            Ellipsis        JoinedStr       Nonlocal                    Tuple           iter_child_nodes     
+AsyncFor          Eq              LShift          Not                         TypeIgnore      iter_fields          
+AsyncFunctionDef  ExceptHandler   Lambda          NotEq                       UAdd            keyword              
+AsyncWith         Expr            List            NotIn                       USub            literal_eval         
+Attribute         Expression      ListComp        Num                         UnaryOp         main                 
+AugAssign         ExtSlice        Load            Or                          While           match_case           
+AugLoad           FloorDiv        Lt              Param                       With            mod                  
+AugStore          For             LtE             Pass                        Yield           nullcontext          
+Await             FormattedValue  MatMult         Pow                         YieldFrom       operator             
+BinOp             FunctionDef     Match           PyCF_ALLOW_TOP_LEVEL_AWAIT  alias           parse                
+BitAnd            FunctionType    MatchAs         PyCF_ONLY_AST               arg             pattern              
+BitOr             GeneratorExp    MatchClass      PyCF_TYPE_COMMENTS          arguments       slice                
+BitXor            Global          MatchMapping    RShift                      auto            stmt                 
+BoolOp            Gt              MatchOr         Raise                       boolop          sys                  
+Break             GtE             MatchSequence   Return                      cmpop           type_ignore          
+Bytes             If              MatchSingleton  Set                         comprehension   unaryop              
+Call              IfExp           MatchStar       SetComp                     contextmanager  unparse              
+ClassDef          Import          MatchValue      Slice                       copy_location   walk                 
+Compare           ImportFrom      Mod             Starred                     dump            withitem             
+Constant          In              Module          Store                       excepthandler 
+Continue          Index           Mult            Str                         expr          
+/ ▶ § ls tail component with trailing pattern ;
+/ ▶ ls ast/c*
+cmpop  comprehension  contextmanager  copy_location
+/ ▶ § ls of name with trailing /  where name's ns is empty ;
+/ ▶ ls /ast/comprehension/
+/ ▶ § ls -a of name with trailing /  where name's ns has only hidden members ;
+/ ▶ ls -a /ast/comprehension/
+__class__    __eq__            __gt__             __lt__          __reduce__     __str__         
+__delattr__  __format__        __hash__           __match_args__  __reduce_ex__  __subclasshook__
+__dict__     __ge__            __init__           __module__      __repr__       __weakref__     
+__dir__      __getattribute__  __init_subclass__  __ne__          __setattr__    _attributes     
+__doc__      __getstate__      __le__             __new__         __sizeof__     _fields         
+/ ▶ § ls -a of pattern containing ? ;
+/ ▶ ls -a /ast/comprehens?on
+comprehension
+/ ▶ cd /sympy/integrals/..
+/sympy ▶ § trailing /.. ;
+/sympy ▶ pwd
+\/sympy
+/sympy ▶ cd /sympy/integrals
+/sympy/integrals ▶ § cd abs path ;
+/sympy/integrals ▶ pwd
+\/sympy\/integrals
+/sympy/integrals ▶ cd /
+/ ▶ § back to root ;
+/ ▶ pwd
+\/
+/ ▶ cd /sympy/integrals/
+/sympy/integrals ▶ § cd abs path with trailing / ;
+/sympy/integrals ▶ pwd
+\/sympy\/integrals
+/sympy/integrals ▶ cd /
+/ ▶ cd nosuchpath
+cd: nosuchpath: No such path
+/ ▶ § still in root, last cd cmd should have failed ;
+/ ▶ pwd
+\/
+/ ▶ § relative parentdir is part of abspath, and ls invoked with -v ;
+/ ▶ ls -v iris/data/../target
+\/iris\/target
+/ ▶ cd iris
+/iris ▶ § ls in ns with few members ;
+/iris ▶ ls 
+DESCR  data  data_module  feature_names  filename  frame  target  target_names
+/iris ▶ § No such path error for ls _* in ns with no hidden members ;
+/iris ▶ ls _*
+ls: _*: No such path
+/iris ▶ § ls _* returns no matches despite ns having hidden members, because lacks -a argument ;
+/iris ▶ ls data/_*
+/iris ▶ cd ..
+/ ▶ § ls _* with no hidden members ;
+/ ▶ ls /sklearn/_*
+/ ▶ § ls -a _* with hidden members ;
+/ ▶ ls -a /sklearn/_*
+_BUILT_WITH_MESON  __builtins__   __doc__     __name__     __spec__           _config          
+__SKLEARN_SETUP__  __cached__     __file__    __package__  __version__        _distributor_init
+__all__            __check_build  __loader__  __path__     _built_with_meson
+/ ▶ § a pwd in root just to write transcript ;
+/ ▶ pwd
+\/
+/ ▶ § find with filter typename ;
+/ ▶ find . --typename str -L 3 --cmd "ls -lv ."
+\/p  str                       'sin(q)'
+\/connection\/filename  str                       '\/Users\/peterdalloz\/Dropbox\/PYTHONDROPBOX\/pobshell_publish\/Tests\/montyp…
+\/connection\/filename_journal  str                       '\/Users\/peterdalloz\/Dropbox\/PYTHONDROPBOX\/pobshell_publish\/Test…
+/ ▶ § find with filter isdata ;
+/ ▶ find . --predicates *isdata* -d 3 -L 10
+\/
+\/ast_trees
+\/connection
+\/cursor
+\/eq
+\/iris
+\/kson
+\/p
+\/paths
+\/viking_cafe
+/ ▶ § find using --matchpy and --noraise ;
+/ ▶ find / --matchpy "len(self)<10" -L 5 --cmd "ls -l ." --noraise 
+ast_trees  list                      [<ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Modu…
+iris  Bunch                     {'DESCR': '.. _iris_dataset:\n\nIris plants dataset\n--------------------\n\n**Data Set…
+kson  list                      ['foo', {'bar': ['baz', None, 1.0, 2]}]
+p  str                       'sin(q)'
+paths  list                      ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)', "z['a…
+/ ▶ § find using --matchpy and --noraise with --cmd "ls -lv ." ;
+/ ▶ find / --matchpy "len(self)<10" -L 5 --cmd "ls -lv ." --noraise 
+\/ast_trees  list                      [<ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Mod…
+\/iris  Bunch                     {'DESCR': '.. _iris_dataset:\n\nIris plants dataset\n--------------------\n\n**Data Se…
+\/kson  list                      ['foo', {'bar': ['baz', None, 1.0, 2]}]
+\/p  str                       'sin(q)'
+\/paths  list                      ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)', "z['…
+/ ▶ § glob patterns must match whole name, this didn't match ast_trees ;
+/ ▶ find . --name ast -d 1 
+\/ast
+/ ▶ § I treat regex patterns as true if they match part of string, ie re.search ;
+/ ▶ find . --name ast -d 1 --regex
+\/ast
+\/ast_trees
+/ ▶ § no result for wildcard match of hidden names ;
+/ ▶ ls *doc*
+/ ▶ § result returned for hidden name if specified by non-wildcard pattern ;
+/ ▶ ls __doc__
+__doc__
+/ ▶ § find with raised exception due to user --matchpy ;
+/ ▶ find / --matchpy "len(self)<10" -L 5 --cmd "ls -lv ." 
+EXCEPTION of type 'NoSuchInfo' occurred with message: NoSuchInfo('matchpy exception at path: \/Cafe: "object of type 'type' has no len()"')
+To enable full traceback, run the following command: 'set debug true'
+/ ▶ § default behaviour for --missing setting is skip ;
+/ ▶ doc -1
+ast          ast
+connection   This object wraps a `sqlite3 pointer
+eq           Expression representing addition operation for algebraic group.
+iris         Container object exposing keys as attributes.
+json         JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
+load_iris    Load and return the iris dataset (classification).
+math         This module provides access to the mathematical functions
+pandas       pandas - a powerful data analysis and manipulation library for Python
+sklearn      Configure global settings and get information about the working environment.
+sympy        SymPy is a Python library for symbolic mathematics. It aims to become a
+sys          This module provides access to some objects used or maintained by the
+x            Symbol class is used to create symbolic variables.
+/ ▶ § --missing with blank ;
+/ ▶ doc -1 --missing blank
+Cafe         
+apsw         
+ast          ast
+ast_trees    
+connection   This object wraps a `sqlite3 pointer
+cursor       
+eq           Expression representing addition operation for algebraic group.
+iris         Container object exposing keys as attributes.
+json         JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
+kson         
+load_iris    Load and return the iris dataset (classification).
+math         This module provides access to the mathematical functions
+p            
+pandas       pandas - a powerful data analysis and manipulation library for Python
+paths        
+sklearn      Configure global settings and get information about the working environment.
+sympy        SymPy is a Python library for symbolic mathematics. It aims to become a
+sys          This module provides access to some objects used or maintained by the
+viking_cafe  
+x            Symbol class is used to create symbolic variables.
+/ ▶ § --missing with "message" shows Exception strings ;
+/ ▶ doc -1 --missing message 
+Cafe         Exception::NoSuchInfo
+apsw         Exception::NoSuchInfo
+ast          ast
+ast_trees    Exception::NoSuchInfo('Docstring excluded because simple_cat_and_doc setting is True')
+connection   This object wraps a `sqlite3 pointer
+cursor       Exception::NoSuchInfo
+eq           Expression representing addition operation for algebraic group.
+iris         Container object exposing keys as attributes.
+json         JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
+kson         Exception::NoSuchInfo('Docstring excluded because simple_cat_and_doc setting is True')
+load_iris    Load and return the iris dataset (classification).
+math         This module provides access to the mathematical functions
+p            Exception::NoSuchInfo('Docstring excluded because simple_cat_and_doc setting is True')
+pandas       pandas - a powerful data analysis and manipulation library for Python
+paths        Exception::NoSuchInfo('Docstring excluded because simple_cat_and_doc setting is True')
+sklearn      Configure global settings and get information about the working environment.
+sympy        SymPy is a Python library for symbolic mathematics. It aims to become a
+sys          This module provides access to some objects used or maintained by the
+viking_cafe  Exception::NoSuchInfo
+x            Symbol class is used to create symbolic variables.
+/ ▶ § confirm --missing skip gives same behaviour as default setting we had before;
+/ ▶ doc -1 --missing skip
+ast          ast
+connection   This object wraps a `sqlite3 pointer
+eq           Expression representing addition operation for algebraic group.
+iris         Container object exposing keys as attributes.
+json         JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
+load_iris    Load and return the iris dataset (classification).
+math         This module provides access to the mathematical functions
+pandas       pandas - a powerful data analysis and manipulation library for Python
+sklearn      Configure global settings and get information about the working environment.
+sympy        SymPy is a Python library for symbolic mathematics. It aims to become a
+sys          This module provides access to some objects used or maintained by the
+x            Symbol class is used to create symbolic variables.
+/ ▶ set missing blank
+missing - was: 'skip'
+now: 'blank'
+/ ▶ § show that persistent missing setting of 'blank' changes doc output for missing infos ;
+/ ▶ doc -1 
+Cafe         
+apsw         
+ast          ast
+ast_trees    
+connection   This object wraps a `sqlite3 pointer
+cursor       
+eq           Expression representing addition operation for algebraic group.
+iris         Container object exposing keys as attributes.
+json         JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
+kson         
+load_iris    Load and return the iris dataset (classification).
+math         This module provides access to the mathematical functions
+p            
+pandas       pandas - a powerful data analysis and manipulation library for Python
+paths        
+sklearn      Configure global settings and get information about the working environment.
+sympy        SymPy is a Python library for symbolic mathematics. It aims to become a
+sys          This module provides access to some objects used or maintained by the
+viking_cafe  
+x            Symbol class is used to create symbolic variables.
+/ ▶ set missing message 
+missing - was: 'blank'
+now: 'message'
+/ ▶ § show that persistent missing setting of 'message' changes doc output for missing infos ;
+/ ▶ doc -1 
+Cafe         Exception::NoSuchInfo
+apsw         Exception::NoSuchInfo
+ast          ast
+ast_trees    Exception::NoSuchInfo('Docstring excluded because simple_cat_and_doc setting is True')
+connection   This object wraps a `sqlite3 pointer
+cursor       Exception::NoSuchInfo
+eq           Expression representing addition operation for algebraic group.
+iris         Container object exposing keys as attributes.
+json         JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
+kson         Exception::NoSuchInfo('Docstring excluded because simple_cat_and_doc setting is True')
+load_iris    Load and return the iris dataset (classification).
+math         This module provides access to the mathematical functions
+p            Exception::NoSuchInfo('Docstring excluded because simple_cat_and_doc setting is True')
+pandas       pandas - a powerful data analysis and manipulation library for Python
+paths        Exception::NoSuchInfo('Docstring excluded because simple_cat_and_doc setting is True')
+sklearn      Configure global settings and get information about the working environment.
+sympy        SymPy is a Python library for symbolic mathematics. It aims to become a
+sys          This module provides access to some objects used or maintained by the
+viking_cafe  Exception::NoSuchInfo
+x            Symbol class is used to create symbolic variables.
+/ ▶ set missing skip 
+missing - was: 'message'
+now: 'skip'
+/ ▶ § Return to default persistent missing setting of 'skip' ;
+/ ▶ doc -1 
+ast          ast
+connection   This object wraps a `sqlite3 pointer
+eq           Expression representing addition operation for algebraic group.
+iris         Container object exposing keys as attributes.
+json         JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
+load_iris    Load and return the iris dataset (classification).
+math         This module provides access to the mathematical functions
+pandas       pandas - a powerful data analysis and manipulation library for Python
+sklearn      Configure global settings and get information about the working environment.
+sympy        SymPy is a Python library for symbolic mathematics. It aims to become a
+sys          This module provides access to some objects used or maintained by the
+x            Symbol class is used to create symbolic variables.
+/ ▶ § test that sympy deprecation warnings are trapped by PP.getmember_func ;
+/ ▶ ls /x/expr_free_symbols
+expr_free_symbols
+/ ▶ cd x
+/x ▶ § test that sympy deprecation warnings are trapped by PP.getitems_func ;
+/x ▶ ls
+adjoint               combsimp                  invert              is_complex               is_symbol          xreplace
+apart                 compare                   is_Add              is_composite             is_transcendental
+args                  compute_leading_term      is_AlgebraicNumber  is_constant              is_zero          
+args_cnc              conjugate                 is_Atom             is_even                  kind             
+as_base_exp           copy                      is_Boolean          is_extended_negative     leadterm         
+as_coeff_Add          could_extract_minus_sign  is_Derivative       is_extended_nonnegative  limit            
+as_coeff_Mul          count                     is_Dummy            is_extended_nonpositive  lseries          
+as_coeff_add          count_ops                 is_Equality         is_extended_nonzero      match            
+as_coeff_exponent     default_assumptions       is_Float            is_extended_positive     matches          
+as_coeff_mul          diff                      is_Function         is_extended_real         n                
+as_coefficient        dir                       is_Indexed          is_finite                name             
+as_coefficients_dict  doit                      is_Integer          is_hermitian             normal           
+as_content_primitive  dummy_eq                  is_MatAdd           is_hypergeometric        nseries          
+as_dummy              equals                    is_MatMul           is_imaginary             nsimplify        
+as_expr               evalf                     is_Matrix           is_infinite              powsimp          
+as_independent        expand                    is_Mul              is_integer               primitive        
+as_leading_term       expr_free_symbols         is_Not              is_irrational            radsimp          
+as_numer_denom        extract_additively        is_Number           is_meromorphic           ratsimp          
+as_ordered_factors    extract_branch_factor     is_NumberSymbol     is_negative              rcall            
+as_ordered_terms      extract_multiplicatively  is_Order            is_noninteger            refine           
+as_poly               factor                    is_Piecewise        is_nonnegative           removeO          
+as_powers_dict        find                      is_Point            is_nonpositive           replace          
+as_real_imag          fourier_series            is_Poly             is_nonzero               rewrite          
+as_set                fps                       is_Pow              is_number                round            
+as_terms              free_symbols              is_Rational         is_odd                   separate         
+aseries               fromiter                  is_Relational       is_polar                 series           
+assumptions0          func                      is_Symbol           is_polynomial            simplify         
+atoms                 gammasimp                 is_Vector           is_positive              sort_key         
+binary_symbols        getO                      is_Wild             is_prime                 subs             
+cancel                getn                      is_algebraic        is_rational              taylor_term      
+canonical_variables   has                       is_algebraic_expr   is_rational_function     to_nnf           
+class_key             has_free                  is_antihermitian    is_real                  together         
+coeff                 has_xfree                 is_commutative      is_same                  transpose        
+collect               integrate                 is_comparable       is_scalar                trigsimp         
+/x ▶ § test doc infocmd on __doc__  returning a non string, e.g.  /pandas/core/arrays/categorical/cache_readonly/__doc__  ;
+/x ▶ find /pandas --doc Exception* -L 10 --cmd "doc -1v ."
+\/pandas\/errors\/ClosedFileError  Exception is raised when trying to perform an operation on a closed HDFStore file.
+\/pandas\/errors\/DataError  Exceptionn raised when performing an operation on non-numerical data.
+\/pandas\/errors\/EmptyDataError  Exception raised in ``pd.read_csv`` when empty data or header is encountered.
+\/pandas\/errors\/IndexingError  Exception is raised when trying to index and there is a mismatch in dimensions.
+\/pandas\/errors\/IntCastingNaNError  Exception raised when converting (``astype``) an array with NaN to an integer type.
+\/pandas\/errors\/InvalidComparison  Exception is raised by _validate_comparison_value to indicate an invalid comparison.
+\/pandas\/errors\/InvalidIndexError  Exception raised when attempting to use an invalid index key.
+\/pandas\/errors\/MergeError  Exception raised when merging data.
+\/pandas\/errors\/NoBufferPresent  Exception is raised in _get_data_buffer to signal that there is no requested buffer.
+\/pandas\/errors\/NullFrequencyError  Exception raised when a ``freq`` cannot be null.
+/x ▶ cd ..
+/ ▶ § cat of object without code (a str) ;
+/ ▶ cat /p
+/ ▶ set missing message
+missing - was: 'skip'
+now: 'message'
+/ ▶ § cat of object without code (a str) when missing is message ;
+/ ▶ cat /p
+# ==> p <==
+Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got str')
+
+/ ▶ § cat lots of objects that don't have code with missing message ;
+/ ▶ cat -1
+Cafe         class Cafe:
+apsw         Exception::NoSuchInfo('source code not available')
+ast          """
+ast_trees    Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got…
+connection   Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got…
+cursor       Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got…
+eq           Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got…
+iris         Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got…
+json         r"""JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
+kson         Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got…
+load_iris    @validate_params(
+math         Exception::NoSuchInfo('source code not available')
+p            Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got…
+pandas       from __future__ import annotations
+paths        Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got…
+sklearn      """Configure global settings and get information about the working environment."""
+sympy        """
+sys          Exception::NoSuchInfo('<module 'sys' (built-in)> is a built-in module')
+viking_cafe  Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got…
+x            Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got…
+/ ▶ set missing skip
+missing - was: 'message'
+now: 'skip'
+/ ▶ § test bugfix for empty signatures ;
+/ ▶ signature -1 --nsignature *
+/ ▶ § test bugfix for mro with instances  ;
+/ ▶ mro -1
+Cafe         (<class '__main__.Cafe'>, <class 'object'>)
+/ ▶ cd ast
+/ast ▶ § pypath in action ;
+/ast ▶ pypath -1 A*
+AST               ast.AST
+Add               ast.Add
+And               ast.And
+AnnAssign         ast.AnnAssign
+Assert            ast.Assert
+Assign            ast.Assign
+AsyncFor          ast.AsyncFor
+AsyncFunctionDef  ast.AsyncFunctionDef
+AsyncWith         ast.AsyncWith
+Attribute         ast.Attribute
+AugAssign         ast.AugAssign
+AugLoad           ast.AugLoad
+AugStore          ast.AugStore
+Await             ast.Await
+/ast ▶ cd ..
+/ ▶ cd /
+/ ▶ cd /
+/ ▶ map contents
+map - was:   members: 'attributes'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+ - now:   members: 'contents'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+/ ▶ cd /kson/`1`/bar/
+/kson/`1`/bar ▶ § ls with wildcarded contentkey after cd to contentkeyed path ;
+/kson/`1`/bar ▶ ls `*`
+`0`  `1`  `2`  `3`
+/kson/`1`/bar ▶ cd /
+/ ▶ § ls of genuinely empty namespace should not report an error, test for bugfix ;
+/ ▶ ls /sklearn/multiclass/sp/sputils/
+ls: \/sklearn\/multiclass\/sp\/sputils\/: No such path
+/ ▶ map 
+  members: 'contents'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+/ ▶ map attributes static
+map - was:   members: 'contents'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+ - now:   members: 'attributes'  binding: 'static'  resolution: 'mro'  frames: 'variables'
+/ ▶ § ls of /cursor/ finds elements if map is static ;
+/ ▶ ls /cursor/
+bindings_count  description_full  expanded_sql    get_description  getexectrace  row_trace       setrowtrace
+bindings_names  exec_trace        fetchall        get_exec_trace   getrowtrace   rowtrace      
+close           exectrace         fetchone        get_row_trace    has_vdbe      set_exec_trace
+connection      execute           get             getconnection    is_explain    set_row_trace 
+description     executemany       get_connection  getdescription   is_readonly   setexectrace  
+/ ▶ § find without --noraise can raise Exceptions for some evaluations, some paths ;
+/ ▶ find /pandas/CategoricalIndex/ --matchpy "len(list(pn.all_child_paths()))==0"
+/ ▶ § find with --noraise does not raise the exception ;
+/ ▶ find /pandas/CategoricalIndex/ --matchpy "len(list(pn.all_child_paths()))==0" --noraise
+/ ▶ § printpy without --noraise can raise Exceptions ;
+/ ▶ printpy "len(list(pn.all_child_paths()))" /pandas/CategoricalIndex/str -1
+str  30
+/ ▶ § printpy with --noraise does not raise Exceptions ;
+/ ▶ printpy "len(list(pn.all_child_paths()))" /pandas/CategoricalIndex/str -1 --noraise
+str  30
+/ ▶ §eval does assignment in root;
+/ ▶ :spam = 42
+/ ▶ § confirm spam has value 42 in root ;
+/ ▶ ls -l spam
+spam  int                       42
+/ ▶ cd viking_cafe/
+/viking_cafe ▶ § update persitent root assignment with rooteval ;
+/viking_cafe ▶ ::spam += 1
+/viking_cafe ▶ § confirm rooteval assignment updated spam value ;
+/viking_cafe ▶ ls -l /spam
+spam  int                       43
+/viking_cafe ▶ map
+  members: 'attributes'  binding: 'static'  resolution: 'mro'  frames: 'variables'
+/viking_cafe ▶ map dynamic
+map - was:   members: 'attributes'  binding: 'static'  resolution: 'mro'  frames: 'variables'
+ - now:   members: 'attributes'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+/viking_cafe ▶ cd :__class__.we_have_got
+/viking_cafe/__class__/we_have_got ▶ § confirm cd works with colon prefixed relative pypath ;
+/viking_cafe/__class__/we_have_got ▶ pwd
+\/viking_cafe\/__class__\/we_have_got
+/viking_cafe/__class__/we_have_got ▶ cd /
+/ ▶ cd p
+/p ▶ cd ::viking_cafe.__class__.we_have_got
+/viking_cafe/__class__/we_have_got ▶ § confirm cd with double colon absolute pypath works ok ;
+/viking_cafe/__class__/we_have_got ▶ pwd
+\/viking_cafe\/__class__\/we_have_got
+/viking_cafe/__class__/we_have_got ▶ cd nosuchpath
+cd: nosuchpath: No such path
+/viking_cafe/__class__/we_have_got ▶ § confirm "No such path" message for cd to non existent path ;
+/viking_cafe/__class__/we_have_got ▶ pwd
+\/viking_cafe\/__class__\/we_have_got
+/viking_cafe/__class__/we_have_got ▶ cd __doc__
+/viking_cafe/__class__/we_have_got/__doc__ ▶ § test cd to hidden path works ok ;
+/viking_cafe/__class__/we_have_got/__doc__ ▶ pwd
+\/viking_cafe\/__class__\/we_have_got\/__doc__
+/viking_cafe/__class__/we_have_got/__doc__ ▶ cd /
+/ ▶ cd nosuchpath
+cd: nosuchpath: No such path
+/ ▶ § confirm cd from root to non existent path gives "No such Path" message too;
+/ ▶ pwd
+\/
+/ ▶ § find with a --cmd arg having multiple cmds and a semicoloon ;
+/ ▶ find . -d 1 --typename list --cmd "pprint .;predicates ." 
+# ==> ast_trees <==
+[<ast.Module object at /0[xX][0-9a-fA-F]+/>,
+ <ast.Module object at /0[xX][0-9a-fA-F]+/>,
+ <ast.Module object at /0[xX][0-9a-fA-F]+/>,
+ <ast.Module object at /0[xX][0-9a-fA-F]+/>,
+ <ast.Module object at /0[xX][0-9a-fA-F]+/>,
+ <ast.Module object at /0[xX][0-9a-fA-F]+/>]
+
+# ==> ast_trees <==
+isdata 
+
+# ==> kson <==
+['foo', {'bar': ['baz', None, 1.0, 2]}]
+
+# ==> kson <==
+isdata 
+
+# ==> paths <==
+['jskf[\'2\'].jwui.vnn["3.4"]',
+ 'T[2][3]',
+ '(-b + math.sqrt(b**2-4*a*c))\/(2*a)',
+ "z['a']",
+ '1\/2',
+ 'sin(q)']
+
+# ==> paths <==
+isdata 
+
+/ ▶ § test unrecognized command ;
+/ ▶ find . -d 1 --typename list --cmd "nonesuch .;predicates ." 
+nonesuch is not a recognized command, alias, or macro.
+# ==> ast_trees <==
+isdata 
+
+nonesuch is not a recognized command, alias, or macro.
+# ==> kson <==
+isdata 
+
+nonesuch is not a recognized command, alias, or macro.
+# ==> paths <==
+isdata 
+
+/ ▶ map contents
+map - was:   members: 'attributes'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+ - now:   members: 'contents'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+/ ▶ § show that map contents works ;
+/ ▶ ls -l p/`2`
+`2`  str                       'n'
+/ ▶ § test contentkey-delimited args in error messages ;
+/ ▶ ls -l p/`8`map
+ls: p\/`8`map: No such path
+/ ▶ map everything 
+map - was:   members: 'contents'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+ - now:   members: 'everything'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+/ ▶ § test truncation of ls -l middle output fields ;
+/ ▶ ls -l /apsw/allow_missing_dict_bindings
+allow_missing_dict_bindings  builtin_function_or_met…  <built-in function allow_missing_dict_bindings>
+/ ▶ cd /__builtins__
+/__builtins__ ▶ § fixed bug in -L limit counting with missing infos ;
+/__builtins__ ▶ signature -1 -L 3
+abs              (x, \/)
+aiter            (async_iterable, \/)
+all              (iterable, \/)
+/__builtins__ ▶ § ls of empty dir should not give error message (bugfix)
+/__builtins__ ▶ ls -a None/ --map local
+/__builtins__ ▶ § confirm that listing an "empty directory" doesn't give  error message ;
+/__builtins__ ▶ ls -a  None/ --map local
+/__builtins__ ▶ cd /
+/ ▶ set column_width 110
+column_width - was: 24
+now: 110
+/ ▶ § ls -l with column_width so large it suppresses col 1 (counting from 0) altogether ;
+/ ▶ ls -l
+Cafe       
+apsw       
+ast        
+ast_trees  
+connection 
+cursor     
+eq         
+iris       
+json       
+kson       
+load_iris  
+math       
+p          
+pandas     
+paths      
+sklearn    
+sympy      
+sys        
+viking_cafe
+x          
+spam       
+/ ▶ set column_width 24
+column_width - was: 110
+now: 24
+/ ▶ set column_width 0
+column_width - was: 24
+now: 0
+/ ▶ § ls -l with column_width zero so it suppresses col 1 (counting from 0) altogether ;
+/ ▶ ls -l
+Cafe         <class '__main__.Cafe'>
+apsw         <module 'apsw' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.11\/site-packages\/apsw\/__ini…
+ast          <module 'ast' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.11\/ast.py'>
+ast_trees    [<ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/…
+connection   <apsw.Connection object at /0[xX][0-9a-fA-F]+/>
+cursor       <apsw.Cursor object at /0[xX][0-9a-fA-F]+/>
+eq           X + 1
+iris         {'DESCR': '.. _iris_dataset:\n\nIris plants dataset\n--------------------\n\n**Data Set Characteristics:**…
+json         <module 'json' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.11\/json\/__init__.py'>
+kson         ['foo', {'bar': ['baz', None, 1.0, 2]}]
+load_iris    <function load_iris at /0[xX][0-9a-fA-F]+/>
+math         <module 'math' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.11\/lib-dynload\/math.cpython…
+p            'sin(q)'
+pandas       <module 'pandas' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.11\/site-packages\/pandas\/_…
+paths        ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)', "z['a']", '1\/2', 'sin(q)']
+sklearn      <module 'sklearn' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.11\/site-packages\/sklearn…
+sympy        <module 'sympy' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.11\/site-packages\/sympy\/__i…
+sys          <module 'sys' (built-in)>
+viking_cafe  <__main__.Cafe object at /0[xX][0-9a-fA-F]+/>
+x            X
+spam         43
+/ ▶ §test shell command substitution;
+/ ▶ !cat """cat Cafe -1"""  """cat json -1 """
+Cafe  class Cafe:
+json  r"""JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
+/ ▶ § test shell with command substitution using relative command number ;
+/ ▶ !cat @-1
+/ ▶ § test non existing command with backtick arg executes del of hex data stored for backtick content ;
+/ ▶ § test shell with command substitution using relative command number ;
+/ ▶ § enumerate root contents to test dollar paths ;
+/ ▶ ls -e
+0: Cafe  3: ast_trees   6: eq    9: kson        12: p       15: sklearn  18: viking_cafe
+1: apsw  4: connection  7: iris  10: load_iris  13: pandas  16: sympy    19: x          
+2: ast   5: cursor      8: json  11: math       14: paths   17: sys      20: spam       
+/ ▶ § confirm dollar access after prior enumeration ;
+/ ▶ ls -l $0
+Cafe  <class '__main__.Cafe'>
+/ ▶ mount $7
+/Bunch ▶ § cannot test mount directly, this tests ls shows Bunch after mount of sklearn.iris type ;
+/Bunch ▶ ls .
+Bunch
+/Bunch ▶ unmount
+Mounted class was removed: \/Bunch 
+/ ▶ § confirm unmount worked by ls of new current path ie root ;
+/ ▶ ls .
+\/
+/ ▶ cdh
+0: \/
+1: \/sympy
+2: \/sympy\/integrals
+3: \/
+4: \/sympy\/integrals
+5: \/
+6: \/iris
+7: \/
+8: \/x
+9: \/
+10: \/ast
+11: \/
+12: \/kson\/`1`\/bar
+13: \/
+14: \/viking_cafe
+15: \/viking_cafe\/__class__\/we_have_got
+16: \/
+17: \/p
+18: \/viking_cafe\/__class__\/we_have_got
+19: \/viking_cafe\/__class__\/we_have_got\/__doc__
+20: \/
+21: \/__builtins__
+22: \/
+/ ▶ cdh 21
+/__builtins__ ▶ § after chd confirm that curr path is now  __builtins__ ;
+/__builtins__ ▶ ls .
+__builtins__
+/__builtins__ ▶ cdh -1
+/ ▶ § confirm that curr path is root after cdh -1 ;
+/ ▶ ls .
+\/
+/ ▶ set column_width 24
+column_width - was: 0
+now: 24
+/ ▶ hide --ismodule
+Adding filterset entry: 'ismodule': 'True'
+Current filters:  {'name': '_*', 'ismodule': True}
+/ ▶ § confirm contents of root after hiding ismodule objects ;
+/ ▶ ls -l
+Cafe         type                      <class '__main__.Cafe'>
+ast_trees    list                      [<ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Mo…
+connection   Connection                <apsw.Connection object at /0[xX][0-9a-fA-F]+/>
+cursor       Cursor                    <apsw.Cursor object at /0[xX][0-9a-fA-F]+/>
+eq           Add                       X + 1
+iris         Bunch                     {'DESCR': '.. _iris_dataset:\n\nIris plants dataset\n--------------------\n\n**D…
+kson         list                      ['foo', {'bar': ['baz', None, 1.0, 2]}]
+load_iris    function                  <function load_iris at /0[xX][0-9a-fA-F]+/>
+p            str                       'sin(q)'
+paths        list                      ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)',…
+viking_cafe  Cafe                      <__main__.Cafe object at /0[xX][0-9a-fA-F]+/>
+x            Symbol                    X
+spam         int                       43
+/ ▶ show --ismodule
+Removing filterset entry for: 'ismodule'
+Current filters:  {'name': '_*'}
+/ ▶ § confirm back to normal after showing the thing we just hid ;
+/ ▶ ls -l
+Cafe         type                      <class '__main__.Cafe'>
+apsw         module                    <module 'apsw' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.1…
+ast          module                    <module 'ast' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.11…
+ast_trees    list                      [<ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Mo…
+connection   Connection                <apsw.Connection object at /0[xX][0-9a-fA-F]+/>
+cursor       Cursor                    <apsw.Cursor object at /0[xX][0-9a-fA-F]+/>
+eq           Add                       X + 1
+iris         Bunch                     {'DESCR': '.. _iris_dataset:\n\nIris plants dataset\n--------------------\n\n**D…
+json         module                    <module 'json' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.1…
+kson         list                      ['foo', {'bar': ['baz', None, 1.0, 2]}]
+load_iris    function                  <function load_iris at /0[xX][0-9a-fA-F]+/>
+math         module                    <module 'math' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.1…
+p            str                       'sin(q)'
+pandas       module                    <module 'pandas' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3…
+paths        list                      ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)',…
+sklearn      module                    <module 'sklearn' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python…
+sympy        module                    <module 'sympy' from '\/opt\/anaconda3\/envs\/platagnostic_PobEnv311all\/lib\/python3.…
+sys          module                    <module 'sys' (built-in)>
+viking_cafe  Cafe                      <__main__.Cafe object at /0[xX][0-9a-fA-F]+/>
+x            Symbol                    X
+spam         int                       43
+/ ▶ map frameattrs 
+map - was:   members: 'everything'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+ - now:   members: 'everything'  binding: 'dynamic'  resolution: 'mro'  frames: 'frameattrs'
+/ ▶ § confirm the contents of root are attrs of the frame, plus the added spam object after map frameattrs ;
+/ ▶ ls -1
+clear
+f_back
+f_builtins
+f_code
+f_globals
+f_lasti
+f_lineno
+f_locals
+f_trace
+f_trace_lines
+f_trace_opcodes
+spam
+/ ▶ map variables 
+map - was:   members: 'everything'  binding: 'dynamic'  resolution: 'mro'  frames: 'frameattrs'
+ - now:   members: 'everything'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+/ ▶ § confirm after map variables we see the original root contents and the added spam object has persisted map change ;
+/ ▶ ls -1
+Cafe
+apsw
+ast
+ast_trees
+connection
+cursor
+eq
+iris
+json
+kson
+load_iris
+math
+p
+pandas
+paths
+sklearn
+sympy
+sys
+viking_cafe
+x
+spam
+/ ▶ § show eval works ok in root namespace ;
+/ ▶ :self
+\/
+/ ▶ cd Cafe
+/Cafe ▶ § confirm eval works ok in non-root namespace ;
+/Cafe ▶ :pn
+<PobNode \/Cafe::<class '__main__.Cafe'>>
+/Cafe ▶ § Confirm root eval evals in root namespace ;
+/Cafe ▶ ::self
+\/
+/Cafe ▶ mount
+[]
+/Cafe ▶ § show mount history when no history ;
+/Cafe ▶ ## placeholder comment as I can't test mount command ;
+/Cafe ▶ mount .
+/object ▶ § pwd to confirm parent class of Cafe is curr path, i.e. object ;
+/object ▶ pwd
+\/object
+/object ▶ mount
+['object']
+/object ▶ § pwd to confirm parent class of Cafe is curr path, i.e. object ;
+/object ▶ § test 'mount' command applied to a class ;
+/object ▶ unmount
+Mounted class was removed: \/object 
+/Cafe ▶ § pwd to confirm successful unmount ;
+/Cafe ▶ pwd
+\/Cafe
+/Cafe ▶ unmount NEVERMOUNTEDTHING
+unmount: NEVERMOUNTEDTHING: Was never mounted
+/Cafe ▶ § test unmountcommand with never mounted thing ;
+/Cafe ▶ pwd 
+\/Cafe
+/Cafe ▶ cdh -t
+-26: \/
+-25: \/sympy
+-24: \/sympy\/integrals
+-23: \/
+-22: \/sympy\/integrals
+-21: \/
+-20: \/iris
+-19: \/
+-18: \/x
+-17: \/
+-16: \/ast
+-15: \/
+-14: \/kson\/`1`\/bar
+-13: \/
+-12: \/viking_cafe
+-11: \/viking_cafe\/__class__\/we_have_got
+-10: \/
+-9: \/p
+-8: \/viking_cafe\/__class__\/we_have_got
+-7: \/viking_cafe\/__class__\/we_have_got\/__doc__
+-6: \/
+-5: \/__builtins__
+-4: \/
+-3: \/__builtins__
+-2: \/
+-1: \/Cafe
+/Cafe ▶ § test of previous cmdCOMMAND ;
+/Cafe ▶ pwd
+\/Cafe
+/Cafe ▶ cd /
+/ ▶ § test shellCOMMAND when typed in full rather than bang shortcut ;
+/ ▶ shell cat """cat Cafe -1"""  """cat json -1 """
+Cafe  class Cafe:
+json  r"""JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
+/ ▶ § test newline command ;
+/ ▶ find .  -d 1  --isroutine -L 40 --cmd "signature -1 . ;newline;doc -1 ."
+load_iris  (*, return_X_y=False, as_frame=False)
+
+load_iris  Load and return the iris dataset (classification).
+/ ▶ § enumerate to set up next test ;
+/ ▶ ls -e
+0: Cafe  3: ast_trees   6: eq    9: kson        12: p       15: sklearn  18: viking_cafe
+1: apsw  4: connection  7: iris  10: load_iris  13: pandas  16: sympy    19: x          
+2: ast   5: cursor      8: json  11: math       14: paths   17: sys      20: spam       
+/ ▶ § confirm dollar-dollar as place holder for everything in list enumerated of paths ;
+/ ▶ ls $$
+Cafe  ast        connection  eq    json  load_iris  p       paths    sympy  viking_cafe  spam
+apsw  ast_trees  cursor      iris  kson  math       pandas  sklearn  sys    x          
+/ ▶ § test use of solo slash as path ;
+/ ▶ ls /
+Cafe  ast        connection  eq    json  load_iris  p       paths    sympy  viking_cafe  spam
+apsw  ast_trees  cursor      iris  kson  math       pandas  sklearn  sys    x          
+/ ▶ § test error message for wildcard in parent path ;
+/ ▶ ls p*/find
+Wildcards are not supported in parent path of TARGET patterns
+/ ▶ cd iris
+/iris ▶ § test the pypath option ;
+/iris ▶ ls -P
+iris['data']    iris['frame']         iris['DESCR']          iris['filename']   
+iris['target']  iris['target_names']  iris['feature_names']  iris['data_module']
+/iris ▶ cd /
+/ ▶ § test line prefixes with multiline output ;
+/ ▶ cat Cafe -l
+Cafe class Cafe: 
+Cafe 	def __init__(self): 
+Cafe 		self._menu_item = "" 
+Cafe  
+Cafe  
+Cafe 	@property 
+Cafe 	def we_have_got(self): 
+Cafe 		self._menu_item += "spam " 
+Cafe 		return self._menu_item + "eggs" 
+
+/ ▶ § test multiline output with quiet option, confirm no name or path listed ;
+/ ▶ cat Cafe -q
+class Cafe:
+	def __init__(self):
+		self._menu_item = ""
+
+
+	@property
+	def we_have_got(self):
+		self._menu_item += "spam "
+		return self._menu_item + "eggs"
+/ ▶ § test tree command with filter ;
+/ ▶ tree Cafe -d 2 --isroutine
+Cafe  <class '__main__.Cafe'>  <class 'type'>
+└── we_have_got  <property object at /0[xX][0-9a-fA-F]+/>  <class 'property'>
+    ├── deleter  <built-in method deleter of property object at /0[xX][0-9a-fA-F]+/>  <class 'builtin_function_or_method'>
+    ├── fget  <function Cafe.we_have_got at /0[xX][0-9a-fA-F]+/>  <class 'function'>
+    ├── getter  <built-in method getter of property object at /0[xX][0-9a-fA-F]+/>  <class 'builtin_function_or_method'>
+    └── setter  <built-in method setter of property object at /0[xX][0-9a-fA-F]+/>  <class 'builtin_function_or_method'>
+/ ▶ cd Cafe
+/Cafe ▶ cd /
+/ ▶ § test treeCOMMAND with or option ;
+/ ▶ tree Cafe -d 2 --isdatadescriptor  -o --isroutine 
+Cafe  <class '__main__.Cafe'>  <class 'type'>
+└── we_have_got  <property object at /0[xX][0-9a-fA-F]+/>  <class 'property'>
+    ├── deleter  <built-in method deleter of property object at /0[xX][0-9a-fA-F]+/>  <class 'builtin_function_or_method'>
+    ├── fget  <function Cafe.we_have_got at /0[xX][0-9a-fA-F]+/>  <class 'function'>
+    ├── getter  <built-in method getter of property object at /0[xX][0-9a-fA-F]+/>  <class 'builtin_function_or_method'>
+    └── setter  <built-in method setter of property object at /0[xX][0-9a-fA-F]+/>  <class 'builtin_function_or_method'>
+/ ▶ § test treeCOMMAND with or option and pruning ;
+/ ▶ tree Cafe -d 2 --isdatadescriptor  -o --isroutine --prune */we_have_got
+Cafe  <class '__main__.Cafe'>  <class 'type'>
+└── we_have_got  <property object at /0[xX][0-9a-fA-F]+/>  <class 'property'>
+/ ▶ § initial find before pruning ;
+/ ▶ find --name D* -l -d 2 
+\/ast\/Del  type                      <class 'ast.Del'>
+\/ast\/Delete  type                      <class 'ast.Delete'>
+\/ast\/Dict  type                      <class 'ast.Dict'>
+\/ast\/DictComp  type                      <class 'ast.DictComp'>
+\/ast\/Div  type                      <class 'ast.Div'>
+\/iris\/DESCR  str                       '.. _iris_dataset:\n\nIris plants dataset\n--------------------\n\n**Data Set Ch…
+\/pandas\/DataFrame  type                      <class 'pandas.core.frame.DataFrame'>
+\/pandas\/DateOffset  OffsetMeta                <class 'pandas._libs.tslibs.offsets.DateOffset'>
+\/pandas\/DatetimeIndex  ABCMeta                   <class 'pandas.core.indexes.datetimes.DatetimeIndex'>
+\/pandas\/DatetimeTZDtype  type                      <class 'pandas.core.dtypes.dtypes.DatetimeTZDtype'>
+\/sympy\/DeferredVector  type                      <class 'sympy.matrices.matrixbase.DeferredVector'>
+\/sympy\/DenseNDimArray  type                      <class 'sympy.tensor.array.dense_ndim_array.DenseNDimArray'>
+\/sympy\/Derivative  type                      <class 'sympy.core.function.Derivative'>
+\/sympy\/Determinant  type                      <class 'sympy.matrices.expressions.determinant.Determinant'>
+\/sympy\/DiagMatrix  type                      <class 'sympy.matrices.expressions.diagonal.DiagMatrix'>
+\/sympy\/DiagonalMatrix  type                      <class 'sympy.matrices.expressions.diagonal.DiagonalMatrix'>
+\/sympy\/DiagonalOf  type                      <class 'sympy.matrices.expressions.diagonal.DiagonalOf'>
+\/sympy\/Dict  type                      <class 'sympy.core.containers.Dict'>
+\/sympy\/DiracDelta  FunctionClass             DiracDelta
+\/sympy\/DisjointUnion  type                      <class 'sympy.sets.sets.DisjointUnion'>
+\/sympy\/Domain  type                      <class 'sympy.polys.domains.domain.Domain'>
+\/sympy\/DomainError  type                      <class 'sympy.polys.polyerrors.DomainError'>
+\/sympy\/DotProduct  type                      <class 'sympy.matrices.expressions.dotproduct.DotProduct'>
+\/sympy\/Dummy  type                      <class 'sympy.core.symbol.Dummy'>
+/ ▶ § same findCOMMAND as above with two prunes ;
+/ ▶ find --name D* -l -d 2 --prune */sympy  ismodule
+\/iris\/DESCR  str                       '.. _iris_dataset:\n\nIris plants dataset\n--------------------\n\n**Data Set Ch…
+/ ▶ § check help option for infocmd ;
+/ ▶ doc -h
+/ ▶ § test memsize is working ;
+/ ▶ memsize viking_cafe 
+# ==> viking_cafe <==
+480
+
+/ ▶ § test memsize as filter ;
+/ ▶ find . -d 1 --memsize "==488"
+/ ▶ § test negative filter ;
+/ ▶ ls --nismodule
+Cafe  ast_trees  connection  cursor  eq  iris  kson  load_iris  p  paths  viking_cafe  x  spam
+/ ▶ § test str filter ;
+/ ▶ ls --str 43
+spam
+/ ▶ § test repr filter ;
+/ ▶ ls --repr 43
+spam
+/ ▶ cd $0
+/Cafe ▶ cd ..
+/ ▶ cd /
+/ ▶ § test unstyled option ;
+/ ▶ typename -1 -u
+Cafe         type
+apsw         module
+ast          module
+ast_trees    list
+connection   Connection
+cursor       Cursor
+eq           Add
+iris         Bunch
+json         module
+kson         list
+load_iris    function
+math         module
+p            str
+pandas       module
+paths        list
+sklearn      module
+sympy        module
+sys          module
+viking_cafe  Cafe
+x            Symbol
+spam         int
+/ ▶ § confirm cat works for root frame ;
+/ ▶ cat /. -n 4
+# ==> \/ <==
+import apsw
+import ast
+import json
+import math
+
+/ ▶ § test backtick with key \x00 ;
+/ ▶ ls -l /json/encoder/ESCAPE_DCT/`'\x00'`
+`'\x00'`  str                       '\\u0000'
+/ ▶ cd $4
+/connection ▶ cd /
+/ ▶ § test backticks with non stringy dict key ;
+/ ▶ ls -l /sympy/Id/canonical_variables/`_x`
+`_x`  Symbol                    _0
+/ ▶ map
+  members: 'everything'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+/ ▶ cd p
+/p ▶ cd /
+/ ▶ cd /x/free_symbols/ 
+/x/free_symbols ▶ map contents 
+map - was:   members: 'everything'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+ - now:   members: 'contents'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+/x/free_symbols ▶ map everything 
+map - was:   members: 'contents'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+ - now:   members: 'everything'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+/x/free_symbols ▶ cd /
+/ ▶ § test listing contents of set object ;
+/ ▶ ls -l /x/free_symbols/ --nisroutine
+`X`  Symbol                    X
+/ ▶ ls sympy/this
+ls: sympy\/this: No such path
+/ ▶ set auto_import true
+auto_import - was: False
+now: True
+/ ▶ § test auto_import, sympy.this is only visible when auto_import is true ;
+/ ▶ ls sympy/this
+this
