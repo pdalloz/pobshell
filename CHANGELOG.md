@@ -10,8 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com).
 ### Internal
 - Add .yml spec for Py 3.11 test environment
 - Rename prior .yml specs to be consistent
-- Add & rename test transcripts to match  
-
+- Add & rename test transcripts to match
 
 ## [0.1.3] - 2025-06-24
 ### Changed
