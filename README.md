@@ -38,7 +38,7 @@ import pobshell
 pobshell.shell()
 ```
 
-**Get a prompt with your variables in the root directory**
+**Gives you a prompt with your variables in the root directory**
 ```
 / ▶ ls
 json
