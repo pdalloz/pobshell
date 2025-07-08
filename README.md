@@ -29,13 +29,35 @@ Pobshell maps Python objects to Linux‑style paths:
 - Each attribute or member is a child in that directory
 - Navigate using **Bash-style commands**
 
-For example:
 
+**Start Pobshell**
+```python
+import json  # Something to explore
+
+import pobshell
+pobshell.shell()
 ```
+
+**Get a prompt with your variables in the root directory**
+```
+/ ▶ ls
+json
 / ▶ cd json
 /json ▶ ls
-/json ▶ cd JSONDecodeError
-/json/JSONDecodeError ▶ ls -l
+JSONDecodeError  JSONEncoder  decoder          dump   encoder  loads  
+JSONDecoder      codecs       detect_encoding  dumps  load     scanner
+/json ▶ doc -1
+JSONDecodeError  Subclass of ValueError with the following additional properties:
+JSONDecoder      Simple JSON <https://json.org> decoder
+JSONEncoder      Extensible JSON <https://json.org> encoder for Python data structures.
+codecs           codecs -- Python Codec Registry, API and helpers.
+decoder          Implementation of JSONDecoder
+dump             Serialize ``obj`` as a JSON formatted stream to ``fp`` (a
+dumps            Serialize ``obj`` to a JSON formatted ``str``.
+encoder          Implementation of JSONEncoder
+load             Deserialize ``fp`` (a ``.read()``-supporting file-like object containing
+loads            Deserialize ``s`` (a ``str``, ``bytes`` or ``bytearray`` instance
+scanner          JSON token scanner
 ```
 
 ---
