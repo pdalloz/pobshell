@@ -57,6 +57,7 @@ Pobshell inspection commands are built on Python’s `inspect` module (mostly).
 
 <details>
 <summary><strong>…more commands</strong></summary>
+ 
 | Command  | Description                                   |
 |----------|-----------------------------------------------|
 | `filepath` | File where the object was defined           |
