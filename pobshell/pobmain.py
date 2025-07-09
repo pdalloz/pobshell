@@ -947,9 +947,7 @@ class Pobiverse(cmd2.Cmd):
                             be kept in the results
         :return: a list of possible tab completions
         """
-        # TODO This breaks cmd2 rules, it should not be a bound method, but I need a handle to PV instance
-        #   for access to curr_path
-
+        
         # Used to replace cwd in the final results
         cwd = self.curr_path.abspath
         cwd_added = False
