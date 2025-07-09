@@ -1,10 +1,12 @@
 # Pobshell
-
 *A Bash‑like shell for live Python objects.*
 
 Think `cd`, `ls`, `cat`, and `find` — but for **Python objects** instead of files. Stroll around your code, runtime state, and data structures. Inspect everything: modules, classes, live objects. It's pick‑up‑and‑play: familiar commands plus optional new tricks. A fun and genuinely useful way to explore a Python app, package, or Python itself.
 
-2 minute video demo: https://www.youtube.com/watch?v=I5QoSrc_E_A 
+![Pobshell OneFrame](https://github.com/user-attachments/assets/44a9be58-031a-4f88-8301-9ccffe652daf)
+
+https://github.com/user-attachments/assets/d3dc69dd-5195-4b51-81eb-be29637b43a6
+
 
 ---
 
@@ -27,13 +29,35 @@ Pobshell maps Python objects to Linux‑style paths:
 - Each attribute or member is a child in that directory
 - Navigate using **Bash-style commands**
 
-For example:
 
+**Start Pobshell**
+```python
+import json  # Something to explore
+
+import pobshell
+pobshell.shell()
 ```
+
+**Gives you a prompt with your variables in the root directory**
+```
+/ ▶ ls
+json
 / ▶ cd json
 /json ▶ ls
-/json ▶ cd JSONDecodeError
-/json/JSONDecodeError ▶ ls -l
+JSONDecodeError  JSONEncoder  decoder          dump   encoder  loads  
+JSONDecoder      codecs       detect_encoding  dumps  load     scanner
+/json ▶ doc -1
+JSONDecodeError  Subclass of ValueError with the following additional properties:
+JSONDecoder      Simple JSON <https://json.org> decoder
+JSONEncoder      Extensible JSON <https://json.org> encoder for Python data structures.
+codecs           codecs -- Python Codec Registry, API and helpers.
+decoder          Implementation of JSONDecoder
+dump             Serialize ``obj`` as a JSON formatted stream to ``fp`` (a
+dumps            Serialize ``obj`` to a JSON formatted ``str``.
+encoder          Implementation of JSONEncoder
+load             Deserialize ``fp`` (a ``.read()``-supporting file-like object containing
+loads            Deserialize ``s`` (a ``str``, ``bytes`` or ``bytearray`` instance
+scanner          JSON token scanner
 ```
 
 ---
@@ -44,28 +68,35 @@ Pobshell inspection commands are built on Python’s `inspect` module (mostly).
 
 | Command  | Description                                   |
 |----------|-----------------------------------------------|
-| `ls`     | List object members                           |
 | `ls -l`  | Long listing: names, types, values            |
 | `ls -x`  | Extra long listing: `ls -l`, `cat -1`, `doc -1`,... |
 | `cat`    | Show syntax‑highlighted source code           |
 | `doc`    | Print docstrings                              |
-| `abcs`   | Show abstract base classes                    |
 | `predicates` | Inspect predicates (e.g. `isclass`)       |
 | `memsize` | Total memory size of object and members      |
 | `tree`   | Diagram object structure                      |
 | `find`   | Recursive search                              |
+
+<details>
+<summary><strong>…more commands</strong></summary>
+ 
+| Command  | Description                                   |
+|----------|-----------------------------------------------|
 | `filepath` | File where the object was defined           |
 | `id`     | Unique identifier of the object               |
 | `module` | Module that defines the object                |
 | `mro`    | Method resolution order                       |
+| `abcs`   | Show abstract base classes                    | 
 | `pprint` | Pretty-printed object value                   |
 | `pydoc`  | Auto-generated documentation                  |
 | `repr`   | saferepr() representation of object value     |
 | `signature` | Function signature                         |
 | `str`    | str() representation of object value          |
 | `type`   | Type of the object                            |
+| `ls`     | List object members                           | 
 | `typename` | Name of the object’s type (type.__name__)   |
 | `which`  | Defining class for a method or descriptor     |
+</details>
 
 ---
 
@@ -180,7 +211,7 @@ Use Python expressions in filters and commands:
 
 ## Installation
 
-Pobshell supports Python 3.12. It has minimal dependencies.
+Pobshell supports Python 3.11 and 3.12. It has minimal dependencies.
 
 ```shell
 $ pip install pobshell
@@ -194,7 +225,7 @@ $ pip install pobshell
 |------------------|--------|--------------|----------------|-------------|
 | macOS            | 3.11   | Yes          | Yes            | Yes         |
 | macOS            | 3.12   | Yes          | Yes            | Yes         |
-| Linux            | 3.12   | Yes          | Yes            | ?           |
+| Linux            | 3.12   | Yes          | Yes            | Yes         |
 | Win 10 WSL       | 3.13   | Yes          | Yes            | Yes         |
 | Win 10 Native    | 3.12   | Yes          | Yes            | Yes         |
 | Win 10 Native    | 3.13   | Yes          | No             | No          |
@@ -209,6 +240,13 @@ $ pip install pobshell
 ```
 
 `shell()` creates a Pobshell virtual filesystem, populates root with globals and locals of the calling frame, and starts a Pobshell command loop. You get a prompt at root for entering Pobshell commands. Use `quit` to exit.
+
+---
+
+## Learn more
+
+YouTube demos:
+https://www.youtube.com/@Pobshell 
 
 ---
 
