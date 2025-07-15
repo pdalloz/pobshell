@@ -4,7 +4,7 @@
 
 Show documentation string for object
 
-From __doc__ or inspect.getdoc  
+From __doc__ attribute or via inspect.getdoc  
 
 
 ## USAGE
@@ -89,6 +89,8 @@ E.g. List code for objects whose docstring includes "encoding"
 
 * Show oneline docstrings for members of current object
   / ▶ doc -1
+* Show code samples from docstring of current object
+  / ▶ doc . | grep '>>>'
 * Show docstring for specific object
   / ▶ doc /__builtins__/staticmethod
 * Show docstring for objects whose names match glob pattern
