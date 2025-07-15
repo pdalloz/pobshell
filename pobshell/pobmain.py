@@ -947,7 +947,7 @@ class Pobiverse(cmd2.Cmd):
                             be kept in the results
         :return: a list of possible tab completions
         """
-        
+
         # Used to replace cwd in the final results
         cwd = self.curr_path.abspath
         cwd_added = False
@@ -2793,7 +2793,9 @@ frames (how frame objects are mapped):
     find_action_group.add_argument('--cmd', type=str, metavar="CMD",
                                    help='execute Pob command CMD in namespace of each match')
     find_action_group.add_argument('-l', action='store_true', help='execute "ls -l" on each match')
+    find_action_group.add_argument('-p', action='store_true', help='execute "ls -Pl" on each match')
     find_action_group.add_argument('-x', action='store_true', help='execute "ls -x" on each match')
+    find_action_group.add_argument('-c', action='store_true', help='execute "doc -1v" on each match')
     find_action_group.add_argument('-e', '--enumerate', action='store_true',
                                    help='enumerate paths matched; to visit with "cd $N"',
                                    default=False)
@@ -2980,15 +2982,19 @@ frames (how frame objects are mapped):
             if args.enumerate:
                 self._result_paths = []
 
-            subcmd = args.cmd   # --cmd COMMAND to be executed on each match
+            subcmd = args.cmd or ''  # --cmd COMMAND to be executed on each match
 
-            if subcmd and (args.l or args.x):
-                self.perror("find: --cmd, --l and --x are mutually exclusive")
-                return
-            elif args.x:
-                subcmd = 'ls -xv .'
-            elif args.l:
-                subcmd = 'ls -lv .'
+            # if subcmd and (args.l or args.x or args.c):
+            #     self.perror("find: --cmd, -x are mutually exclusive")
+            #     return
+            if args.x:
+                subcmd = 'ls -xv . ; ' + subcmd
+            if args.l:
+                subcmd = 'ls -lv . ; ' + subcmd
+            if args.p:
+                subcmd = 'ls -Pl . ; ' + subcmd
+            if args.c:
+                subcmd = 'doc -1v . ; ' + subcmd
 
 
             # ========= start walking ==========
