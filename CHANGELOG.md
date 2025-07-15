@@ -4,6 +4,14 @@ All notable changes to this project will be documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com).
 
+## [0.2.0] - 2025-07-15
+### Added
+- Add negative filters: `--nmodule PATTERN`  and `--nismodule` 
+- Add `--nstr PATTERN` filter
+### Changed
+- Rename `--nfile` as `--nfilepath` for consistency
+- Remove `--value PATTERN` and `--nvalue PATTERN` filters
+
 ## [0.1.4] - 2025-07-01
 ### Changed
 - Minimum supported Python lowered from 3.12 to 3.11
