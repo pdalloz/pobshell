@@ -678,7 +678,7 @@ class PobNode:
                         doc = ''
                 yield (prefix +
                        f"{style_str(self.name, 'path')}  "
-                       + f"  {style_str(str(self.type), 'type')}"
+                       + f"  {style_str(self.typename, 'type')}"
                        + "  " + doc.split('\n', 1)[0])
             else:   # tree command had no option -c
                 yield (prefix +
