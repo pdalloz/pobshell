@@ -26,7 +26,8 @@ from pygments.formatters.terminal import TerminalFormatter
 from .dirops import PobNS
 import collections.abc
 from . import common
-from .common import (PobPrefs, xtra_safe_repr, fmt_update_msg, temporary_setting, POBNODE_NAME, SELF_NAME, NoSuchInfo)
+from .common import (PobPrefs, xtra_safe_repr, fmt_update_msg, temporary_setting, POBNODE_NAME, SELF_NAME,
+                     MissingInfoOptions, NoSuchInfo)
 
 import ast
 import builtins
@@ -613,7 +614,8 @@ class PobNode:
              depth: int = 1,
              exclude_func=None,
              prune_func=None,
-             match_func=lambda x: True):
+             match_func=lambda x: True,
+             report_docs=False):
         """
         A single-function recursive tree generator. Yields lines (strings) that form
         a directory-like tree of this node and its descendants, subject to:
@@ -623,8 +625,8 @@ class PobNode:
                               we do NOT descend into its children.
           - match_func(node): if True, the node is 'included' unconditionally.
                               If False, it is included only if it has included children.
+          - report_docs:  if True report (path, doc -1) if False report (path, type, strval)
 
-        A node is included if match_func(node) is True, OR at least one child is included.
         """
 
         # 1) Check if we should exclude this node entirely
@@ -651,7 +653,8 @@ class PobNode:
                                               depth=depth - 1,
                                               exclude_func=exclude_func,
                                               prune_func=prune_func,
-                                              match_func=match_func))
+                                              match_func=match_func,
+                                              report_docs=report_docs))
                 # If child_lines is non-empty, that child (or its subtree) is included
                 if child_lines:
                     included_children.append(child_lines)
@@ -666,10 +669,22 @@ class PobNode:
         if is_match or included_children:
             # -- YIELD the line for this node itself.
             # No pointer on the "self" line, because it's the top in this local subtree.
-            yield (prefix +
-                   f"{style_str(self.name, 'path')}  "
-                   + xtra_safe_repr(self.obj)[:500].replace('\n', ' ')
-                   + f"  {style_str(str(self.type), 'type')}")
+            if report_docs:   # tree command used option -c
+                doc = self.doc
+                if isinstance(doc, NoSuchInfo):
+                    if PobPrefs.missing == MissingInfoOptions.exception_string:
+                        doc = str(doc)
+                    else:
+                        doc = ''
+                yield (prefix +
+                       f"{style_str(self.name, 'path')}  "
+                       + f"  {style_str(str(self.type), 'type')}"
+                       + "  " + doc.split('\n', 1)[0])
+            else:   # tree command had no option -c
+                yield (prefix +
+                       f"{style_str(self.name, 'path')}  "
+                       + xtra_safe_repr(self.obj)[:500].replace('\n', ' ')
+                       + f"  {style_str(str(self.type), 'type')}")
 
             # 6) Yield lines for each included child, with pointer prefixes.
             # We have N included children; pointers are TEE for all but the last, and LAST for the final child.

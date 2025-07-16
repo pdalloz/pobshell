@@ -136,8 +136,8 @@ class PobPrefsClass:  # Singleton container object for pobshell preferences
     #   when prettify_infos is true, info-func output has syntax highlighting of code & signature strings,
     #       pretty printing of value strings, cleaning of doc strings, and colouring of pydoc output
     #       these are temporarily turned off when evaluating --cat --signature --matchpy, to prevent
-    #       ansi codes from breaking pattern matching of output.  And all styling is turned off when
-    #       output is sent to an OS pipe, e.g. for grep
+    #       ansi codes from breaking pattern matching of output.
+    #
     #       prettify_infos not a user setting, but user can turn off all colouring with
     #           set allow_style Never
     prettify_infos = True
@@ -149,7 +149,7 @@ class PobPrefsClass:  # Singleton container object for pobshell preferences
         # attributes that implement PV settings  ------------
         #   see Pobiverse __init__ for descriptions/help text
 
-        # TODO: Consolidate these instance attributes with class attributes above
+        # TODO: Consolidate these singleton instance attributes with class attributes above
 
         # NB Need consistent width setting for tests, or output won't match
         # DEBUG may be overridden in init_options; width and path_width will be updated if necessary

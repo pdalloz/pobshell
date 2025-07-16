@@ -2300,6 +2300,7 @@ frames (how frame objects are mapped):
     tree_parser.add_argument('-o', '--or', '--any', action='store_true',
                              help="Include objects that satisfy ANY match criteria")
     tree_parser.add_argument('-v', '--verbose', action='store_true', help="echo fullpath to output")
+    tree_parser.add_argument('-c', action='store_true', help="show docstrings")
     tree_parser.add_argument('-p', '--paged', action='store_true', help="view output in pager")
     tree_parser.add_argument('--prune', nargs='+', help='Prune paths matching abspath pattern, typename or satisfying predicate')
     tree_parser.add_argument('path', metavar='PATH', completer=ns_path_complete, help="Specify the target (name or path)",
@@ -2371,7 +2372,8 @@ frames (how frame objects are mapped):
             for line in pn.tree(depth=args.depth if args.depth is not None else 2,
                                 match_func=match_func,
                                 exclude_func=exclude_func,
-                                prune_func=lambda node: prune_func and prune_func(node) and node.abspath != pn.abspath):
+                                prune_func=lambda node: prune_func and prune_func(node) and node.abspath != pn.abspath,
+                                report_docs=args.c):
                                 # prune_func=lambda node: prune_func(node) and node.abspath != pn.abspath):
                                 # prune_func=prune_func):
 
