@@ -91,6 +91,8 @@ from .infocmds import (
 # Next is for reimport purposes, to support do_reset method
 from . import common
 
+from . import __version__
+
 POB_HALT = 1
 POB_CONTINUE = 2
 
@@ -3059,10 +3061,12 @@ frames (how frame objects are mapped):
 
     def output_pobshell_banner(self):
         if not self.quiet:
-            self.poutput("\nWelcome to Pobshell - type '" + boldit("help") + "' for commands, '"
-                         + boldit("quit") + "' to exit ")
+            self.poutput(f"\nWelcome to Pobshell V{__version__}  Type '" + boldit("help") + "' for commands, '"
+                         + boldit("quit") + "' to exit ", end='  ')
             if PobPrefs.DEBUG:
                 self.poutput(datetime.now())
+            else:
+                self.poutput()
 
 
     def columnize(self, str_list: Optional[List[str]], display_width: int = 80) -> None:
