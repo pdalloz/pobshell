@@ -683,7 +683,7 @@ class PobNode:
             else:   # no option -c, so report 'ls -l' for each node
                 yield (prefix +
                        (f"{style_str(self.name, 'path')}" if is_match else self.name)
-                       + xtra_safe_repr(self.obj)[:500].replace('\n', ' ')
+                       + "  " + xtra_safe_repr(self.obj)[:500].replace('\n', ' ')
                        + f"  {style_str(str(self.type), 'type')}")
 
             # 6) Yield lines for each included child, with pointer prefixes.
