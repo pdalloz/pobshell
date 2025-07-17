@@ -3007,19 +3007,6 @@ frames (how frame objects are mapped):
             for pn in walk_chain:
                 self.clean_update_msgs_output()
 
-                if not subcmd:
-                    if args.enumerate:
-                        self.poutput(boldit(str(match_count)) + ': ', end='')
-                        self._result_paths.append(pn.abspath)
-                    if not args.quiet:
-                        self.poutput(f"{short(pn.abspath)}", end='  ' if args.printpy else '\n')
-                    match_count += 1
-
-                if args.printpy:
-                    # if the user provided a python expression to eval and printpy for matches, do it now
-                    self.poutput(pn.eval_PYEXPR(args.printpy, expecting_eval=True, noraise=args.noraise),
-                                 end='  ' if subcmd else '\n')  # cmd results on same line if possible
-
                 if subcmd:
                     # if the user provided a pobshell command to execute for all matches, do it now, reentrantly
                     #   NB don't clobber cdh history with these
@@ -3028,7 +3015,7 @@ frames (how frame objects are mapped):
                         # 'cd' to the path
                         self.change_curr_path(pn)
                         if args.enumerate and not args.quiet:
-                            self.poutput(boldit(str(match_count)) + ': ', end='')
+                            self.poutput(boldit(str(match_count)) + ': ')
                             self._result_paths.append(pn.abspath)
                         match_count += 1
                         cmds = parse_cmds(subcmd)  # split ";" delimited string of commands
@@ -3036,7 +3023,18 @@ frames (how frame objects are mapped):
                         # execute --cmd commmands in the namespace of this result path
                         if self.runcmds_plus_hooks(cmds, add_to_history=False, stop_on_keyboard_interrupt=True):
                             return
+                else:
+                    if args.enumerate:
+                        self.poutput(boldit(str(match_count)) + ': ', end='')
+                        self._result_paths.append(pn.abspath)
+                    if not args.quiet:
+                        self.poutput(f"{short(pn.abspath)}", end='  ' if args.printpy else '\n')
+                    match_count += 1
 
+
+                if args.printpy:
+                    # if the user provided a python expression to eval and printpy for matches, do it now
+                    self.poutput(pn.eval_PYEXPR(args.printpy, expecting_eval=True, noraise=args.noraise))
 
                 if args.LIMIT and match_count >= args.LIMIT :
                     # We found enough matches, stop looking
