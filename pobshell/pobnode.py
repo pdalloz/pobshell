@@ -23,7 +23,7 @@ from pygments import highlight
 from pygments.lexers.python import PythonLexer
 from pygments.formatters.terminal import TerminalFormatter
 
-from .dirops import PobNS
+from .dirops import PobNS, PobMissingMemberException
 import collections.abc
 from . import common
 from .common import (PobPrefs, xtra_safe_repr, fmt_update_msg, temporary_setting, POBNODE_NAME, SELF_NAME,
@@ -638,9 +638,13 @@ class PobNode:
             return
 
         # 3) Gather potential children (already filtered by exclude_func in self.filtered())
-        children = list(self.filtered(target_name_pattern='*',
-                                      automagic=False,
-                                      exclude_func=exclude_func))
+        try:
+            children = list(self.filtered(target_name_pattern='*',
+                                          automagic=False,
+                                          exclude_func=exclude_func))
+        except PobMissingMemberException:
+            children = []
+
 
         # If prune_func says "don't descend", skip children entirely
         included_children = []
