@@ -615,7 +615,8 @@ class PobNode:
              exclude_func=None,
              prune_func=None,
              match_func=lambda x: True,
-             report_docs=False):
+             report_docs=False,
+             num_lines=None):
         """
         A single-function recursive tree generator. Yields lines (strings) that form
         a directory-like tree of this node and its descendants, subject to:
@@ -658,7 +659,8 @@ class PobNode:
                                               exclude_func=exclude_func,
                                               prune_func=prune_func,
                                               match_func=match_func,
-                                              report_docs=report_docs))
+                                              report_docs=report_docs,
+                                              num_lines=num_lines))
                 # If child_lines is non-empty, that child (or its subtree) is included
                 if child_lines:
                     included_children.append(child_lines)
@@ -693,7 +695,7 @@ class PobNode:
             # 6) Yield lines for each included child, with pointer prefixes.
             # We have N included children; pointers are TEE for all but the last, and LAST for the final child.
             num_incl = len(included_children)
-            for i, child_lines in enumerate(included_children):
+            for i, child_lines in enumerate(included_children[:num_lines]):
                 pointer = self.TEE if (i < num_incl - 1) else self.LAST
                 extension = self.BRANCH if pointer == self.TEE else self.SPACE
 

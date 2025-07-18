@@ -2297,7 +2297,7 @@ frames (how frame objects are mapped):
 
     tree_parser = argparse.ArgumentParser(formatter_class=HideArgumentHelpFormatter)
     tree_parser.add_argument('-d', '--depth', type=int, help='Depth of tree (default is 2)')
-    tree_parser.add_argument('-n', '--numlines', type=int, help='truncate at N lines per entry')
+    tree_parser.add_argument('-n', '--numlines', type=int, help='truncate at N lines (children) per entry')
     tree_parser.add_argument('-a', '--all', action='store_true', help='include hidden prefixes')
     tree_parser.add_argument('-o', '--or', '--any', action='store_true',
                              help="Include objects that satisfy ANY match criteria")
@@ -2375,7 +2375,8 @@ frames (how frame objects are mapped):
                                 match_func=match_func,
                                 exclude_func=exclude_func,
                                 prune_func=lambda node: prune_func and prune_func(node) and node.abspath != pn.abspath,
-                                report_docs=args.c):
+                                report_docs=args.c,
+                                num_lines=getattr(args, 'numlines', None)):
                                 # prune_func=lambda node: prune_func(node) and node.abspath != pn.abspath):
                                 # prune_func=prune_func):
 
