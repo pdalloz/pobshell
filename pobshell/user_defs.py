@@ -59,30 +59,6 @@ available_filters.update(predicate_funcs)
 
 # Define named prunesets: CODE, DATA, ..    ----------------------------------------------------
 
-SEARCH_MODES = {
-    "DATA": {
-        "prune_paths": ['*/sys/modules'],
-        "prune_prefixes": ['_'],
-        "prune_types": [int, float, str, bool, ...],
-        'DATA': [
-            'bool', 'float', 'int', 'complex', 'str', 'bytes',
-            'bytearray', 'memoryview',
-            # skip properties', staticmethods, method_wrappers
-            'property', 'staticmethod', 'method-wrapper', 'wrapper_descriptor',
-            # but allow list/tuple/dict, because might have interesting nested objects
-        ],
-        "prune_predicates": [isroutine, isdatadescriptor],
-    },
-    "CODE": {
-        "prune_paths": ['*/importlib/*', '*/__dir__/*'],
-        "prune_prefixes": ['_'],
-        "prune_types": [int, float, str, bool, ...],
-        "prune_predicates": [isbuiltin, ismethoddescriptor],
-    },
-    # ...
-}
-
-
 def CODE(pn):
     """Focus on code objects (prune non-code) """
     return (type(pn.obj).__name__ in {'bool', 'float', 'int', 'complex', 'list', 'str', 'bytes',
