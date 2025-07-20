@@ -1644,7 +1644,7 @@ frames (how frame objects are mapped):
 
         def _history_to_file(token: str) -> str:
             """Run history item N (from @N/@-N/$N) and return the temp file path."""
-            tmp = NamedTemporaryFile(mode="w+", delete=False, encoding="utf-8")
+            tmp = NamedTemporaryFile(mode="w+", delete=False, encoding="utf-8", suffix=".html")
             file_handles.append(tmp)
             temp_files.append(tmp.name)
 
@@ -1675,7 +1675,7 @@ frames (how frame objects are mapped):
 
         def _run_inline(cmdstr: str) -> str:
             """Run *cmd* in Pobshell, capture stdout, return temp file path."""
-            tmp = NamedTemporaryFile(mode="w+", delete=False, encoding="utf-8")
+            tmp = NamedTemporaryFile(mode="w+", delete=False, encoding="utf-8", suffix=".html")
             file_handles.append(tmp)
             temp_files.append(tmp.name)
 
