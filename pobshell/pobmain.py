@@ -3024,14 +3024,14 @@ frames (how frame objects are mapped):
             # if subcmd and (args.l or args.x or args.c):
             #     self.perror("find: --cmd, -x are mutually exclusive")
             #     return
-            if args.x:
-                subcmd = 'ls -xv . ; ' + subcmd
+            if args.c:
+                subcmd = 'doc -1v . ; ' + subcmd
             if args.l:
                 subcmd = 'ls -lv . ; ' + subcmd
             if args.p:
                 subcmd = 'ls -Pl . ; ' + subcmd
-            if args.c:
-                subcmd = 'doc -1v . ; ' + subcmd
+            if args.x:
+                subcmd = 'ls -xv . ; ' + subcmd
 
 
             # ========= start walking ==========
