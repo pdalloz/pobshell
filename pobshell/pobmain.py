@@ -795,6 +795,41 @@ class Pobiverse(cmd2.Cmd):
         if PobPrefs.contentkey_delimiter not in line:
             return data
 
+        new_statement_dict = {}
+        for k,v in data.statement.to_dict().items():
+            if isinstance(v, str):
+                new_statement_dict[k] = self.fixupstr(v)
+            if isinstance(v, list):
+                new_statement_dict[k] = self.fixuplist(v)
+
+        data.statement = cmd2.parsing.Statement.from_dict(new_statement_dict)
+
+        return data
+
+
+    def fixuplist(self, alist):
+        # alist: of strs for backtick fixing
+        # returns: list of bacticked items replaced by uuids
+        # side effect: stores backticked contents in self.contentkeys
+        if isinstance(alist, list):
+            new_list = []
+            for item in alist:
+                if isinstance(item, list):
+                    new_list.append(self.fixuplist(item))
+                elif isinstance(item, str):
+                    new_list.append(self.fixupstr(item))
+                else:
+                    new_list.append(item)
+            return new_list
+        else:
+            return alist
+
+    def fixupstr(self, line):
+        # line: str for backtick fixing
+        # returns: str with backticks replaced by uuids
+        # side effect: stores backticked contents in self.contentkeys
+        if PobPrefs.contentkey_delimiter not in line:
+            return line
         btsplit = line.split(PobPrefs.contentkey_delimiter)
         for i, ele in enumerate(btsplit):
             # odd numbered elements were contentkey_delimiter-escaped
@@ -803,10 +838,7 @@ class Pobiverse(cmd2.Cmd):
                 self.contentkeys[bt_uuid.hex] = ele  # save the contentkey expr in dict for later retrieval
                 btsplit[i] = bt_uuid.hex
 
-        updated_line = PobPrefs.contentkey_delimiter.join(btsplit)
-        data.statement = self.statement_parser.parse(updated_line)
-
-        return data
+        return PobPrefs.contentkey_delimiter.join(btsplit)
 
 
 
@@ -2108,13 +2140,13 @@ frames (how frame objects are mapped):
                 self.perror(f'{cmdstr}: {arg_pattern}: No such path')
             return
 
-        # some commands expand the list of pn targets
+        # pathinfo command expands the list of pn targets
         if cmdstr == 'pathinfo':
             newpns = []
             for pn in targetpns:
                 splitpath = strpath.split_path_all(pn.abspath)[1:]  # strip off blank name corresponding to root
                 for subpathlen in range(len(splitpath)):
-                    extrapn_path = strpath.join('/',*splitpath[:subpathlen+1])
+                    extrapn_path = strpath.join('/', *splitpath[:subpathlen+1])
                     newpns.append(PobNode(extrapn_path, self.rootpn))
             targetpns = newpns
 
