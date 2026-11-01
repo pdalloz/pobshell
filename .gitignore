@@ -3,3 +3,8 @@
 /pobshell/__pycache__
 /pobshell.egg-info
 /.idea
+/.venv
+/docs
+/AGENTS.md
+/.claude/settings.local.json
+/.claude/skills/brainstorm/
