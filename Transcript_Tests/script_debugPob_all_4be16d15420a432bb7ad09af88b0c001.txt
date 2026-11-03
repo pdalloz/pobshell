@@ -1,3 +1,6 @@
+§ width and path_width large enough that no output line is truncated ;
+set width 100000
+set path_width 100000
 § ;
 ls
 § wildcard wrapped name pattern ;
