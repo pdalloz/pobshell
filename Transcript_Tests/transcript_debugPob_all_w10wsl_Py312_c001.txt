@@ -105,8 +105,8 @@ __all__            __check_build  __loader__  __path__     _built_with_meson
 / ▶ § find with filter typename ;
 / ▶ find . --typename str -L 3 --cmd "ls -lv ."
 \/p  str                       'sin(q)'
-\/connection\/filename  str                       '\/mnt\/c\/Users\/pdall\/Dropbox\/PYTHONDROPBOX\/pobshell_publish\/Tests\/montyp…
-\/connection\/filename_journal  str                       '\/mnt\/c\/Users\/pdall\/Dropbox\/PYTHONDROPBOX\/pobshell_publish\/Test…
+\/connection\/filename  str                       '/[^\n]*/
+\/connection\/filename_journal  str                       '/[^\n]*/
 / ▶ § find with filter isdata ;
 / ▶ find . --predicates *isdata* -d 3 -L 10
 \/
@@ -580,22 +580,22 @@ now: 0
 / ▶ § ls -l with column_width zero so it suppresses col 1 (counting from 0) altogether ;
 / ▶ ls -l
 Cafe         <class '__main__.Cafe'>
-apsw         <module 'apsw' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/python3.12\/site-packages\/a…
-ast          <module 'ast' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/python3.12\/ast.py'>
+apsw         <module 'apsw' from '/[^\n]*/
+ast          <module 'ast' from '/[^\n]*/
 ast_trees    [<ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/…
 connection   <apsw.Connection object at /0[xX][0-9a-fA-F]+/>
 cursor       <apsw.Cursor object at /0[xX][0-9a-fA-F]+/>
 eq           X + 1
 iris         {'DESCR': '.. _iris_dataset:\n\nIris plants dataset\n--------------------\n\n**Data Set Characteristics:**…
-json         <module 'json' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/python3.12\/json\/__init__.p…
+json         <module 'json' from '/[^\n]*/
 kson         ['foo', {'bar': ['baz', None, 1.0, 2]}]
 load_iris    <function load_iris at /0[xX][0-9a-fA-F]+/>
-math         <module 'math' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/python3.12\/lib-dynload\/mat…
+math         <module 'math' from '/[^\n]*/
 p            'sin(q)'
-pandas       <module 'pandas' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/python3.12\/site-packages…
+pandas       <module 'pandas' from '/[^\n]*/
 paths        ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)', "z['a']", '1\/2', 'sin(q)']
-sklearn      <module 'sklearn' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/python3.12\/site-package…
-sympy        <module 'sympy' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/python3.12\/site-packages\/…
+sklearn      <module 'sklearn' from '/[^\n]*/
+sympy        <module 'sympy' from '/[^\n]*/
 sys          <module 'sys' (built-in)>
 viking_cafe  <__main__.Cafe object at /0[xX][0-9a-fA-F]+/>
 x            X
@@ -684,22 +684,22 @@ Current filters:  {'name': '_*'}
 / ▶ § confirm back to normal after showing the thing we just hid ;
 / ▶ ls -l
 Cafe         type                      <class '__main__.Cafe'>
-apsw         module                    <module 'apsw' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/…
-ast          module                    <module 'ast' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/p…
+apsw         module                    <module 'apsw' from '/[^\n]*/
+ast          module                    <module 'ast' from '/[^\n]*/
 ast_trees    list                      [<ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <…
 connection   Connection                <apsw.Connection object at /0[xX][0-9a-fA-F]+/>
 cursor       Cursor                    <apsw.Cursor object at /0[xX][0-9a-fA-F]+/>
 eq           Add                       X + 1
 iris         Bunch                     {'DESCR': '.. _iris_dataset:\n\nIris plants dataset\n--------------------\n\n**D…
-json         module                    <module 'json' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/…
+json         module                    <module 'json' from '/[^\n]*/
 kson         list                      ['foo', {'bar': ['baz', None, 1.0, 2]}]
 load_iris    function                  <function load_iris at /0[xX][0-9a-fA-F]+/>
-math         module                    <module 'math' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib\/…
+math         module                    <module 'math' from '/[^\n]*/
 p            str                       'sin(q)'
-pandas       module                    <module 'pandas' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/li…
+pandas       module                    <module 'pandas' from '/[^\n]*/
 paths        list                      ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)',…
-sklearn      module                    <module 'sklearn' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/l…
-sympy        module                    <module 'sympy' from '\/home\/pdalloz\/anaconda3\/envs\/pobshell_test_wsl20250619\/lib…
+sklearn      module                    <module 'sklearn' from '/[^\n]*/
+sympy        module                    <module 'sympy' from '/[^\n]*/
 sys          module                    <module 'sys' (built-in)>
 viking_cafe  Cafe                      <__main__.Cafe object at /0[xX][0-9a-fA-F]+/>
 x            Symbol                    X
@@ -864,7 +864,6 @@ class Cafe:
 	def we_have_got(self):
 		self._menu_item += "spam "
 		return self._menu_item + "eggs"
-
 / ▶ § test tree command with filter ;
 / ▶ tree Cafe -d 2 --isroutine
 Cafe  <class '__main__.Cafe'>  <class 'type'>
