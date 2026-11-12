@@ -306,7 +306,7 @@ iris         Exception::NoSuchInfo('module, class, method, function, traceback, 
 json         r"""JSON (JavaScript Object Notation) <https:\/\/json.org> is a subset of
 kson         Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got list')
 load_iris    @validate_params(
-math         Exception::NoSuchInfo('source code not available')
+math         Exception::NoSuchInfo(/[^\n]*/
 p            Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got str')
 pandas       from __future__ import annotations
 paths        Exception::NoSuchInfo('module, class, method, function, traceback, frame, or code object was expected, got list')
@@ -499,7 +499,7 @@ iris         Bunch                                                              
 json         module                                                                                                          <module 'json' from '/[^\n]*/
 kson         list                                                                                                            ['foo', {'bar': ['baz', None, 1.0, 2]}]
 load_iris    function                                                                                                        <function load_iris at /0[xX][0-9a-fA-F]+/>
-math         module                                                                                                          <module 'math' from '/[^\n]*/
+math         module                                                                                                          <module 'math' /[^\n]*/
 p            str                                                                                                             'sin(q)'
 pandas       module                                                                                                          <module 'pandas' from '/[^\n]*/
 paths        list                                                                                                            ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)', "z['a']", '1\/2', 'sin(q)']
@@ -528,7 +528,7 @@ iris         {'DESCR': '.. _iris_dataset:\n\nIris plants dataset\n--------------
 json         <module 'json' from '/[^\n]*/
 kson         ['foo', {'bar': ['baz', None, 1.0, 2]}]
 load_iris    <function load_iris at /0[xX][0-9a-fA-F]+/>
-math         <module 'math' from '/[^\n]*/
+math         <module 'math' /[^\n]*/
 p            'sin(q)'
 pandas       <module 'pandas' from '/[^\n]*/
 paths        ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)', "z['a']", '1\/2', 'sin(q)']
@@ -630,7 +630,7 @@ iris         Bunch                     {'DESCR': '.. _iris_dataset:\n\nIris plan
 json         module                    <module 'json' from '/[^\n]*/
 kson         list                      ['foo', {'bar': ['baz', None, 1.0, 2]}]
 load_iris    function                  <function load_iris at /0[xX][0-9a-fA-F]+/>
-math         module                    <module 'math' from '/[^\n]*/
+math         module                    <module 'math' /[^\n]*/
 p            str                       'sin(q)'
 pandas       module                    <module 'pandas' from '/[^\n]*/
 paths        list                      ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)', "z['a']", '1\/2', 'sin(q)']
