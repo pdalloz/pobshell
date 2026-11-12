@@ -483,32 +483,38 @@ all              (iterable, \/)
 /__builtins__ ▶ § confirm that listing an "empty directory" doesn't give  error message ;
 /__builtins__ ▶ ls -a  None/ --map local
 /__builtins__ ▶ cd /
+/ ▶ set width 120
+width - was: 100000
+now: 120
 / ▶ set column_width 110
 column_width - was: 24
 now: 110
 / ▶ § ls -l with column_width so large it suppresses col 1 (counting from 0) altogether ;
 / ▶ ls -l
-Cafe         type                                                                                                            <class '__main__.Cafe'>
-apsw         module                                                                                                          <module 'apsw' from '/[^\n]*/
-ast          module                                                                                                          <module 'ast' from '/[^\n]*/
-ast_trees    list                                                                                                            [<ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>, <ast.Module object at /0[xX][0-9a-fA-F]+/>]
-connection   Connection                                                                                                      <apsw.Connection object at /0[xX][0-9a-fA-F]+/>
-cursor       Cursor                                                                                                          <apsw.Cursor object at /0[xX][0-9a-fA-F]+/>
-eq           Add                                                                                                             X + 1
-iris         Bunch                                                                                                           {'DESCR': '.. _iris_dataset:\n\nIris plants dataset\n--------------------\n\n**Data Set Characteristics:**\n\n:Number of Instances: 150 (50 in each of three classes)\n:Number of Attributes: 4 numeric, predictive attributes and the class\n:Attribute Information:\n    - sepal length in cm\n    - sepal
-json         module                                                                                                          <module 'json' from '/[^\n]*/
-kson         list                                                                                                            ['foo', {'bar': ['baz', None, 1.0, 2]}]
-load_iris    function                                                                                                        <function load_iris at /0[xX][0-9a-fA-F]+/>
-math         module                                                                                                          <module 'math' /[^\n]*/
-p            str                                                                                                             'sin(q)'
-pandas       module                                                                                                          <module 'pandas' from '/[^\n]*/
-paths        list                                                                                                            ['jskf[\'2\'].jwui.vnn["3.4"]', 'T[2][3]', '(-b + math.sqrt(b**2-4*a*c))\/(2*a)', "z['a']", '1\/2', 'sin(q)']
-sklearn      module                                                                                                          <module 'sklearn' from '/[^\n]*/
-sympy        module                                                                                                          <module 'sympy' from '/[^\n]*/
-sys          module                                                                                                          <module 'sys' (built-in)>
-viking_cafe  Cafe                                                                                                            <__main__.Cafe object at /0[xX][0-9a-fA-F]+/>
-x            Symbol                                                                                                          X
-spam         int                                                                                                             43
+Cafe       
+apsw       
+ast        
+ast_trees  
+connection 
+cursor     
+eq         
+iris       
+json       
+kson       
+load_iris  
+math       
+p          
+pandas     
+paths      
+sklearn    
+sympy      
+sys        
+viking_cafe
+x          
+spam       
+/ ▶ set width 100000
+width - was: 120
+now: 100000
 / ▶ set column_width 24
 column_width - was: 110
 now: 24

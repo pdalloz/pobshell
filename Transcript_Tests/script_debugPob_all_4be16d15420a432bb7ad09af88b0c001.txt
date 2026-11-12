@@ -182,9 +182,11 @@ ls -a None/ --map local
 § confirm that listing an "empty directory" doesn't give  error message ;
 ls -a  None/ --map local
 cd /
+set width 120
 set column_width 110
 § ls -l with column_width so large it suppresses col 1 (counting from 0) altogether ;
 ls -l
+set width 100000
 set column_width 24
 set column_width 0
 § ls -l with column_width zero so it suppresses col 1 (counting from 0) altogether ;
