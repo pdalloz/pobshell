@@ -11,6 +11,11 @@ cd "$(dirname "$0")" || exit 1
 HOME=$PWD/.testhome
 mkdir -p "$HOME" || exit 1
 export HOME
+echo 'Transcript_Tests/transcript_debugPob_all_w10wsl_Py312_c001.txt *************:'
 .venv/bin/python Use_Cases/debugPob_all.py --test Transcript_Tests/transcript_debugPob_all_w10wsl_Py312_c001.txt
+echo ''
+echo 'Use_Cases/testPob_getmembers.py *************:'
 .venv/bin/python Use_Cases/testPob_getmembers.py < /dev/null
+echo ''
+echo 'Tests/test_frame_ref_release.py *************:'
 .venv/bin/python Tests/test_frame_ref_release.py < /dev/null
