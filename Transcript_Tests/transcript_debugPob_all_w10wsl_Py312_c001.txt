@@ -855,12 +855,11 @@ Cafe  <class '__main__.Cafe'>  <class 'type'>
 / ▶ § check help option for infocmd ;
 / ▶ doc -h
 / ▶ § test memsize is working ;
-/ ▶ memsize viking_cafe 
-# ==> viking_cafe <==
-456
-
+/ ▶ memsize -1 p
+p  48
 / ▶ § test memsize as filter ;
-/ ▶ find . -d 1 --memsize "==488"
+/ ▶ find . -d 1 --memsize "==48"
+\/p
 / ▶ § test negative filter ;
 / ▶ ls --nismodule
 Cafe  ast_trees  connection  cursor  eq  iris  kson  load_iris  p  paths  viking_cafe  x  spam
@@ -935,3 +934,206 @@ now: True
 / ▶ § test auto_import, sympy.this is only visible when auto_import is true ;
 / ▶ ls sympy/this
 this
+/ ▶ § ls -x of an instance ;
+/ ▶ ls -x viking_cafe
+viking_cafe  Cafe                      <__main__.Cafe object at /0[xX][0-9a-fA-F]+/>
+    type          <class '__main__.Cafe'>
+    predicates    isdata 
+    abcs          Hashable 
+    memsize       456
+    pydoc         Cafe in module __main__ object
+    module        <module '__main__' from '/[^\n]*/\/Use_Cases\/debugPob_all.py'>
+    pypath        viking_cafe
+    id            /[0-9]+/
+/ ▶ § ls -x of a class ;
+/ ▶ ls -x Cafe
+Cafe  type                      <class '__main__.Cafe'>
+    type          <class 'type'>
+    predicates    isclass 
+    abcs          Hashable 
+    memsize       0
+    pydoc         class Cafe in module __main__
+    mro           (<class '__main__.Cafe'>, <class 'object'>)
+    cat           class Cafe:
+    signature     ()
+    module        <module '__main__' from '/[^\n]*/\/Use_Cases\/debugPob_all.py'>
+    filepath      /[^\n]*/\/Use_Cases\/debugPob_all.py
+    pypath        Cafe
+    id            /[0-9]+/
+/ ▶ § ls -x of a function in a stdlib module ;
+/ ▶ ls -x json/dumps
+dumps  function                  <function dumps at /0[xX][0-9a-fA-F]+/>
+    type          <class 'function'>
+    predicates    isfunction isroutine 
+    abcs          Callable Hashable 
+    memsize       0
+    doc           Serialize ``obj`` to a JSON formatted ``str``.
+    pydoc         function dumps in module json
+    cat           def dumps(obj, *, skipkeys=False, ensure_ascii=True, check_circular=True,
+    signature     (obj, *, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, cls=None, indent=None, separators=None, default=None, sort_keys=False, **kw)
+    module        <module 'json' from '/[^\n]*/\/json\/__init__.py'>
+    filepath      /[^\n]*/\/json\/__init__.py
+    pypath        json.dumps
+    id            /[0-9]+/
+/ ▶ § ls -x of a list reached through content keys ;
+/ ▶ ls -x kson/`1`/bar
+bar  list                      ['baz', None, 1.0, 2]
+    type          <class 'list'>
+    predicates    isdata 
+    abcs          Collection Container Iterable MutableSequence Reversible Sequence Sized 
+    memsize       208
+    pydoc         list object
+    pypath        kson[1]['bar']
+    id            /[0-9]+/
+/ ▶ § ls -x of a builtin method, showing 'which' command output ;
+/ ▶ ls -x kson/append
+append  builtin_function_or_met…  <built-in method append of list object at /0[xX][0-9a-fA-F]+/>
+    type          <class 'builtin_function_or_method'>
+    predicates    isbuiltin isroutine 
+    abcs          Callable Hashable 
+    memsize       0
+    doc           Append object to the end of the list.
+    pydoc         built-in function append
+    signature     (object, \/)
+    pypath        kson.append
+    id            /[0-9]+/
+    which         <class 'list'>
+/ ▶ § type of a property with a dynamic map for this command only, gives the type of the value ;
+/ ▶ type viking_cafe/we_have_got --map dynamic
+# ==> we_have_got <==
+<class 'str'>
+
+/ ▶ § type of the same property with a static map for this command only, gives property ;
+/ ▶ type viking_cafe/we_have_got --map static
+# ==> we_have_got <==
+<class 'property'>
+
+/ ▶ § confirm the persistent map is still dynamic ;
+/ ▶ map
+  members: 'everything'  binding: 'dynamic'  resolution: 'mro'  frames: 'variables'
+/ ▶ § type as a command ;
+/ ▶ type viking_cafe
+# ==> viking_cafe <==
+<class '__main__.Cafe'>
+
+/ ▶ § repr as a command, shows the quotes of a str ;
+/ ▶ repr p
+# ==> p <==
+'sin(q)'
+
+/ ▶ § str as a command, no quotes ;
+/ ▶ str p
+# ==> p <==
+sin(q)
+
+/ ▶ § pprint as a command on a dict too long for one line ;
+/ ▶ pprint json/encoder/ESCAPE_DCT
+# ==> ESCAPE_DCT <==
+{'\x00': '\\u0000',
+ '\x01': '\\u0001',
+ '\x02': '\\u0002',
+ '\x03': '\\u0003',
+ '\x04': '\\u0004',
+ '\x05': '\\u0005',
+ '\x06': '\\u0006',
+ '\x07': '\\u0007',
+ '\x08': '\\b',
+ '\t': '\\t',
+ '\n': '\\n',
+ '\x0b': '\\u000b',
+ '\x0c': '\\f',
+ '\r': '\\r',
+ '\x0e': '\\u000e',
+ '\x0f': '\\u000f',
+ '\x10': '\\u0010',
+ '\x11': '\\u0011',
+ '\x12': '\\u0012',
+ '\x13': '\\u0013',
+ '\x14': '\\u0014',
+ '\x15': '\\u0015',
+ '\x16': '\\u0016',
+ '\x17': '\\u0017',
+ '\x18': '\\u0018',
+ '\x19': '\\u0019',
+ '\x1a': '\\u001a',
+ '\x1b': '\\u001b',
+ '\x1c': '\\u001c',
+ '\x1d': '\\u001d',
+ '\x1e': '\\u001e',
+ '\x1f': '\\u001f',
+ '"': '\\"',
+ '\\': '\\\\'}
+
+/ ▶ § which as a command on a method ;
+/ ▶ which Cafe/__init__
+# ==> __init__ <==
+<class '__main__.Cafe'>
+
+/ ▶ § filepath as a command ;
+/ ▶ filepath Cafe
+# ==> Cafe <==
+/[^\n]*/\/Use_Cases\/debugPob_all.py
+
+/ ▶ § module as a command ;
+/ ▶ module Cafe
+# ==> Cafe <==
+<module '__main__' from '/[^\n]*/\/Use_Cases\/debugPob_all.py'>
+
+/ ▶ § pydoc as a command on a class ;
+/ ▶ pydoc Cafe
+# ==> Cafe <==
+class Cafe in module __main__
+
+class Cafe(builtins.object)
+ |  # property
+ |
+ |  Methods defined here:
+ |
+ |  __init__(self)
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |
+ |  ----------------------------------------------------------------------
+ |  Readonly properties defined here:
+ |
+ |  we_have_got
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  __dict__
+ |      dictionary for instance variables
+ |
+ |  __weakref__
+ |      list of weak references to the object
+
+/ ▶ § abcs as a command on a dict ;
+/ ▶ abcs kson/`1`
+# ==> `1` <==
+Collection Container Iterable Mapping MutableMapping Reversible Sized 
+
+/ ▶ § pathinfo as a command, one block per path component ;
+/ ▶ pathinfo kson/`1`/bar
+kson  list                      ['foo', {'bar': ['baz', None, 1.0, 2]}]
+    type          <class 'list'>
+    predicates    isdata 
+    abcs          Collection Container Iterable MutableSequence Reversible Sequence Sized 
+    memsize       576
+    pydoc         list object
+    pypath        kson
+    id            /[0-9]+/
+`1`  dict                      {'bar': ['baz', None, 1.0, 2]}
+    type          <class 'dict'>
+    predicates    isdata 
+    abcs          Collection Container Iterable Mapping MutableMapping Reversible Sized 
+    memsize       440
+    pydoc         dict object
+    pypath        kson[1]
+    id            /[0-9]+/
+bar  list                      ['baz', None, 1.0, 2]
+    type          <class 'list'>
+    predicates    isdata 
+    abcs          Collection Container Iterable MutableSequence Reversible Sequence Sized 
+    memsize       208
+    pydoc         list object
+    pypath        kson[1]['bar']
+    id            /[0-9]+/

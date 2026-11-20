@@ -288,9 +288,9 @@ find --name D* -l -d 2 --prune */sympy  ismodule
 § check help option for infocmd ;
 doc -h
 § test memsize is working ;
-memsize viking_cafe 
+memsize -1 p
 § test memsize as filter ;
-find . -d 1 --memsize "==488"
+find . -d 1 --memsize "==48"
 § test negative filter ;
 ls --nismodule
 § test str filter ;
@@ -323,3 +323,39 @@ ls sympy/this
 set auto_import true
 § test auto_import, sympy.this is only visible when auto_import is true ;
 ls sympy/this
+§ ls -x of an instance ;
+ls -x viking_cafe
+§ ls -x of a class ;
+ls -x Cafe
+§ ls -x of a function in a stdlib module ;
+ls -x json/dumps
+§ ls -x of a list reached through content keys ;
+ls -x kson/`1`/bar
+§ ls -x of a builtin method, showing 'which' command output ;
+ls -x kson/append
+§ type of a property with a dynamic map for this command only, gives the type of the value ;
+type viking_cafe/we_have_got --map dynamic
+§ type of the same property with a static map for this command only, gives property ;
+type viking_cafe/we_have_got --map static
+§ confirm the persistent map is still dynamic ;
+map
+§ type as a command ;
+type viking_cafe
+§ repr as a command, shows the quotes of a str ;
+repr p
+§ str as a command, no quotes ;
+str p
+§ pprint as a command on a dict too long for one line ;
+pprint json/encoder/ESCAPE_DCT
+§ which as a command on a method ;
+which Cafe/__init__
+§ filepath as a command ;
+filepath Cafe
+§ module as a command ;
+module Cafe
+§ pydoc as a command on a class ;
+pydoc Cafe
+§ abcs as a command on a dict ;
+abcs kson/`1`
+§ pathinfo as a command, one block per path component ;
+pathinfo kson/`1`/bar
